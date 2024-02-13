@@ -1,16 +1,24 @@
-# wave
+# 2024-SolutionChallenge-Wave-Frontend
+This is 2024 GDSC Solution Challenge Wave Repository.
 
-A new Flutter project.
+## 🌊 Wave? 
+### ***"Wave from us save from war"***
+#### every ripple is a step away from conflict. Let's create waves of change together!
 
-## Getting Started
+# GitHub Role
+This repository follows the following conventions.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Commit Convention
+| Commit Type | Description |
+| --- | --- |
+| Feat | Add new features |
+| Fix | Fix bugs |
+| Docs | Modify documentation |
+| Style | Code formatting, missing semicolons, no changes to the code itself |
+| Refactor | Code refactoring |
+| Test | Add test code, refactor test code |
+| Chore | Modify package manager, and other miscellaneous changes (e.g., .gitignore) |
+| Design | Change user UI design, such as CSS |
+| Comment | Add or modify necessary comments |
+| Rename | Only changes to file or folder names or locations |
+| Remove | Only performing the action of deleting files |
