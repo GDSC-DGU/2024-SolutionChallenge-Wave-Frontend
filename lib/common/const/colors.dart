@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // Primary Color
 const PRIMARY_BLUE_COLOR = Color(0xFF247EF4);
 // Button Color
-const BUTTON_GRAY_COLOR = Color(0xFFD0D0DA);
+const PRIMARY_GRAY_COLOR = Color(0xFFD0D0DA);
 // Emergency Color
 const EMERGENCY_RED_COLOR = Color(0xFFFF5039);
 // Alert Color

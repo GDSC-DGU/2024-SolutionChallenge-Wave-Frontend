@@ -31,7 +31,6 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // 각 탭에 대한 SVG 아이콘 경로를 설정합니다.
     final items = List<Widget>.generate(4, (index) {
       String iconName =
           'tab${index + 1}${this.index == index ? 'On' : 'Off'}.svg';
@@ -42,7 +41,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
       bottomNavigationBar: CurvedNavigationBar(
         key: navigationKey, // key를 할당
         animationCurve: Curves.linearToEaseOut,
-        animationDuration: const Duration(milliseconds: 600),
+        animationDuration: const Duration(milliseconds: 700),
         backgroundColor: Colors.white,
         buttonBackgroundColor:
             PRIMARY_BLUE_COLOR, // PRIMARY_COLOR를 적절한 색상 값으로 변경
@@ -51,6 +50,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
         items: items,
         color: Colors.black,
         onTap: (selectedIndex) {
+          print(selectedIndex);
           setState(() {
             index = selectedIndex;
           });
