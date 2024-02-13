@@ -1,0 +1,7 @@
+flutter_native_splash:
+  color: "FFFFFF"
+  fullscreen: true
+  image: assets/images/waveGif.gif
+  android: true
+  ios: true
+  scale: "fill"
