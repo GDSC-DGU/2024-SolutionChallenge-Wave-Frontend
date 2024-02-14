@@ -35,7 +35,7 @@ class _App extends ConsumerWidget {
 }
 
 
-// // ⭐️ TEST CODE: 아래처럼 UI만 보고 싶을 때 위에 기존거 주석 처리 하고 ✅
+// ⭐️ TEST CODE: 아래처럼 UI만 보고 싶을 때 위에 기존거 주석 처리 하고 ✅
 // void main() {
 //   WidgetsFlutterBinding.ensureInitialized();
 //   runApp(const _App());
@@ -51,7 +51,7 @@ class _App extends ConsumerWidget {
 //         fontFamily: 'Pretendard',
 //       ),
 //       debugShowCheckedModeBanner: false,
-//       home: SecondOnboardingScreen(), // 여기 원하는 스크린 대입 ✅
+//       home: FirstOnboardingScreen(), // 여기 원하는 스크린 대입 ✅
 //     );
 //   }
 // }
