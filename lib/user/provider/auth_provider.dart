@@ -6,6 +6,7 @@ import 'package:wave/common/view/initial_screen.dart';
 import 'package:wave/common/view/root_tab.dart';
 import 'package:wave/onboarding/onboarding_screen.dart';
 import 'package:wave/user/provider/user_me_provider.dart';
+import 'package:wave/user/view/login_screen.dart';
 
 import '../../splash/splash_screen.dart';
 import '../model/user_model.dart';
@@ -48,6 +49,11 @@ class AuthProvider extends ChangeNotifier {
           path: '/splash',
           name: SplashScreen.routeName,
           builder: (_, __) => SplashScreen(),
+        ),
+        GoRoute(
+          path: '/login',
+          name: LoginScreen.routeName,
+          builder: (_, __) => LoginScreen(),
         ),
       ];
 

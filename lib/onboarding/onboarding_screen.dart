@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../common/layout/default_layout.dart';
+import '../user/view/login_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   static String get routeName => 'onboarding1';
@@ -87,7 +89,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             left: 8.0,
             child: InkWell(
               onTap: () {
-                // Skip 버튼 클릭 시 수행할 액션 (예: 홈 화면으로 이동)
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginScreen()));
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
