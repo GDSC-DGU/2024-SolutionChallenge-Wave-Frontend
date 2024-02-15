@@ -4,8 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wave/common/view/initial_screen.dart';
 import 'package:wave/common/view/root_tab.dart';
-import 'package:wave/onboarding/first_onboarding_screen.dart';
-import 'package:wave/onboarding/second_onboarding_screen.dart';
+import 'package:wave/onboarding/onboarding_screen.dart';
 import 'package:wave/user/provider/user_me_provider.dart';
 
 import '../../splash/splash_screen.dart';
@@ -36,14 +35,9 @@ class AuthProvider extends ChangeNotifier {
           routes: [],
         ),
         GoRoute(
-          path: '/onboarding1',
-          name: FirstOnboardingScreen.routeName,
-          builder: (_, __) => FirstOnboardingScreen(),
-        ),
-        GoRoute(
-          path: '/onboarding2',
-          name: SecondOnboardingScreen.routeName,
-          builder: (_, __) => SecondOnboardingScreen(),
+          path: '/onboarding',
+          name: OnboardingScreen.routeName,
+          builder: (_, __) => OnboardingScreen(),
         ),
         GoRoute(
           path: '/initial',

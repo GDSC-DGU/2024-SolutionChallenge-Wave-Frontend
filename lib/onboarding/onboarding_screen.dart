@@ -4,14 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../common/layout/default_layout.dart';
 
-class FirstOnboardingScreen extends StatefulWidget {
+class OnboardingScreen extends StatefulWidget {
   static String get routeName => 'onboarding1';
 
   @override
-  _FirstOnboardingScreenState createState() => _FirstOnboardingScreenState();
+  _OnboardingScreenState createState() => _OnboardingScreenState();
 }
 
-class _FirstOnboardingScreenState extends State<FirstOnboardingScreen> {
+class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
