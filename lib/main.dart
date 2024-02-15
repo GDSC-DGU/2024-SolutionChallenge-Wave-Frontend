@@ -1,13 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wave/common/provider/go_router.dart';
 import 'package:wave/onboarding/first_onboarding_screen.dart';
 import 'package:wave/onboarding/second_onboarding_screen.dart';
-
+import 'package:wave/user/view/login_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 //⭐️ 아래에 스크린 UI 빌딩 빠르게 볼 수 있는 주석 코드 있음 ⭐️
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(
     const ProviderScope(
       child: _App(),
@@ -34,10 +40,12 @@ class _App extends ConsumerWidget {
   }
 }
 
-
-// ⭐️ TEST CODE: 아래처럼 UI만 보고 싶을 때 위에 기존거 주석 처리 하고 ✅
-// void main() {
+// //// ⭐️ TEST CODE: 아래처럼 UI만 보고 싶을 때 위에 기존거 주석 처리 하고 ✅
+// void main() async{
 //   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp(
+//     options: DefaultFirebaseOptions.currentPlatform,
+//   );
 //   runApp(const _App());
 // }
 //
@@ -51,10 +59,7 @@ class _App extends ConsumerWidget {
 //         fontFamily: 'Pretendard',
 //       ),
 //       debugShowCheckedModeBanner: false,
-//       home: FirstOnboardingScreen(), // 여기 원하는 스크린 대입 ✅
+//       home: LoginScreen(), // 여기 원하는 스크린 대입 ✅
 //     );
 //   }
 // }
-
-
-

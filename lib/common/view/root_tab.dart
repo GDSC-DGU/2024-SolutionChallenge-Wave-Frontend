@@ -41,8 +41,8 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
       bottomNavigationBar: CurvedNavigationBar(
         key: navigationKey, // key를 할당
         animationCurve: Curves.linearToEaseOut,
-        animationDuration: const Duration(milliseconds: 700),
-        backgroundColor: Colors.white,
+        animationDuration: const Duration(milliseconds: 800),
+        backgroundColor: Colors.lightBlueAccent,
         buttonBackgroundColor:
             PRIMARY_BLUE_COLOR, // PRIMARY_COLOR를 적절한 색상 값으로 변경
         height: 75,
