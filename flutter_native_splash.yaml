@@ -4,4 +4,3 @@ flutter_native_splash:
   image: assets/images/waveGif.gif
   android: true
   ios: true
-  scale: "fill"
