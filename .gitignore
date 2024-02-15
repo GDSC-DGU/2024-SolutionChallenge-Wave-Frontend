@@ -44,3 +44,5 @@ app.*.map.json
 
 # environment files
 /assets/config/*.env
+
+/ios/Runner/

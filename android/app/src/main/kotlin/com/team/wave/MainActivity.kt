@@ -1,4 +1,4 @@
-package com.example.wave
+package com.team.wave
 
 import io.flutter.embedding.android.FlutterActivity
 

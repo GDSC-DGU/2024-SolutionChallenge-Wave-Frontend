@@ -64,6 +64,9 @@ dependencies:
   syncfusion_flutter_maps: ^24.2.4
   syncfusion_flutter_core: ^24.2.4
   curved_navigation_bar: ^1.0.3
+  google_sign_in: ^6.2.1
+  firebase_core: ^2.25.4
+  firebase_auth: ^4.17.4
 
 dev_dependencies:
   flutter_test:
