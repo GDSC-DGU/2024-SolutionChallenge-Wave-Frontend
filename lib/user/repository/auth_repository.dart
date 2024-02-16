@@ -1,59 +1,23 @@
-
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:retrofit/retrofit.dart';
+import 'package:wave/common/model/login_response.dart';
 
 import '../../common/const/data.dart';
 import '../../common/dio/dio.dart';
-import '../../common/model/login_response.dart';
-import '../../common/model/token_response.dart';
-import '../../common/utils/data_utils.dart';
+import '../model/google_login_model.dart';
+part 'auth_repository.g.dart';
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   final dio = ref.watch(dioProvider);
-
-  return AuthRepository(baseUrl: 'http://$ip/auth', dio: dio);
+  return AuthRepository(dio, baseUrl: '$ip/api/v1/auth');
 });
 
-class AuthRepository {
-  // http://$ip/auth
-  final String baseUrl;
-  final Dio dio;
-
-  AuthRepository({
-    required this.baseUrl,
-    required this.dio,
+@RestApi()
+abstract class AuthRepository {
+  factory AuthRepository(Dio dio, {String? baseUrl}) = _AuthRepository;
+  @POST('/google')
+  Future<LoginResponse> googleLogin({
+    @Body() required GoogleLoginModel googleLoginModel,
   });
-
-  Future<LoginResponse> login({
-    required String username,
-    required String password,
-  }) async {
-    final serialized = DataUtils.plainToBase64('$username:$password');
-
-    final resp = await dio.post(
-      '$baseUrl/login',
-      options: Options(
-        headers: {
-          'authorization': 'Basic $serialized',
-        },
-      ),
-    );
-
-    return LoginResponse.fromJson(
-      resp.data,
-    );
-  }
-
-  Future<TokenResponse> token()async{
-    final resp = await dio.post(
-      '$baseUrl/token',
-      options: Options(
-        headers: {
-          'refreshToken': 'true',
-        },
-      ),
-    );
-
-    return TokenResponse.fromJson(resp.data);
-  }
 }

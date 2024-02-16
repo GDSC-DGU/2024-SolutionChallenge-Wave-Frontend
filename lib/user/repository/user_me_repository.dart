@@ -12,7 +12,7 @@ final userMeRepositoryProvider = Provider<UserMeRepository>(
   (ref) {
     final dio = ref.watch(dioProvider);
 
-    return UserMeRepository(dio, baseUrl: 'http://$ip/user/me');
+    return UserMeRepository(dio, baseUrl: '$ip/api/v1/user');
   },
 );
 
@@ -21,7 +21,7 @@ final userMeRepositoryProvider = Provider<UserMeRepository>(
 abstract class UserMeRepository {
   factory UserMeRepository(Dio dio, {String baseUrl}) = _UserMeRepository;
 
-  @GET('/')
+  @GET('/me')
   @Headers({
     'accessToken': 'true',
   })

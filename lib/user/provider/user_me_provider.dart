@@ -4,6 +4,7 @@ import 'package:wave/common/const/data.dart';
 import 'package:wave/common/secure_storage/secure_storage.dart';
 import 'package:wave/user/model/user_model.dart';
 
+import '../model/google_login_model.dart';
 import '../repository/auth_repository.dart';
 import '../repository/user_me_repository.dart';
 
@@ -50,32 +51,34 @@ class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
     state = resp;
   }
 
-  Future<UserModelBase> login({
-    required String username,
-    required String password,
-  }) async {
+  // UserMeStateNotifier 클래스 내부에 추가
+  Future<void> googleLogin(GoogleLoginModel googleLoginModel) async {
     try {
+      // 로그인 로딩 상태로 변경
       state = UserModelLoading();
 
-      final resp = await authRepository.login(
-        username: username,
-        password: password,
-      );
+      // AuthRepository의 googleLogin 메서드 호출
+      final loginResponse = await authRepository.googleLogin(googleLoginModel: googleLoginModel);
 
-      await storage.write(key: REFRESH_TOKEN_KEY, value: resp.refreshToken);
-      await storage.write(key: ACCESS_TOKEN_KEY, value: resp.accessToken);
+      if (loginResponse.data != null) {
+        // 받은 토큰을 안전하게 저장
+        await storage.write(key: REFRESH_TOKEN_KEY, value: loginResponse.data!.refreshToken);
+        await storage.write(key: ACCESS_TOKEN_KEY, value: loginResponse.data!.accessToken);
 
-      final userResp = await repository.getMe();
-
-      state = userResp;
-
-      return userResp;
+        // 저장된 토큰을 이용하여 사용자 정보 가져오기
+        final userResp = await repository.getMe();
+        // 상태를 업데이트하고 사용자 정보 반환
+        state = userResp;
+      } else {
+        // 로그인 실패 상태로 변경
+        state = UserModelError(message: 'Google 로그인에 실패했습니다.');
+      }
     } catch (e) {
-      state = UserModelError(message: '로그인에 실패했습니다.');
-
-      return Future.value(state);
+      // 예외 발생 시 로그인 실패 상태로 변경
+      state = UserModelError(message: 'Google 로그인에 실패했습니다.');
     }
   }
+
 
   Future<void> logout() async {
     state = null;

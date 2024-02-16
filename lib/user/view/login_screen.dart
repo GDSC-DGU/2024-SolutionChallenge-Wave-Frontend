@@ -1,18 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class LoginScreen extends StatefulWidget {
+import '../model/google_login_model.dart';
+import '../provider/user_me_provider.dart';
+
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
 
   static const String routeName = '/login';
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,18 +85,28 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void signInWithGoogle() async {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
     final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
-    final OAuthCredential credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
+    if (googleAuth != null) {
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
 
-    await FirebaseAuth.instance.signInWithCredential(credential).then((value) {
-      print('${value.user?.displayName}, ${value.user?.email}, ${value.user?.photoURL}');
-    }).catchError((error) {
-      print(error);
-    });
+      await FirebaseAuth.instance.signInWithCredential(credential).then((value) async {
+        if (value.user != null) {
+          // GoogleLoginModel 생성
+          final googleLoginModel = GoogleLoginModel(
+            id: value.user!.uid,
+            displayName: value.user!.displayName ?? 'NO NAME',
+          );
+
+          // UserMeStateNotifier를 통해 googleLogin 호출
+          await ref.read(userMeProvider.notifier).googleLogin(googleLoginModel);
+        }
+      }).catchError((error) {
+        print(error);
+      });
+    }
   }
 }
