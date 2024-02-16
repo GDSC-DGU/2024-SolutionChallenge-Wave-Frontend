@@ -70,10 +70,26 @@ class MyPageScreen extends StatelessWidget {
             TextButton(
               child: const Text('No'),
               onPressed: () => Navigator.of(context).pop(),
+              style: TextButton.styleFrom(
+                backgroundColor: Color(0xFF247EF4),
+                primary: Colors.white,
+                minimumSize: Size(80, 36),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18),
+                ),
+              ),
             ),
             TextButton(
               child: const Text('Yes'),
               onPressed: onConfirm,
+              style: TextButton.styleFrom(
+                backgroundColor: Color(0xFF247EF4),
+                primary: Colors.white,
+                minimumSize: Size(80, 36),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18),
+                ),
+              ),
             ),
           ],
         );
