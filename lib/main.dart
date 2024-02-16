@@ -6,6 +6,9 @@ import 'package:wave/onboarding/onboarding_screen.dart';
 import 'package:wave/user/view/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+
+import 'loading/loading_screen.dart';
 
 //⭐️ 아래에 스크린 UI 빌딩 빠르게 볼 수 있는 주석 코드 있음 ⭐️
 void main() async {
@@ -58,7 +61,7 @@ class _App extends ConsumerWidget {
 //         fontFamily: 'Pretendard',
 //       ),
 //       debugShowCheckedModeBanner: false,
-//       home: OnboardingScreen(), // 여기 원하는 스크린 대입 ✅
+//       home: LoadingScreen(), // 여기 원하는 스크린 대입 ✅
 //     );
 //   }
 // }
