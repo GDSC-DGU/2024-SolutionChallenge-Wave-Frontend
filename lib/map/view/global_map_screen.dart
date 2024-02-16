@@ -2,81 +2,39 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
 import 'package:wave/common/const/colors.dart';
 import 'package:wave/common/const/important_countries.dart';
+import 'package:wave/loading/loading_screen.dart';
+import 'package:wave/map/model/important_countries_model.dart';
+import 'package:wave/splash/splash_screen.dart';
 
-class GlobalMapScreen extends StatefulWidget {
+import '../provider/global_map_provider.dart';
+
+class GlobalMapScreen extends ConsumerStatefulWidget {
   @override
   _GlobalMapScreenState createState() => _GlobalMapScreenState();
 }
 
-class _GlobalMapScreenState extends State<GlobalMapScreen> {
+class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
   late MapShapeSource _dataSource;
   late MapZoomPanBehavior _zoomPanBehavior;
   bool _isLoading = true;
   double _currentZoomLevel = 6;
 
+  // api call로 받아온 데이터를 저장할 위험 국가 리스트 ID
+  late List<int> lowRiskCountriesId = [];
+  late List<int> midRiskCountriesId = [];
+  late List<int> highRiskCountriesId = [];
+  late List<int> importantCountriesId = [];
+
   // 변경: 리스크 레벨별 상태 관리
-  bool _showLowRisk = false;
-  bool _showMidRisk = false;
-  bool _showHighRisk = false;
+  bool _showLowRisk = true;
+  bool _showMidRisk = true;
+  bool _showHighRisk = true;
 
-  @override
-  void initState() {
-    super.initState();
-    _zoomPanBehavior = MapZoomPanBehavior(
-      focalLatLng: MapLatLng(34.8149, 39.02),
-      enableDoubleTapZooming: true,
-      enablePanning: true,
-      enablePinching: true,
-      zoomLevel: _currentZoomLevel,
-      minZoomLevel: 1,
-      maxZoomLevel: 10,
-    );
-    print(_showLowRisk);
-    _showLowRisk = true;
-    print(_showLowRisk);
-    _showMidRisk = true;
-    _showHighRisk = true;
-    _updateDataSource();
-  }
-
-  Future<void> _updateDataSource() async {
-    print('now is time');
-    final jsonString =
-        await rootBundle.loadString('assets/maps/world_map.json');
-    final jsonResponse = json.decode(jsonString);
-    final features = jsonResponse['features'] as List;
-
-    setState(() {
-      _dataSource = MapShapeSource.asset(
-        'assets/maps/world_map.json',
-        shapeDataField: 'name',
-        dataCount: features.length,
-        primaryValueMapper: (int index) =>
-            features[index]['properties']['name'],
-        shapeColorValueMapper: (int index) =>
-            _getRiskLevelColor(features[index]['properties']['name']),
-        dataLabelMapper: (int index) =>
-            jsonResponse['features'][index]['properties']['name'].toString(),
-      );
-      _isLoading = false;
-    });
-  }
-
-  Color _getRiskLevelColor(String countryName) {
-    if (lowRiskCountries.contains(countryName) && _showLowRisk) {
-      return CAUTION_YELLO_COLOR;
-    } else if (midRiskCountries.contains(countryName) && _showMidRisk) {
-      return ALERT_ORANGE_COLOR;
-    } else if (highRiskCountries.contains(countryName) && _showHighRisk) {
-      return EMERGENCY_RED_COLOR;
-    } else {
-      return PRIMARY_GRAY_COLOR;
-    }
-  }
-
+  // zoom level에 따른 국가 라벨 설정
   MapDataLabelSettings _getDataLabelSettings() {
     if (_currentZoomLevel >= 8) {
       // 줌 레벨이 10 이상일 때
@@ -111,16 +69,93 @@ class _GlobalMapScreenState extends State<GlobalMapScreen> {
     }
   }
 
-  void _showCustomModal(BuildContext context, String countryName) {
+  @override
+  void initState() {
+    // 중요 국가 데이터를 가져와서 초기화
+    _fetchImportantCountriesDataAndInitialize();
+    super.initState();
+    _zoomPanBehavior = MapZoomPanBehavior(
+      focalLatLng: const MapLatLng(34.8149, 39.02),
+      enableDoubleTapZooming: true,
+      enablePanning: true,
+      enablePinching: true,
+      zoomLevel: _currentZoomLevel,
+      minZoomLevel: 1,
+      maxZoomLevel: 10,
+    );
+  }
+
+  Future<void> _fetchImportantCountriesDataAndInitialize() async {
+    // 중요 국가 데이터를 가져오는 API 호출(ref.watch => provider를 통해 상태를 읽어옴)
+    final state = ref.watch(importantCountriesProvider);
+    if (state is ImportantCountriesLoaded) {
+      // API로부터 받은 중요 국가 데이터를 기반으로 리스트를 업데이트
+      _updateRiskCountriesLists(state.data);
+      // 단계가 적용된 맵 그리기 시작!
+      _updateDataSource();
+    } else {
+      // 데이터 로딩 중이거나 실패했을 경우의 처리 => both 일단 무한 로딩 화면으로 대체
+      _isLoading = true;
+    }
+  }
+
+  void _updateRiskCountriesLists(ImportantCountriesModel data) {
+    // emergency, alert, caution 리스트를 업데이트하는 로직 구현
+    lowRiskCountriesId = data.caution?.map((e) => e.id).toList() ?? [];
+    midRiskCountriesId = data.alert?.map((e) => e.id).toList() ?? [];
+    highRiskCountriesId = data.emergency?.map((e) => e.id).toList() ?? [];
+    importantCountriesId = data.important ?? [];
+    print('lowRiskCountriesId: $lowRiskCountriesId');
+  }
+
+  Future<void> _updateDataSource() async {
+    print('now is time');
+    final jsonString =
+        await rootBundle.loadString('assets/maps/world_map.json');
+    final jsonResponse = json.decode(jsonString);
+    final features = jsonResponse['features'] as List;
+
+    setState(() {
+      _dataSource = MapShapeSource.asset(
+        'assets/maps/world_map.json',
+        shapeDataField: 'name',
+        dataCount: features.length,
+        primaryValueMapper: (int index) =>
+            features[index]['properties']['name'],
+        shapeColorValueMapper: (int index) =>
+            _getRiskLevelColor(features[index]['properties']['id']),
+        dataLabelMapper: (int index) =>
+            jsonResponse['features'][index]['properties']['id'],
+      );
+      _isLoading = false;
+    });
+  }
+
+  Color _getRiskLevelColor(int countryId) {
+    if (lowRiskCountriesId.contains(countryId) && _showLowRisk) {
+      return CAUTION_YELLO_COLOR;
+    } else if (midRiskCountriesId.contains(countryId) && _showMidRisk) {
+      return ALERT_ORANGE_COLOR;
+    } else if (highRiskCountriesId.contains(countryId) && _showHighRisk) {
+      return EMERGENCY_RED_COLOR;
+    } else {
+      return PRIMARY_GRAY_COLOR;
+    }
+  }
+
+
+  /// test code
+  void _showCustomModal(BuildContext context, int countryId) {
     showDialog(
-        context: context,
-        barrierDismissible: true,
-        barrierColor: Colors.black.withOpacity(0.5),
-        builder: (BuildContext context) {
-          return Dialog(
-            child: BuildCustomCard(),
-          );
-        });
+      context: context,
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      builder: (BuildContext context) {
+        return Dialog(
+          child: BuildCustomCard(),
+        );
+      },
+    );
   }
 
   final maxHeight =
@@ -128,6 +163,7 @@ class _GlobalMapScreenState extends State<GlobalMapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(importantCountriesProvider);
     return Scaffold(
       appBar: AppBar(
         title: Align(
@@ -139,7 +175,7 @@ class _GlobalMapScreenState extends State<GlobalMapScreen> {
         ),
       ),
       body: _isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? LoadingScreen()
           : Container(
               height: maxHeight * 0.9,
               child: Stack(
@@ -150,10 +186,10 @@ class _GlobalMapScreenState extends State<GlobalMapScreen> {
                         onSelectionChanged: (int index) {
                           print(_dataSource.dataLabelMapper!(index));
                           setState(() {
-                            final String countryName =
-                                _dataSource.dataLabelMapper!(index);
-                            if (importantCountries.contains(countryName)) {
-                              _showCustomModal(context, countryName);
+                            final int countryId =
+                                _dataSource.dataLabelMapper!(index) as int;
+                            if (importantCountriesId.contains(countryId)) {
+                              _showCustomModal(context, countryId);
                             }
                           });
                         },
@@ -205,7 +241,7 @@ class _GlobalMapScreenState extends State<GlobalMapScreen> {
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
         onPressed: () {
-          print('now is time@@@@');
+          print('now is time wave!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
           setState(() {
             if (riskLevel == 'Caution') {
               _showLowRisk = !_showLowRisk;
@@ -229,6 +265,10 @@ class _GlobalMapScreenState extends State<GlobalMapScreen> {
     );
   }
 }
+
+
+
+
 Widget BuildCustomCard() {
   return Container(
     decoration: BoxDecoration(

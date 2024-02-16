@@ -18,6 +18,7 @@ class ImportantCountriesResponse extends CommonResponse {
   factory ImportantCountriesResponse.fromJson(Map<String, dynamic> json) =>
       _$ImportantCountriesResponseFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$ImportantCountriesResponseToJson(this);
 }
 
