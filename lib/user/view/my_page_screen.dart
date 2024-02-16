@@ -9,6 +9,35 @@ class MyPageScreen extends StatelessWidget {
     if (!await launchUrl(Uri.parse(url))) throw 'Could not launch $url';
   }
 
+  Future<void> _showConfirmationDialog(BuildContext context, String title, String content, VoidCallback onConfirm) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(content),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('No'),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            TextButton(
+              child: const Text('Yes'),
+              onPressed: onConfirm,
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   // 사용자에게 확인을 요청하는 대화상자를 표시하는 함수
   Future<void> _showLeaveConfirmationDialog(BuildContext context) async {
     return showDialog<void>(
@@ -52,7 +81,12 @@ class MyPageScreen extends StatelessWidget {
       },
       'Terms and conditions': () => _launchURL('https://example.com/terms'),
       'Privacy policy': () => _launchURL('https://example.com/privacy'),
-      'Unscribing membership': () => _showLeaveConfirmationDialog(context),
+      'Unscribing membership': () => _showConfirmationDialog(
+        context,
+        'Are you sure you want to leave?',
+        'All your donation lists will disappear. Would that be okay with you?',
+            () => Navigator.of(context).pop(),
+      ),
     };
 
     return Scaffold(
@@ -88,9 +122,15 @@ class MyPageScreen extends StatelessWidget {
                         ),
                       ),
                       OutlinedButton(
-                        onPressed: () {
-                          // 로그아웃 로직
-                        },
+                        onPressed: () => _showConfirmationDialog(
+                          context,
+                          'Do you want to logout?',
+                          'You will be returned to the login screen.',
+                              () {
+                            // Logout logic here
+                            Navigator.of(context).pop();
+                          },
+                        ),
                         child: const Text('Log out', style: TextStyle(color: Colors.white, fontSize: 10)),
                         style: OutlinedButton.styleFrom(
                           side: const BorderSide(color: Colors.white, width: 1.2),
