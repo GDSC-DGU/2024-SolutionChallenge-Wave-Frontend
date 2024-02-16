@@ -142,8 +142,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
         // Donation List 스크린으로 이동
         Navigator.push(context, MaterialPageRoute(builder: (_) => const DonationListScreen()));
       },
-      'Terms and conditions': () => _launchURL('https://example.com/terms'),
-      'Privacy policy': () => _launchURL('https://example.com/privacy'),
+      'Terms and conditions': () => _launchURL('https://gusty-flock-5cd.notion.site/Terms-and-conditions-for-Wave-14c3fa62bc754673a4555c45dfd7916a?pvs=4'),
+      'Privacy policy': () => _launchURL('https://gusty-flock-5cd.notion.site/Privacy-Policy-for-Wave-2e85cef8f08e4b5abfd329a92cdf8c1e?pvs=4'),
       'Unscribing membership': () => _showConfirmationDialog(
         context,
         'Are you sure you want to leave?',
