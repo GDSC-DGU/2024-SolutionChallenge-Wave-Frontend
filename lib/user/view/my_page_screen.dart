@@ -262,7 +262,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            buildInfoText('🌊 ${totalWave}', 'Delivered waves', 'Wave per 1USD / 397.00'),
+            buildInfoText('🌊 ${totalWave}', 'Delivered waves', 'Wave per 1USD / ${totalWave.toStringAsFixed(2)}'),
             const VerticalDivider(color: Colors.white),
             buildInfoText('🌍 ${donationCountryCnt}', 'Protected countries', ''),
           ],
