@@ -1,11 +1,49 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+import '../../loading/loading_screen.dart';
 import 'donation_list_screen.dart';
 
-class MyPageScreen extends StatelessWidget {
+class MyPageScreen extends StatefulWidget {
   const MyPageScreen({Key? key}) : super(key: key);
+  @override
+  _MyPageScreenState createState() => _MyPageScreenState();
+}
+
+class _MyPageScreenState extends State<MyPageScreen> {
+  Map<String, dynamic>? userInfo;
+  bool isLoading = true; // 로딩 상태를 관리하는 변수
+
+  @override
+  void initState() {
+    super.initState();
+    getUserInfo();
+  }
+
+  //회원 정보 받기 API 호출 함수
+  Future<Map<String, dynamic>> getUserInfo() async {
+    var url = Uri.parse('https://example.com/api/v1/users'); //TODO: 서버 url 수정해야함
+    var response = await http.get(url, headers: {
+      "Content-Type": "application/json",
+      // "Authorization": "Bearer $accessToken", // TODO: accessToken 가져와야 함
+    });
+    await Future.delayed(const Duration(seconds: 1)); // 가상의 로딩 시간
+
+    if (response.statusCode == 200) {
+      isLoading = false; // 로딩 완료
+      return json.decode(response.body)['data'];
+    } else {
+      //throw Exception('Failed to load user info');
+      // API 호출 실패 시 더미 데이터 반환
+      isLoading = false; // 로딩 완료
+      return {
+        "nickname": "DummyUser",
+        "totalWave": 0,
+        "donationCountryCnt": 0,
+      };
+    }
+  }
 
   // 로그아웃 API 호출 함수
   Future<void> _logout() async {
@@ -68,28 +106,28 @@ class MyPageScreen extends StatelessWidget {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('No'),
               onPressed: () => Navigator.of(context).pop(),
               style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
                 backgroundColor: Color(0xFF247EF4),
-                primary: Colors.white,
                 minimumSize: Size(80, 36),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18),
                 ),
               ),
+              child: const Text('No'),
             ),
             TextButton(
-              child: const Text('Yes'),
               onPressed: onConfirm,
               style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
                 backgroundColor: Color(0xFF247EF4),
-                primary: Colors.white,
                 minimumSize: Size(80, 36),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18),
                 ),
               ),
+              child: const Text('Yes'),
             ),
           ],
         );
@@ -102,7 +140,7 @@ class MyPageScreen extends StatelessWidget {
     final actions = {
       'Donation list': () {
         // Donation List 스크린으로 이동
-        Navigator.push(context, MaterialPageRoute(builder: (_) => DonationListScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (_) => const DonationListScreen()));
       },
       'Terms and conditions': () => _launchURL('https://example.com/terms'),
       'Privacy policy': () => _launchURL('https://example.com/privacy'),
@@ -118,102 +156,115 @@ class MyPageScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Mypage', style: TextStyle(fontWeight: FontWeight.w600)),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Donation Profile',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
-                color: const Color(0xFF247EF4),
-                borderRadius: BorderRadius.circular(15),
-              ),
+      body: FutureBuilder<Map<String, dynamic>>(
+        future: getUserInfo(),
+        builder: (context, snapshot) {
+          if (isLoading) {
+            return const LoadingScreen();
+          } else if (snapshot.hasError) {
+            return Center(child: Text("Error: ${snapshot.error}"));
+            // return const LoadingScreen();
+          } else {
+            // Assuming your user data includes 'nickname', 'totalWave', and 'donationCountryCnt'
+            var userData = snapshot.data!;
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: const Text(
-                          'Emma Smith',
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
-                        ),
-                      ),
-                      OutlinedButton(
-                        onPressed: () => _showConfirmationDialog(
-                          context,
-                          'Do you want to logout?',
-                          'You will be returned to the login screen.',
-                          _logout,
-                        ),
-                        child: const Text('Log out', style: TextStyle(color: Colors.white, fontSize: 10)),
-                        style: OutlinedButton.styleFrom(
-                          side: const BorderSide(color: Colors.white, width: 1.2),
-                          minimumSize: const Size(80, 30),
-                        ),
-                      ),
-                    ],
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Donation Profile',
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.black),
+                    ),
                   ),
-                  const SizedBox(height: 35),
+                  const SizedBox(height: 8),
                   Container(
+                    padding: const EdgeInsets.all(20.0),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF242424), // 내부 박스 색상 변경
+                      color: const Color(0xFF247EF4),
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: buildInfoSection(),
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(height: 24),
-            ...['Donation list', 'Terms and conditions', 'Privacy policy', 'Unscribing membership']
-                .map(
-                  (title) => Container(
-                margin: const EdgeInsets.only(bottom: 8),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF1F1F7),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(26, 10, 10, 10),
-                  child: ListTile(
-                    title: Text(
-                      title,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black.withOpacity(0.9),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                '${userData['nickname']}', // 안전하게 데이터에 접근
+                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
+                              ),
+                            ),
+                            OutlinedButton(
+                              onPressed: () => _showConfirmationDialog(
+                                context,
+                                'Do you want to logout?',
+                                'You will be returned to the login screen.',
+                                _logout,
+                              ),
+                              child: const Text('Log out', style: TextStyle(color: Colors.white, fontSize: 10)),
+                              style: OutlinedButton.styleFrom(
+                                side: const BorderSide(color: Colors.white, width: 1.2),
+                                minimumSize: const Size(80, 30),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 35),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF242424), // 내부 박스 색상 변경
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: buildInfoSection(userData!['totalWave'], userData!['donationCountryCnt']),
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  ...['Donation list', 'Terms and conditions', 'Privacy policy', 'Unscribing membership']
+                      .map(
+                        (title) => Container(
+                      margin: const EdgeInsets.only(bottom: 8),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFF1F1F7),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(26, 10, 10, 10),
+                        child: ListTile(
+                          title: Text(
+                            title,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black.withOpacity(0.9),
+                            ),
+                          ),
+                          trailing: const Icon(Icons.arrow_forward_ios),
+                          onTap: actions[title]!,
+                        ),
                       ),
                     ),
-                    trailing: const Icon(Icons.arrow_forward_ios),
-                    onTap: actions[title]!,
-                  ),
-                ),
+                  ).toList(),
+                ],
               ),
-            )
-                .toList(),
-          ],
-        ),
-      ),
+            );
+          }
+        }
+      )
     );
   }
 
-  Widget buildInfoSection() {
+  Widget buildInfoSection(int totalWave, int donationCountryCnt) {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: IntrinsicHeight(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            buildInfoText('🌊 397', 'Delivered waves', 'Wave per 1USD / 397.00'),
+            buildInfoText('🌊 ${totalWave}', 'Delivered waves', 'Wave per 1USD / 397.00'),
             const VerticalDivider(color: Colors.white),
-            buildInfoText('🌍 43', 'Protected countries', ''),
+            buildInfoText('🌍 ${donationCountryCnt}', 'Protected countries', ''),
           ],
         ),
       ),
