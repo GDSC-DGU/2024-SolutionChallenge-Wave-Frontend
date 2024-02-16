@@ -1,10 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'donation_list_screen.dart';
 
 class MyPageScreen extends StatelessWidget {
   const MyPageScreen({Key? key}) : super(key: key);
+
+  // 로그아웃 API 호출 함수
+  Future<void> _logout() async {
+    var url = Uri.parse('https://example.com/api/v1/auth/logout'); //TODO: 서버 url 수정해야함
+    var response = await http.post(
+        url,
+        headers: {
+          "Content-Type": "application/json",
+         // "Authorization": "Bearer $accessToken", // TODO: accessToken 가져와야 함
+        },
+        body: {}
+    );
+    if (response.statusCode == 200) {
+      // 로그아웃 처리 성공
+      print('Logged out successfully');
+    } else {
+      // 오류 처리
+      print('Failed to log out');
+    }
+  }
+
+// 회원 탈퇴 API 호출 함수
+  Future<void> _unsubscribe() async {
+    var url = Uri.parse('https://example.com/api/v1/auth/sign-out'); //TODO: 서버 url 수정해야함
+    var response = await http.post(url,
+        headers: {
+          "Content-Type": "application/json",
+          // "Authorization": "Bearer $accessToken", // TODO: accessToken 가져와야 함
+        },
+        body: {}
+    );
+    if (response.statusCode == 200) {
+      // 회원 탈퇴 처리 성공
+      print('Unsubscribed successfully');
+    } else {
+      // 오류 처리
+      print('Failed to unsubscribe');
+    }
+  }
 
   // URL을 열기 위한 함수
   Future<void> _launchURL(String url) async {
@@ -54,7 +94,7 @@ class MyPageScreen extends StatelessWidget {
         context,
         'Are you sure you want to leave?',
         'All your donation lists will disappear. Would that be okay with you?',
-            () => Navigator.of(context).pop(),
+        _unsubscribe,
       ),
     };
 
@@ -95,10 +135,7 @@ class MyPageScreen extends StatelessWidget {
                           context,
                           'Do you want to logout?',
                           'You will be returned to the login screen.',
-                              () {
-                            // Logout logic here
-                            Navigator.of(context).pop();
-                          },
+                          _logout,
                         ),
                         child: const Text('Log out', style: TextStyle(color: Colors.white, fontSize: 10)),
                         style: OutlinedButton.styleFrom(
