@@ -109,8 +109,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
               onPressed: () => Navigator.of(context).pop(),
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white,
-                backgroundColor: Color(0xFF247EF4),
-                minimumSize: Size(80, 36),
+                backgroundColor: const Color(0xFF247EF4),
+                minimumSize: const Size(80, 36),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18),
                 ),
@@ -121,8 +121,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
               onPressed: onConfirm,
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white,
-                backgroundColor: Color(0xFF247EF4),
-                minimumSize: Size(80, 36),
+                backgroundColor: const Color(0xFF247EF4),
+                minimumSize: const Size(80, 36),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18),
                 ),
@@ -192,7 +192,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             Expanded(
                               child: Text(
                                 '${userData['nickname']}', // 안전하게 데이터에 접근
-                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
+                                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: Colors.white),
                               ),
                             ),
                             OutlinedButton(
@@ -202,11 +202,11 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                 'You will be returned to the login screen.',
                                 _logout,
                               ),
-                              child: const Text('Log out', style: TextStyle(color: Colors.white, fontSize: 10)),
                               style: OutlinedButton.styleFrom(
                                 side: const BorderSide(color: Colors.white, width: 1.2),
                                 minimumSize: const Size(80, 30),
                               ),
+                              child: const Text('Log out', style: TextStyle(color: Colors.white, fontSize: 10)),
                             ),
                           ],
                         ),
@@ -216,7 +216,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             color: const Color(0xFF242424), // 내부 박스 색상 변경
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          child: buildInfoSection(userData!['totalWave'], userData!['donationCountryCnt']),
+                          child: buildInfoSection(userData['totalWave'], userData['donationCountryCnt']),
                         )
                       ],
                     ),
@@ -262,9 +262,9 @@ class _MyPageScreenState extends State<MyPageScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            buildInfoText('🌊 ${totalWave}', 'Delivered waves', 'Wave per 1USD / ${totalWave.toStringAsFixed(2)}'),
+            buildInfoText('🌊 $totalWave', 'Delivered waves', 'Wave per 1USD / ${totalWave.toStringAsFixed(2)}'),
             const VerticalDivider(color: Colors.white),
-            buildInfoText('🌍 ${donationCountryCnt}', 'Protected countries', ''),
+            buildInfoText('🌍 $donationCountryCnt', 'Protected countries', ''),
           ],
         ),
       ),
