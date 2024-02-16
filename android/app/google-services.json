@@ -12,7 +12,20 @@
           "package_name": "com.team.wave"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "265781847133-nsdtmjka0vf7933b45e2sb8m9o9kr8it.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.team.wave",
+            "certificate_hash": "1e5a3a84a65520731f4fed7304929f9adad4cd17"
+          }
+        },
+        {
+          "client_id": "265781847133-rs1m91j61o82di1t42b9scog4imreunc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyA74tSxRuz9hzDK1ckwXu2uGTXZAjBR-ws"
@@ -21,6 +34,10 @@
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
+            {
+              "client_id": "265781847133-rs1m91j61o82di1t42b9scog4imreunc.apps.googleusercontent.com",
+              "client_type": 3
+            },
             {
               "client_id": "265781847133-dr3epabha3cmj97u8q2kv97k7vp5uq15.apps.googleusercontent.com",
               "client_type": 2,
