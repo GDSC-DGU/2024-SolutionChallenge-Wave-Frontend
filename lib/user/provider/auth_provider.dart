@@ -10,6 +10,7 @@ import 'package:wave/user/view/login_screen.dart';
 import 'package:wave/loading/loading_screen.dart';
 import '../../splash/splash_screen.dart';
 import '../model/user_model.dart';
+import 'package:wave/user/view/donation_list_screen.dart';
 
 final authProvider = ChangeNotifierProvider<AuthProvider>((ref) {
   return AuthProvider(ref: ref);
@@ -59,6 +60,11 @@ class AuthProvider extends ChangeNotifier {
           path: '/loading',
           name: LoadingScreen.routeName,
           builder: (_, __) => LoadingScreen(),
+        ),
+        GoRoute(
+          path: '/donation-list',
+          name: DonationListScreen.routeName,
+          builder: (_, __) => DonationListScreen(),
         ),
       ];
 

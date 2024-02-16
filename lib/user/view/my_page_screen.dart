@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'donation_list_screen.dart';
+
 class MyPageScreen extends StatelessWidget {
   const MyPageScreen({Key? key}) : super(key: key);
 
@@ -77,7 +79,7 @@ class MyPageScreen extends StatelessWidget {
     final actions = {
       'Donation list': () {
         // Donation List 스크린으로 이동
-        // Navigator.push(context, MaterialPageRoute(builder: (_) => DonationListScreen()));
+        Navigator.push(context, MaterialPageRoute(builder: (_) => DonationListScreen()));
       },
       'Terms and conditions': () => _launchURL('https://example.com/terms'),
       'Privacy policy': () => _launchURL('https://example.com/privacy'),
