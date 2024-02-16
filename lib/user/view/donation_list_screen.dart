@@ -169,7 +169,7 @@ class _DonationListScreenState extends State<DonationListScreen> {
                         ),
                         title: Row(
                           children: [
-                            const SizedBox(width: 35), // title에 대한 간격
+                            const SizedBox(width: 15), // title에 대한 간격
                             Text(
                               donation['country'],
                               style: TextStyle(
@@ -182,7 +182,7 @@ class _DonationListScreenState extends State<DonationListScreen> {
                         ),
                         subtitle: Row(
                           children: [
-                            SizedBox(width: 35), // subtitle에 대한 간격
+                            SizedBox(width: 15), // subtitle에 대한 간격
                             Expanded(
                               child: Text(
                                 '${donation['time']} | donation',
