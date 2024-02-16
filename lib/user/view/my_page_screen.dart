@@ -8,7 +8,7 @@ import 'donation_list_screen.dart';
 class MyPageScreen extends StatefulWidget {
   const MyPageScreen({Key? key}) : super(key: key);
   @override
-  _MyPageScreenState createState() => _MyPageScreenState();
+  State<MyPageScreen> createState() => _MyPageScreenState();
 }
 
 class _MyPageScreenState extends State<MyPageScreen> {
