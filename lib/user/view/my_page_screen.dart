@@ -13,7 +13,7 @@ class MyPageScreen extends StatelessWidget {
   Future<void> _showLeaveConfirmationDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: false, // 사용자가 버튼을 눌러야만 닫히도록 설정
+      barrierDismissible: true, // 외부 눌러도 닫히게 설정
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Are you sure you want to leave?'),
