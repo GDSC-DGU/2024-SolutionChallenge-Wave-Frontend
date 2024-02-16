@@ -14,6 +14,7 @@ SearchCountriesModel _$SearchCountriesModelFromJson(
       subTitle: json['subTitle'] as String,
       image: json['image'] as String,
       views: json['views'] as int,
+      id: json['id'] as int,
     );
 
 Map<String, dynamic> _$SearchCountriesModelToJson(
@@ -24,4 +25,5 @@ Map<String, dynamic> _$SearchCountriesModelToJson(
       'subTitle': instance.subTitle,
       'image': instance.image,
       'views': instance.views,
+      'id': instance.id,
     };

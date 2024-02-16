@@ -16,6 +16,7 @@ DonateCountriesDetailModel _$DonateCountriesDetailModelFromJson(
       allWave: json['allWave'] as int,
       lastWave: json['lastWave'] as int,
       casualties: json['casualties'] as int,
+      id: json['id'] as int,
       imageProducer: json['imageProducer'] as String,
       contents: (json['contents'] as List<dynamic>)
           .map((e) => Content.fromJson(e as Map<String, dynamic>))
@@ -38,6 +39,7 @@ Map<String, dynamic> _$DonateCountriesDetailModelToJson(
       'allWave': instance.allWave,
       'lastWave': instance.lastWave,
       'casualties': instance.casualties,
+      'id': instance.id,
       'imageProducer': instance.imageProducer,
       'contents': instance.contents,
       'detailImage': instance.detailImage,

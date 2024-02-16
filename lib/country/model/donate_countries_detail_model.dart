@@ -20,6 +20,7 @@ class DonateCountriesDetailModel extends DonateCountriesModel {
     required int allWave,
     required int lastWave,
     required int casualties,
+    required int id,
     required this.imageProducer,
     required this.contents,
     required this.detailImage,
@@ -34,6 +35,7 @@ class DonateCountriesDetailModel extends DonateCountriesModel {
     allWave: allWave,
     lastWave: lastWave,
     casualties: casualties,
+    id: id,
   );
 
   factory DonateCountriesDetailModel.fromJson(Map<String, dynamic> json) =>
