@@ -32,12 +32,15 @@ class CategoryButton extends StatelessWidget {
           bottomRight: Radius.circular(12),
         ),
       ),
-      child: Text(
-        category,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 14,
-          fontWeight: FontWeight.w600,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(6,3, 10, 3),
+        child: Text(
+          category,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );
