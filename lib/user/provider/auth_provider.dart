@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wave/common/view/initial_screen.dart';
 import 'package:wave/common/view/root_tab.dart';
+import 'package:wave/country/view/search_country_screen.dart';
+import 'package:wave/country/view/donate_countries_screen.dart';
+import 'package:wave/country/view/donate_country_detail_screen.dart';
 import 'package:wave/onboarding/onboarding_screen.dart';
 import 'package:wave/user/provider/user_me_provider.dart';
 import 'package:wave/user/view/login_screen.dart';
@@ -34,7 +37,40 @@ class AuthProvider extends ChangeNotifier {
           path: '/',
           name: RootTab.routeName,
           builder: (_, __) => RootTab(),
-          routes: [],
+          routes: [
+            GoRoute(
+              path: 'donate',
+              name: DonateCountriesScreen.routeName,
+              builder: (_, __) => const DonateCountriesScreen(),
+              routes: [
+                GoRoute(
+                  path: ':id',
+                  name: DonateCountryDetailScreen.routeName,
+                  builder: (_, state) => DonateCountryDetailScreen(
+                    id: int.parse(
+                      state.pathParameters['id']!,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            GoRoute(
+              path: 'search',
+              name: SearchCountriesScreen.routeName,
+              builder: (_, __) => const DonateCountriesScreen(),
+              routes: [
+                // GoRoute(
+                //   path: ':id',
+                //   name: DonateCountryDetailScreen.routeName,
+                //   builder: (_, state) => DonateCountryDetailScreen(
+                //     id: int.parse(
+                //       state.pathParameters['id']!,
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
+          ],
         ),
         GoRoute(
           path: '/onboarding',
