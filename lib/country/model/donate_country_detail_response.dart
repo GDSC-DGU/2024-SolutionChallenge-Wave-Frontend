@@ -6,17 +6,17 @@ import 'donate_country_detail_model.dart';
 part 'donate_country_detail_response.g.dart';
 
 @JsonSerializable()
-class DonateCountriesDetailResponse extends CommonResponse {
+class DonateCountryDetailResponse extends CommonResponse {
   final DonateCountryDetailModel? data;
 
-  DonateCountriesDetailResponse({
+  DonateCountryDetailResponse({
     required bool success,
     this.data,
     dynamic error,
   }) : super(success: success, error: error);
 
-  factory DonateCountriesDetailResponse.fromJson(Map<String, dynamic> json) =>
-      _$DonateCountriesDetailResponseFromJson(json);
+  factory DonateCountryDetailResponse.fromJson(Map<String, dynamic> json) =>
+      _$DonateCountryDetailResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$DonateCountriesDetailResponseToJson(this);
+  Map<String, dynamic> toJson() => _$DonateCountryDetailResponseToJson(this);
 }

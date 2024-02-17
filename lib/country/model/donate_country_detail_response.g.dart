@@ -6,9 +6,9 @@ part of 'donate_country_detail_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-DonateCountriesDetailResponse _$DonateCountriesDetailResponseFromJson(
+DonateCountryDetailResponse _$DonateCountryDetailResponseFromJson(
         Map<String, dynamic> json) =>
-    DonateCountriesDetailResponse(
+    DonateCountryDetailResponse(
       success: json['success'] as bool,
       data: json['data'] == null
           ? null
@@ -17,8 +17,8 @@ DonateCountriesDetailResponse _$DonateCountriesDetailResponseFromJson(
       error: json['error'],
     );
 
-Map<String, dynamic> _$DonateCountriesDetailResponseToJson(
-        DonateCountriesDetailResponse instance) =>
+Map<String, dynamic> _$DonateCountryDetailResponseToJson(
+        DonateCountryDetailResponse instance) =>
     <String, dynamic>{
       'error': instance.error,
       'success': instance.success,

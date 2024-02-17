@@ -65,14 +65,14 @@ class _DonateCountryRepository implements DonateCountryRepository {
   }
 
   @override
-  Future<DonateCountriesDetailResponse> getDonateCountryDetail(
+  Future<DonateCountryDetailResponse> getDonateCountryDetail(
       {required id}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<DonateCountriesDetailResponse>(Options(
+        _setStreamType<DonateCountryDetailResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -84,7 +84,7 @@ class _DonateCountryRepository implements DonateCountryRepository {
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = DonateCountriesDetailResponse.fromJson(_result.data!);
+    final value = DonateCountryDetailResponse.fromJson(_result.data!);
     return value;
   }
 

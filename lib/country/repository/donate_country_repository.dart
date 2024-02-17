@@ -35,7 +35,7 @@ abstract class DonateCountryRepository {
 
   // /api/v1/countries/donate/{id}/detail
   @GET('/{id}/detail')
-  Future<DonateCountriesDetailResponse> getDonateCountryDetail({
+  Future<DonateCountryDetailResponse> getDonateCountryDetail({
     @Path() required int id,
   });
 }
