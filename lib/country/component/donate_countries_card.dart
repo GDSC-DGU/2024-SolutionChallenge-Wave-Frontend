@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:wave/country/component/category_button.dart';
+import 'package:wave/country/component/donate_card_row.dart';
+import 'package:wave/country/component/forward_detail_button.dart';
 import 'package:wave/country/model/donate_countries_detail_model.dart';
-
 import '../model/donate_countries_model.dart';
 
 class DonateCountryCard extends StatelessWidget {
@@ -47,8 +49,13 @@ class DonateCountryCard extends StatelessWidget {
       category: model.category,
       mainTitle: model.mainTitle,
       subTitle: model.subTitle,
-      image: Image.network(
-        model.image,
+      // image: Image.network(
+      //   model.image,
+      //   fit: BoxFit.cover,
+      // ),
+      /// Test Image
+      image: Image.asset(
+        'assets/images/testImg.png',
         fit: BoxFit.cover,
       ),
       allWave: model.allWave,
@@ -95,7 +102,7 @@ class DonateCountryCard extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: isDetail
                         ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
-                        : BorderRadius.only(
+                        : const BorderRadius.only(
                             topLeft: Radius.circular(12.0),
                             topRight: Radius.circular(12.0),
                           ),
@@ -106,41 +113,52 @@ class DonateCountryCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: isDetail
                       ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
-                      : BorderRadius.only(
+                      : const BorderRadius.only(
                           topLeft: Radius.circular(12.0),
                           topRight: Radius.circular(12.0),
                         ),
-                  child: image,
+                  child: Container(
+                    height: 160,
+                    width: double.infinity,
+                    child: image,
+                  ),
                 ),
               Positioned(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Text(
-                    'EMERGENCY',
-                    style: TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                ),
+                child: CategoryButton(category: category),
               ),
               Positioned(
                 bottom: 8,
-                left: 8,
+                left: 18,
                 right: 8,
                 child: Text(
-                  mainTitle,
+                  "$mainTitle\n$subTitle",
                   style: const TextStyle(
                       fontSize: 20.0,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w700,
                       color: Colors.white),
                 ),
               ),
             ],
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: DonateCardRow(
+              allWave: allWave,
+              lastWave: lastWave,
+              casualties: casualties,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 10,
+            ),
+            child: ForwardDetailButton(
+              buttonName: 'Sending Waves',
+              onPressed: () {},
+            ),
+          ),
           const SizedBox(height: 16.0),
-
         ],
       ),
     );
