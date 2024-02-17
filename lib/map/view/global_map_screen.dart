@@ -72,8 +72,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
 
   @override
   void initState() {
-    // 중요 국가 데이터를 가져와서 초기화
-    _fetchImportantCountriesDataAndInitialize();
+
     super.initState();
     _zoomPanBehavior = MapZoomPanBehavior(
       focalLatLng: const MapLatLng(34.8149, 39.02),
@@ -84,6 +83,10 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
       minZoomLevel: 1,
       maxZoomLevel: 10,
     );
+    // 중요 국가 데이터를 가져와서 초기화
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _fetchImportantCountriesDataAndInitialize();
+    });
   }
 
   Future<void> _fetchImportantCountriesDataAndInitialize() async {
