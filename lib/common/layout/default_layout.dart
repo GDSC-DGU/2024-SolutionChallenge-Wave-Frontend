@@ -32,19 +32,15 @@ class DefaultLayout extends StatelessWidget {
       return null;
     } else {
       return AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
         title: Align(
           alignment: Alignment.centerLeft,
           child: Text(
             title!,
             style: const TextStyle(
-              fontSize: 18.0,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
             ),
-          ),
-        ),
-        foregroundColor: Colors.black,
+          )
+        )
       );
     }
   }

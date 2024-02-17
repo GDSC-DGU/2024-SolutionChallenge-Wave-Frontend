@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
 import 'package:wave/common/const/colors.dart';
 import 'package:wave/common/const/important_countries.dart';
+import 'package:wave/common/layout/default_layout.dart';
 import 'package:wave/loading/loading_screen.dart';
 import 'package:wave/map/model/important_countries_model.dart';
 import 'package:wave/splash/splash_screen.dart';
@@ -164,17 +165,9 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(importantCountriesProvider);
-    return Scaffold(
-      appBar: AppBar(
-        title: Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            'World Conflict Map',
-            style: TextStyle(fontWeight: FontWeight.w600),
-          ),
-        ),
-      ),
-      body: _isLoading
+    return DefaultLayout(
+      title: 'World Conflict Map',
+      child: _isLoading
           ? LoadingScreen()
           : Container(
               height: maxHeight * 0.9,

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
+import 'package:wave/common/layout/default_layout.dart';
 import '../../loading/loading_screen.dart';
 import 'donation_list_screen.dart';
 
@@ -152,11 +153,9 @@ class _MyPageScreenState extends State<MyPageScreen> {
       ),
     };
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mypage', style: TextStyle(fontWeight: FontWeight.w600)),
-      ),
-      body: FutureBuilder<Map<String, dynamic>>(
+    return DefaultLayout(
+      title: 'My Page',
+      child: FutureBuilder<Map<String, dynamic>>(
         future: getUserInfo(),
         builder: (context, snapshot) {
           if (isLoading) {

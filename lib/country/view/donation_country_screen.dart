@@ -7,6 +7,7 @@ class DonationCountryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const DefaultLayout(
+      title: 'Sending Waves',
       child: Column(
         children: [
           Text('DonationCountryScreen'),
