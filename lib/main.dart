@@ -63,7 +63,7 @@ class _App extends ConsumerWidget {
 //         fontFamily: 'Pretendard',
 //       ),
 //       debugShowCheckedModeBanner: false,
-//       home: MyPageScreen(), // 여기 원하는 스크린 대입 ✅
+//       home: LoginScreen(), // 여기 원하는 스크린 대입 ✅
 //     );
 //   }
 // }

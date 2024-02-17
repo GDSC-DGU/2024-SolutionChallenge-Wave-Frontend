@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wave/common/model/common_response.dart';
+import 'package:wave/country/model/donate_country_detail_response.dart';
+import 'package:wave/country/model/donate_country_response.dart';
 import 'package:wave/country/repository/donate_country_repository.dart';
 import '../model/donate_country_detail_model.dart';
 import '../model/donate_country_model.dart';
@@ -15,19 +17,19 @@ class AsyncState<T> {
   AsyncState({this.data, this.error, this.isLoading = false});
 }
 
-// Donation countries notifier
+/// DonateCountriesNotifierProvider
 final donateCountriesNotifierProvider = StateNotifierProvider<
     DonateCountriesNotifier, AsyncState<List<DonateCountryModel>>>((ref) {
   return DonateCountriesNotifier(ref.watch(donateCountryRepositoryProvider));
 });
 
-// Donation country notifier
+/// DonateCountryNotifierProvider
 final donateCountryNotifierProvider = StateNotifierProvider.family<
     DonateCountryNotifier, AsyncState<DonateCountryModel>, int>((ref, id) {
   return DonateCountryNotifier(ref.watch(donateCountryRepositoryProvider), id);
 });
 
-// Donation country detail notifier
+/// DonateCountryDetailNotifierProvider
 final donateCountryDetailNotifierProvider = StateNotifierProvider.family<
     DonateCountryDetailNotifier,
     AsyncState<DonateCountryDetailModel>,
@@ -36,7 +38,7 @@ final donateCountryDetailNotifierProvider = StateNotifierProvider.family<
       ref.watch(donateCountryRepositoryProvider), id);
 });
 
-// Generic handling for async operations
+/// 비동기 작업을 수행하고 상태를 업데이트하는 헬퍼 함수
 Future<void> handleAsyncOperation<T>(
   StateNotifier<AsyncState<T>> notifier,
   Future<T> Function() operation,
@@ -50,6 +52,7 @@ Future<void> handleAsyncOperation<T>(
   }
 }
 
+/// DonateCountriesNotifier
 class DonateCountriesNotifier
     extends StateNotifier<AsyncState<List<DonateCountryModel>>> {
   final DonateCountryRepository _repository;
@@ -81,6 +84,7 @@ class DonateCountriesNotifier
   }
 }
 
+/// DonateCountryNotifier
 class DonateCountryNotifier
     extends StateNotifier<AsyncState<DonateCountryModel>> {
   final DonateCountryRepository _repository;
@@ -97,18 +101,33 @@ class DonateCountryNotifier
   }
 }
 
+
+/// DonateCountryDetailNotifier
 class DonateCountryDetailNotifier
     extends StateNotifier<AsyncState<DonateCountryDetailModel>> {
   final DonateCountryRepository _repository;
   final int _id;
 
   DonateCountryDetailNotifier(this._repository, this._id)
-      : super(AsyncState(isLoading: true)) {
+      : super(AsyncState<DonateCountryDetailModel>(isLoading: true)) {
     _fetchDonateCountryDetail();
   }
 
   Future<void> _fetchDonateCountryDetail() async {
-    await handleAsyncOperation(
-        this, () async => (await _repository.getDonateCountryDetail(id: _id)));
+    await handleAsyncOperation<DonateCountryDetailModel>(
+      this,
+          () async {
+        final result = await _repository.getDonateCountryDetail(id: _id);
+        print(result.success);
+        if (result.success && result.data != null) {
+          // API 호출이 성공하고 데이터가 존재하는 경우
+          return result.data!;
+        } else {
+          // API 호출에 실패하거나 데이터가 존재하지 않는 경우
+          throw Exception('Failed to load country detail');
+        }
+      },
+    );
   }
+
 }
