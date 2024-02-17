@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:wave/country/component/category_button.dart';
 import 'package:wave/country/component/donate_card_row.dart';
 import 'package:wave/country/component/forward_detail_button.dart';
-import 'package:wave/country/model/donate_countries_detail_model.dart';
-import '../model/donate_countries_model.dart';
+import 'package:wave/country/model/donate_country_detail_model.dart';
+import '../model/donate_country_model.dart';
 
 class DonateCountryCard extends StatelessWidget {
   final String category;
@@ -23,7 +23,6 @@ class DonateCountryCard extends StatelessWidget {
   final List<News>? news;
 
   const DonateCountryCard({
-    super.key,
     required this.category,
     required this.mainTitle,
     required this.subTitle,
@@ -39,10 +38,11 @@ class DonateCountryCard extends StatelessWidget {
     this.detailImageTitle,
     this.detailImageProducer,
     this.news,
-  });
+    Key? key,
+  }) : super(key: key);
 
   factory DonateCountryCard.fromModel({
-    required DonateCountriesModel model,
+    required DonateCountryModel model,
     bool isDetail = false,
   }) {
     return DonateCountryCard(
@@ -64,16 +64,14 @@ class DonateCountryCard extends StatelessWidget {
       isDetail: isDetail,
       heroKey: model.id,
       imageProducer:
-          model is DonateCountriesDetailModel ? model.imageProducer : null,
-      contents: model is DonateCountriesDetailModel ? model.contents : null,
-      detailImage:
-          model is DonateCountriesDetailModel ? model.detailImage : null,
+          model is DonateCountryDetailModel ? model.imageProducer : null,
+      contents: model is DonateCountryDetailModel ? model.contents : null,
+      detailImage: model is DonateCountryDetailModel ? model.detailImage : null,
       detailImageTitle:
-          model is DonateCountriesDetailModel ? model.detailImageTitle : null,
-      detailImageProducer: model is DonateCountriesDetailModel
-          ? model.detailImageProducer
-          : null,
-      news: model is DonateCountriesDetailModel ? model.news : null,
+          model is DonateCountryDetailModel ? model.detailImageTitle : null,
+      detailImageProducer:
+          model is DonateCountryDetailModel ? model.detailImageProducer : null,
+      news: model is DonateCountryDetailModel ? model.news : null,
     );
   }
 

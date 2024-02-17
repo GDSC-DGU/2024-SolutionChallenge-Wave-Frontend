@@ -2,8 +2,8 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:wave/common/const/colors.dart';
-import 'package:wave/country/view/attention_country_screen.dart';
-import 'package:wave/country/view/donation_country_screen.dart';
+import 'package:wave/country/view/search_country_screen.dart';
+import 'package:wave/country/view/donate_countries_screen.dart';
 import 'package:wave/map/view/global_map_screen.dart';
 import 'package:wave/user/view/my_page_screen.dart';
 
@@ -24,9 +24,9 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
 
   final screens = [
     GlobalMapScreen(),
-    DonationCountryScreen(),
-    AttentionCountryScreen(),
-    MyPageScreen(),
+    const DonateCountriesScreen(),
+    const SearchCountriesScreen(),
+    const MyPageScreen(),
   ];
 
   @override
