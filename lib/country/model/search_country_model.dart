@@ -1,19 +1,23 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../common/model/i_model_with_id.dart';
+import '../../common/utils/data_utils.dart';
 
-part 'search_countries_model.g.dart';
+part 'search_country_model.g.dart';
 
 @JsonSerializable()
-class SearchCountriesModel implements IModelWithId {
+class SearchCountryModel implements IModelWithId {
   final String category;
   final String mainTitle;
   final String subTitle;
+  @JsonKey(
+    fromJson: DataUtils.pathToUrl,
+  )
   final String image;
   final int views;
   final int id;
 
-  SearchCountriesModel({
+  SearchCountryModel({
     required this.category,
     required this.mainTitle,
     required this.subTitle,
@@ -22,8 +26,8 @@ class SearchCountriesModel implements IModelWithId {
     required this.id,
   });
 
-  factory SearchCountriesModel.fromJson(Map<String, dynamic> json) =>
-      _$SearchCountriesModelFromJson(json);
+  factory SearchCountryModel.fromJson(Map<String, dynamic> json) =>
+      _$SearchCountryModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$SearchCountriesModelToJson(this);
+  Map<String, dynamic> toJson() => _$SearchCountryModelToJson(this);
 }

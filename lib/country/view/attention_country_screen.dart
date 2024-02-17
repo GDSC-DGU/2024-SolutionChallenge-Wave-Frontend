@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wave/common/layout/default_layout.dart';
 
-class AttentionCountryScreen extends StatelessWidget {
-  const AttentionCountryScreen({super.key});
+class AttentionCountriesScreen extends StatelessWidget {
+  const AttentionCountriesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

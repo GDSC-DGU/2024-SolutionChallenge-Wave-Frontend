@@ -1,10 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:wave/country/model/search_countries_model.dart';
+import 'package:wave/country/model/donate_country_model.dart';
 
-part 'search_countries_detail_model.g.dart';
+part 'donate_country_detail_model.g.dart';
 
 @JsonSerializable()
-class SearchCountriesDetailModel extends SearchCountriesModel {
+class DonateCountryDetailModel extends DonateCountryModel {
   final String imageProducer;
   final List<Content> contents;
   final String detailImage;
@@ -12,12 +12,14 @@ class SearchCountriesDetailModel extends SearchCountriesModel {
   final String detailImageProducer;
   final List<News> news;
 
-  SearchCountriesDetailModel({
+  DonateCountryDetailModel({
     required String category,
     required String mainTitle,
     required String subTitle,
     required String image,
-    required int views,
+    required int allWave,
+    required int lastWave,
+    required int casualties,
     required int id,
     required this.imageProducer,
     required this.contents,
@@ -30,12 +32,14 @@ class SearchCountriesDetailModel extends SearchCountriesModel {
     mainTitle: mainTitle,
     subTitle: subTitle,
     image: image,
-    views: views,
+    allWave: allWave,
+    lastWave: lastWave,
+    casualties: casualties,
     id: id,
   );
 
-  factory SearchCountriesDetailModel.fromJson(Map<String, dynamic> json) =>
-      _$SearchCountriesDetailModelFromJson(json);
+  factory DonateCountryDetailModel.fromJson(Map<String, dynamic> json) =>
+      _$DonateCountryDetailModelFromJson(json);
 }
 
 @JsonSerializable()

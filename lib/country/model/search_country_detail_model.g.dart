@@ -1,21 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'donate_countries_detail_model.dart';
+part of 'search_country_detail_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-DonateCountriesDetailModel _$DonateCountriesDetailModelFromJson(
+SearchCountryDetailModel _$SearchCountryDetailModelFromJson(
         Map<String, dynamic> json) =>
-    DonateCountriesDetailModel(
+    SearchCountryDetailModel(
       category: json['category'] as String,
       mainTitle: json['mainTitle'] as String,
       subTitle: json['subTitle'] as String,
-      image: json['image'] as String,
-      allWave: json['allWave'] as int,
-      lastWave: json['lastWave'] as int,
-      casualties: json['casualties'] as int,
+      image: DataUtils.pathToUrl(json['image'] as String),
+      views: json['views'] as int,
       id: json['id'] as int,
       imageProducer: json['imageProducer'] as String,
       contents: (json['contents'] as List<dynamic>)
@@ -29,16 +27,14 @@ DonateCountriesDetailModel _$DonateCountriesDetailModelFromJson(
           .toList(),
     );
 
-Map<String, dynamic> _$DonateCountriesDetailModelToJson(
-        DonateCountriesDetailModel instance) =>
+Map<String, dynamic> _$SearchCountryDetailModelToJson(
+        SearchCountryDetailModel instance) =>
     <String, dynamic>{
       'category': instance.category,
       'mainTitle': instance.mainTitle,
       'subTitle': instance.subTitle,
       'image': instance.image,
-      'allWave': instance.allWave,
-      'lastWave': instance.lastWave,
-      'casualties': instance.casualties,
+      'views': instance.views,
       'id': instance.id,
       'imageProducer': instance.imageProducer,
       'contents': instance.contents,

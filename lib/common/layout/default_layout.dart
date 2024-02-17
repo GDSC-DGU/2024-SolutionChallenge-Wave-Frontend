@@ -6,6 +6,7 @@ class DefaultLayout extends StatelessWidget {
   final String? title;
   final Widget? bottomNavigationBar;
   final Widget? floatingActionButton;
+  final bool isSingleChildScrollViewNeeded; // Make it non-optional with a default value
 
   const DefaultLayout({
     required this.child,
@@ -13,6 +14,7 @@ class DefaultLayout extends StatelessWidget {
     this.title,
     this.bottomNavigationBar,
     this.floatingActionButton,
+    this.isSingleChildScrollViewNeeded = false, // Default to false
     Key? key,
   }) : super(key: key);
 
@@ -21,7 +23,9 @@ class DefaultLayout extends StatelessWidget {
     return Scaffold(
       backgroundColor: backgroundColor ?? Colors.white,
       appBar: renderAppBar(),
-      body: child,
+      body: isSingleChildScrollViewNeeded
+          ? SingleChildScrollView(child: child) // Wrap child with SingleChildScrollView if needed
+          : child,
       bottomNavigationBar: bottomNavigationBar,
       floatingActionButton: floatingActionButton,
     );
@@ -39,8 +43,8 @@ class DefaultLayout extends StatelessWidget {
             style: const TextStyle(
               fontWeight: FontWeight.w600,
             ),
-          )
-        )
+          ),
+        ),
       );
     }
   }

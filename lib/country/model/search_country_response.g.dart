@@ -1,23 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'donate_countries_response.dart';
+part of 'search_country_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-DonateCountriesResponse _$DonateCountriesResponseFromJson(
+SearchCountryResponse _$SearchCountryResponseFromJson(
         Map<String, dynamic> json) =>
-    DonateCountriesResponse(
+    SearchCountryResponse(
       success: json['success'] as bool,
-      data: (json['data'] as List<dynamic>?)
-          ?.map((e) => DonateCountryModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      data: json['data'] == null
+          ? null
+          : SearchCountryModel.fromJson(json['data'] as Map<String, dynamic>),
       error: json['error'],
     );
 
-Map<String, dynamic> _$DonateCountriesResponseToJson(
-        DonateCountriesResponse instance) =>
+Map<String, dynamic> _$SearchCountryResponseToJson(
+        SearchCountryResponse instance) =>
     <String, dynamic>{
       'error': instance.error,
       'success': instance.success,

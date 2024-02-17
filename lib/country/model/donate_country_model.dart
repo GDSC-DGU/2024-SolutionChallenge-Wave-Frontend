@@ -3,10 +3,10 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:wave/common/model/i_model_with_id.dart';
 
-part 'donate_countries_model.g.dart';
+part 'donate_country_model.g.dart';
 
 @JsonSerializable()
-class DonateCountriesModel implements IModelWithId {
+class DonateCountryModel implements IModelWithId {
   final String category;
   final String mainTitle;
   final String subTitle;
@@ -17,7 +17,7 @@ class DonateCountriesModel implements IModelWithId {
   @override
   final int id;
 
-  DonateCountriesModel({
+  DonateCountryModel({
     required this.category,
     required this.mainTitle,
     required this.subTitle,
@@ -28,6 +28,6 @@ class DonateCountriesModel implements IModelWithId {
     required this.id,
   });
 
-  factory  DonateCountriesModel.fromJson(Map<String, dynamic> json) =>
-      _$DonateCountriesModelFromJson(json);
+  factory  DonateCountryModel.fromJson(Map<String, dynamic> json) =>
+      _$DonateCountryModelFromJson(json);
 }
