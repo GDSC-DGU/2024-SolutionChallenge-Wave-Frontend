@@ -123,8 +123,15 @@ class _DonationListScreenState extends State<DonationListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Donation list'),
-        centerTitle: true,
+        title: Text(
+          'Donation list',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: Colors.black.withOpacity(0.9),
+          ),
+        ),
+        centerTitle: true, // 제목을 중앙에 배치
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
