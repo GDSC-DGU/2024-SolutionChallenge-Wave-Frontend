@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wave/country/component/category_button.dart';
 import 'package:wave/country/component/donate_card_row.dart';
 import 'package:wave/country/component/forward_detail_button.dart';
 import 'package:wave/country/model/donate_country_detail_model.dart';
+import 'package:wave/country/view/donate_country_detail_screen.dart';
 import '../model/donate_country_model.dart';
 
 class DonateCountryCard extends StatelessWidget {
@@ -21,6 +23,7 @@ class DonateCountryCard extends StatelessWidget {
   final String? detailImageTitle;
   final String? detailImageProducer;
   final List<News>? news;
+  final int id;
 
   const DonateCountryCard({
     required this.category,
@@ -30,6 +33,7 @@ class DonateCountryCard extends StatelessWidget {
     required this.allWave,
     required this.lastWave,
     required this.casualties,
+    required this.id,
     this.isDetail = false,
     this.heroKey,
     this.imageProducer,
@@ -72,6 +76,7 @@ class DonateCountryCard extends StatelessWidget {
       detailImageProducer:
           model is DonateCountryDetailModel ? model.detailImageProducer : null,
       news: model is DonateCountryDetailModel ? model.news : null,
+      id: model.id,
     );
   }
 
@@ -153,7 +158,28 @@ class DonateCountryCard extends StatelessWidget {
             ),
             child: ForwardDetailButton(
               buttonName: 'Sending Waves',
-              onPressed: () {},
+              onPressed: () {
+                // Navigator를 사용해 상세 화면으로 이동
+                // 여기서는 `id`를 DonateCountryCard가 받은 `id` 프로퍼티를 사용
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => DonateCountryDetailScreen(id: id),
+                //   ),
+                // );
+
+                print('kiki');
+                context.pushNamed(DonateCountryDetailScreen.routeName,
+                    pathParameters: {
+                      'id': id.toString(),
+                    });
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => DonateCountryDetailScreen(id: id),
+                //   ),
+                // );
+              },
             ),
           ),
           const SizedBox(height: 16.0),

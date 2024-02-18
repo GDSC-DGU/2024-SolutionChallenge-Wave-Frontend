@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wave/country/component/category_button.dart';
 import 'package:wave/country/component/forward_detail_button.dart';
 import 'package:wave/country/model/search_country_detail_model.dart';
 import 'package:wave/country/model/search_country_model.dart';
+import 'package:wave/country/view/search_country_detail_screen.dart';
 
 import '../model/donate_country_model.dart';
 
@@ -21,6 +23,7 @@ class SearchCountryCard extends StatelessWidget {
   final String? detailImageTitle;
   final String? detailImageProducer;
   final List<News>? news;
+  final int id;
 
   const SearchCountryCard({
     required this.category,
@@ -36,6 +39,7 @@ class SearchCountryCard extends StatelessWidget {
     this.detailImageTitle,
     this.detailImageProducer,
     this.news,
+    required this.id,
     Key? key,
   }) : super(key: key);
 
@@ -44,6 +48,7 @@ class SearchCountryCard extends StatelessWidget {
     bool isDetail = false,
   }) {
     return SearchCountryCard(
+      id: model.id,
       category: model.category,
       mainTitle: model.mainTitle,
       subTitle: model.subTitle,
@@ -158,7 +163,11 @@ class SearchCountryCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: ForwardDetailButton(
               buttonName: 'Learn their pain',
-              onPressed: () {},
+              onPressed: () {
+                context.pushNamed(SearchCountryDetailScreen.routeName,pathParameters: {
+                  'id': id.toString(),
+                });
+              },
               width: 250,
               isSearch: true,
             ),

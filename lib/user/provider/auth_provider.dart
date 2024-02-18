@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wave/common/view/initial_screen.dart';
 import 'package:wave/common/view/root_tab.dart';
+import 'package:wave/country/view/search_country_detail_screen.dart';
 import 'package:wave/country/view/search_country_screen.dart';
 import 'package:wave/country/view/donate_countries_screen.dart';
 import 'package:wave/country/view/donate_country_detail_screen.dart';
@@ -57,17 +58,17 @@ class AuthProvider extends ChangeNotifier {
             GoRoute(
               path: 'search',
               name: SearchCountriesScreen.routeName,
-              builder: (_, __) => const DonateCountriesScreen(),
+              builder: (_, __) => const SearchCountriesScreen(),
               routes: [
-                // GoRoute(
-                //   path: ':id',
-                //   name: DonateCountryDetailScreen.routeName,
-                //   builder: (_, state) => DonateCountryDetailScreen(
-                //     id: int.parse(
-                //       state.pathParameters['id']!,
-                //     ),
-                //   ),
-                // ),
+                GoRoute(
+                  path: ':id',
+                  name: SearchCountryDetailScreen.routeName,
+                  builder: (_, state) => SearchCountryDetailScreen(
+                    id: int.parse(
+                      state.pathParameters['id']!,
+                    ),
+                  ),
+                ),
               ],
             ),
           ],
@@ -85,22 +86,22 @@ class AuthProvider extends ChangeNotifier {
         GoRoute(
           path: '/splash',
           name: SplashScreen.routeName,
-          builder: (_, __) => SplashScreen(),
+          builder: (_, __) => const SplashScreen(),
         ),
         GoRoute(
           path: '/login',
           name: LoginScreen.routeName,
-          builder: (_, __) => LoginScreen(),
+          builder: (_, __) => const LoginScreen(),
         ),
         GoRoute(
           path: '/loading',
           name: LoadingScreen.routeName,
-          builder: (_, __) => LoadingScreen(),
+          builder: (_, __) => const LoadingScreen(),
         ),
         GoRoute(
           path: '/donation-list',
           name: DonationListScreen.routeName,
-          builder: (_, __) => DonationListScreen(),
+          builder: (_, __) => const DonationListScreen(),
         ),
       ];
 
@@ -110,26 +111,20 @@ class AuthProvider extends ChangeNotifier {
   // 로그인 스크린으로 보내줄지
   // 홈 스크린으로 보내줄지 확인하는 과정이 필요하다.
   String? redirectLogic(BuildContext context, GoRouterState state) {
-    final UserModelBase? user = ref.read(userMeProvider);
 
     return '/';
+    // return null;
+    // // return null;
 
+    // final UserModelBase? user = ref.read(userMeProvider);
+    //
     // final logginIn = state.matchedLocation == '/login';
     //
-    // // 유저 정보가 없는데
-    // // 로그인중이면 그대로 로그인 페이지에 두고
-    // // 만약에 로그인중이 아니라면 로그인 페이지로 이동
-    // if (user == null) {
+    // if(user == null){
     //   return logginIn ? null : '/login';
     // }
     //
-    // // user가 null이 아님
-    //
-    // // UserModel
-    // // 사용자 정보가 있는 상태면
-    // // 로그인 중이거나 현재 위치가 SplashScreen이면
-    // // 홈으로 이동
-    // if (user is UserModel) {
+    // if(user is UserModel){
     //   return logginIn || state.matchedLocation == '/splash' ? '/' : null;
     // }
     //

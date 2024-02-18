@@ -105,7 +105,9 @@ class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
         // 저장된 토큰을 이용하여 사용자 정보 가져오기
         final userResp = await repository.getMe();
         // 상태를 업데이트하고 사용자 정보 반환
-        state = userResp.data;
+        print('userResp.data: ${userResp.data}');
+        print('userResp.data Without Null: ${userResp.data!}');
+        state = userResp.data!;
       } else {
         // 로그인 실패 상태로 변경
         state = UserModelError(message: 'Google 로그인에 실패했습니다.');

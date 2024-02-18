@@ -20,8 +20,5 @@ abstract class GlobalMapRepository {
   factory GlobalMapRepository(Dio dio, {String baseUrl}) = _GlobalMapRepository;
 
   @GET('/countries')
-  @Headers({
-    'accessToken': 'true',
-  })
   Future<ImportantCountriesResponse> getImportantCountries();
 }
