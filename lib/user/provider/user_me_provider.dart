@@ -3,8 +3,10 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:wave/common/const/data.dart';
 import 'package:wave/common/model/common_response.dart';
 import 'package:wave/common/secure_storage/secure_storage.dart';
+import 'package:wave/user/model/donation_response_model.dart';
 import 'package:wave/user/model/user_model.dart';
 
+import '../model/donation_model.dart';
 import '../model/google_login_model.dart';
 import '../repository/auth_repository.dart';
 import '../repository/user_me_repository.dart';
@@ -24,10 +26,26 @@ final userMeProvider =
   },
 );
 
+final donateResponseProvider =
+StateNotifierProvider<UserMeStateNotifier, UserModelBase?>(
+      (ref) {
+    final authRepository = ref.watch(authRepositoryProvider);
+    final userMeRepository = ref.watch(userMeRepositoryProvider);
+    final storage = ref.watch(secureStorageProvider);
+
+    return UserMeStateNotifier(
+      authRepository: authRepository,
+      repository: userMeRepository,
+      storage: storage,
+    );
+  },
+);
+
 class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
   final AuthRepository authRepository;
   final UserMeRepository repository;
   final FlutterSecureStorage storage;
+  DonationResponseModel? donationResponse; // 기부 목록 정보를 저장하는 필드
 
   UserMeStateNotifier({
     required this.authRepository,
@@ -35,7 +53,7 @@ class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
     required this.storage,
   }) : super(UserModelLoading()) {
     // 내 정보 가져오기
-    getMe();
+     getMe();
   }
 
   Future<void> getMe() async {
@@ -48,6 +66,26 @@ class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
     }
     final resp = await repository.getMe();
     state = resp.data;
+  }
+
+  Future<void> getDonationsResponse() async {
+    try {
+      // 로그인 로딩 상태로 변경
+      state = UserModelLoading();
+
+      // AuthRepository의 googleLogin 메서드 호출
+      final donationResponse = await repository.getDonationsResponse();
+
+      if (donationResponse.data != null) {
+        this.donationResponse = donationResponse; // 상태 업데이트
+      } else {
+        // 로그인 실패 상태로 변경
+        state = UserModelError(message: 'Google 로그인에 실패했습니다.');
+      }
+    } catch (e) {
+      // 예외 발생 시 로그인 실패 상태로 변경
+      state = UserModelError(message: 'Google 로그인에 실패했습니다.');
+    }
   }
 
   // UserMeStateNotifier 클래스 내부에 추가
@@ -114,5 +152,4 @@ class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
       throw e;
     }
   }
-
 }

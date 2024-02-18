@@ -51,7 +51,11 @@ class _App extends ConsumerWidget {
 //   await Firebase.initializeApp(
 //     options: DefaultFirebaseOptions.currentPlatform,
 //   );
-//   runApp(const _App());
+//   runApp(
+//     ProviderScope( // ProviderScope 추가
+//       child: _App(),
+//     ),
+//   );
 // }
 //
 // class _App extends StatelessWidget {

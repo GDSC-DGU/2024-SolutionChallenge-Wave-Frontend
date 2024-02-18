@@ -5,6 +5,7 @@ import 'package:wave/user/model/user_info_response.dart';
 
 import '../../common/const/data.dart';
 import '../../common/dio/dio.dart';
+import '../model/donation_response_model.dart';
 import '../model/user_model.dart';
 
 part 'user_me_repository.g.dart';
@@ -28,5 +29,10 @@ abstract class UserMeRepository {
   })
   Future<UserInfoResponse> getMe(); // token authentication 용 test api
 
+  @GET('/donate')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<DonationResponseModel> getDonationsResponse();
 
 }
