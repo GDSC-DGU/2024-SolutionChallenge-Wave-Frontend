@@ -1,12 +1,43 @@
 import 'package:flutter/material.dart';
 
-class DonatedWavesSummary extends StatelessWidget {
+class DonatedWavesSummary extends StatefulWidget {
   final int totalWave;
 
   const DonatedWavesSummary({
     Key? key,
     required this.totalWave,
   }) : super(key: key);
+
+  @override
+  DonatedWavesSummaryState createState() => DonatedWavesSummaryState();
+}
+
+class DonatedWavesSummaryState extends State<DonatedWavesSummary> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<int> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 3), // 애니메이션 지속 시간 설정
+      vsync: this,
+    );
+
+    _animation = IntTween(begin: 0, end: widget.totalWave).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    )..addListener(() {
+      setState(() {});
+    });
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +75,7 @@ class DonatedWavesSummary extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '🌊 $totalWave',
+                  '🌊 ${_animation.value}',
                   style: const TextStyle(
                     color: Color(0xFF247EF4),
                     fontWeight: FontWeight.w600,
@@ -52,7 +83,7 @@ class DonatedWavesSummary extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Wave per 1USD / \$${totalWave.toStringAsFixed(2)}',
+                  'Wave per 1USD / \$${widget.totalWave.toStringAsFixed(2)}',
                   style: TextStyle(
                     color: Colors.black.withOpacity(0.75),
                     fontWeight: FontWeight.w500,
