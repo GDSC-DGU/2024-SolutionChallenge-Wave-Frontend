@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wave/common/layout/default_layout.dart';
 import 'package:wave/country/component/donate_countries_card.dart';
+import 'package:wave/country/model/donate_country_detail_response.dart';
 import 'package:wave/country/model/donate_country_model.dart';
 import 'package:wave/country/provider/donate_country_provider.dart';
 import 'package:wave/loading/loading_screen.dart';
@@ -28,33 +29,24 @@ class _DonateCountryDetailScreenState
   @override
   void initState() {
     // TODO: implement initState
-    print(widget.id);
+    print('written id : ${widget.id}');
+
     super.initState();
+    Future.microtask(() =>
+        ref.read(donateNotifierProvider.notifier).fetchDonateCountryDetail(widget.id.toInt()));
   }
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(donateCountryDetailNotifierProvider(widget.id));
-    if (state.isLoading) {
-      print(state.isLoading);
-      print(state.data);
-      return const LoadingScreen();
+    final donateNotifier = ref.watch(donateNotifierProvider);
+    final donateCountryModel = donateNotifier.donateCountry; // 기존 상태
+    final donateCountryDetailModel = donateNotifier.donateCountryDetail; // 상세 정보
+
+    // 로딩 중 또는 데이터 없음 처리
+    if (donateCountryModel == null) {
+      print('Please wait for loading');
+      return const LoadingScreen(); // 기본 정보 로딩 중 처리
     }
-
-    print(state);
-
-    if (state.error != null) {
-      return Scaffold(
-        body: Center(
-          child: Text(state.error!.message), /// 지금은 에러날 것
-        ),
-      );
-    }
-
-    final model = state.data!;
-
-    print(state);
-    print(model.detailImageTitle);
 
     return DefaultLayout(
       isSingleChildScrollViewNeeded: true,
@@ -62,10 +54,12 @@ class _DonateCountryDetailScreenState
         controller: controller,
         slivers: [
           renderTop(
-            model: model,
+            model: donateCountryModel, // 기존 모델 사용
           ),
-          if(state is! DonateCountryDetailModel) renderLoading(),
-          if(state is DonateCountryDetailModel) renderDetail(model: model),
+          // 상세 정보 로딩 상태 처리
+          if (donateCountryDetailModel == null) renderLoading(),
+          // 상세 정보가 로드되었다면, 상세 정보 UI 구성
+          if (donateCountryDetailModel != null) renderDetail(model: donateCountryDetailModel),
         ],
       ),
     );
@@ -85,7 +79,7 @@ class _DonateCountryDetailScreenState
             Padding(
               padding: const EdgeInsets.only(bottom: 32.0),
               child: Text(
-                model.detailImageTitle, ///test
+                model.detailImageTitle, ///테스트 테스트
                 style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
@@ -98,9 +92,9 @@ class _DonateCountryDetailScreenState
   SliverToBoxAdapter renderTop({
     required DonateCountryModel model,
   }) {
-    return SliverToBoxAdapter(
+    return  SliverToBoxAdapter(
       child: DonateCountryCard.fromModel(
-        model: model,
+        model: model, // 기존에 전달받은 모델 데이터 사용
         isDetail: true,
       ),
     );

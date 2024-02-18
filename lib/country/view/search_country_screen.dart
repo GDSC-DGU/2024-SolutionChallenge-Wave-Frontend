@@ -57,8 +57,6 @@ class SearchCountriesScreen extends ConsumerWidget {
       ),
     );
   }
-
-
 }
 
 Widget _buildHorizontalCardListEmergency() {
@@ -76,6 +74,7 @@ Widget _buildHorizontalCardListEmergency() {
               'assets/images/testImg.png',
               fit: BoxFit.cover,
             ),
+            id: 5,
             views: 6239,
           ),
         ),
@@ -90,6 +89,7 @@ Widget _buildHorizontalCardListEmergency() {
               fit: BoxFit.cover,
             ),
             views: 6239,
+            id: 5,
           ),
         ),
         Padding(
@@ -103,6 +103,7 @@ Widget _buildHorizontalCardListEmergency() {
               fit: BoxFit.cover,
             ),
             views: 6239,
+            id: 5,
           ),
         ),
         // 추가적인 카드들
@@ -127,6 +128,7 @@ Widget _buildHorizontalCardListEmergencyAlert() {
               fit: BoxFit.cover,
             ),
             views: 6239,
+            id: 5,
           ),
         ),
         Padding(
@@ -140,6 +142,7 @@ Widget _buildHorizontalCardListEmergencyAlert() {
               fit: BoxFit.cover,
             ),
             views: 6239,
+            id: 5,
           ),
         ),
         Padding(
@@ -153,6 +156,7 @@ Widget _buildHorizontalCardListEmergencyAlert() {
               fit: BoxFit.cover,
             ),
             views: 6239,
+            id: 5,
           ),
         ),
         // 추가적인 카드들
@@ -177,6 +181,7 @@ Widget _buildHorizontalCardListCaution() {
               fit: BoxFit.cover,
             ),
             views: 6239,
+            id: 5,
           ),
         ),
         Padding(
@@ -190,6 +195,7 @@ Widget _buildHorizontalCardListCaution() {
               fit: BoxFit.cover,
             ),
             views: 6239,
+            id: 5,
           ),
         ),
         Padding(
@@ -203,6 +209,7 @@ Widget _buildHorizontalCardListCaution() {
               fit: BoxFit.cover,
             ),
             views: 6239,
+            id: 5,
           ),
         ),
         // 추가적인 카드들

@@ -20,6 +20,9 @@ ImportantCountriesModel _$ImportantCountriesModelFromJson(
           .toList(),
       important:
           (json['important'] as List<dynamic>?)?.map((e) => e as int).toList(),
+      donatePossibleList: (json['donatePossibleList'] as List<dynamic>?)
+          ?.map((e) => e as int)
+          .toList(),
     );
 
 Map<String, dynamic> _$ImportantCountriesModelToJson(
@@ -29,6 +32,7 @@ Map<String, dynamic> _$ImportantCountriesModelToJson(
       'alert': instance.alert,
       'caution': instance.caution,
       'important': instance.important,
+      'donatePossibleList': instance.donatePossibleList,
     };
 
 CountryData _$CountryDataFromJson(Map<String, dynamic> json) => CountryData(

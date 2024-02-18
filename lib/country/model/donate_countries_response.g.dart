@@ -12,7 +12,8 @@ DonateCountriesResponse _$DonateCountriesResponseFromJson(
       success: json['success'] as bool,
       data: json['data'] == null
           ? null
-          : DonateCountriesData.fromJson(json['data'] as Map<String, dynamic>),
+          : DonateCountriesDataModel.fromJson(
+              json['data'] as Map<String, dynamic>),
       error: json['error'],
     );
 

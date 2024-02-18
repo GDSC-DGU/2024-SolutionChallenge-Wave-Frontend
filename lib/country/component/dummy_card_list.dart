@@ -17,6 +17,7 @@ Widget _buildHorizontalCardListEmergency() {
               fit: BoxFit.cover,
             ),
             views: 6239,
+            id: 5,
           ),
         ),
         Padding(
@@ -30,6 +31,7 @@ Widget _buildHorizontalCardListEmergency() {
               fit: BoxFit.cover,
             ),
             views: 6239,
+            id: 5,
           ),
         ),
         Padding(
@@ -43,6 +45,7 @@ Widget _buildHorizontalCardListEmergency() {
               fit: BoxFit.cover,
             ),
             views: 6239,
+            id: 5,
           ),
         ),
         // 추가적인 카드들
@@ -67,6 +70,7 @@ Widget _buildHorizontalCardListAlert() {
               fit: BoxFit.cover,
             ),
             views: 6239,
+            id: 5,
           ),
         ),
         Padding(
@@ -80,6 +84,7 @@ Widget _buildHorizontalCardListAlert() {
               fit: BoxFit.cover,
             ),
             views: 6239,
+            id: 5,
           ),
         ),
         Padding(
@@ -93,6 +98,7 @@ Widget _buildHorizontalCardListAlert() {
               fit: BoxFit.cover,
             ),
             views: 6239,
+            id: 5,
           ),
         ),
         // 추가적인 카드들
@@ -117,6 +123,7 @@ Widget _buildHorizontalCardListCaution() {
               fit: BoxFit.cover,
             ),
             views: 6239,
+            id: 5,
           ),
         ),
         Padding(
@@ -130,6 +137,7 @@ Widget _buildHorizontalCardListCaution() {
               fit: BoxFit.cover,
             ),
             views: 6239,
+            id: 5,
           ),
         ),
         Padding(
@@ -143,6 +151,7 @@ Widget _buildHorizontalCardListCaution() {
               fit: BoxFit.cover,
             ),
             views: 6239,
+            id: 5,
           ),
         ),
         // 추가적인 카드들
