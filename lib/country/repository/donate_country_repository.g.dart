@@ -32,7 +32,7 @@ class _DonateCountryRepository implements DonateCountryRepository {
     )
             .compose(
               _dio.options,
-              '/',
+              '/donate',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -55,7 +55,7 @@ class _DonateCountryRepository implements DonateCountryRepository {
     )
             .compose(
               _dio.options,
-              '/${id}',
+              '/donate/${id}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -79,7 +79,7 @@ class _DonateCountryRepository implements DonateCountryRepository {
     )
             .compose(
               _dio.options,
-              '/${id}/detail',
+              '/donate/${id}/detail',
               queryParameters: queryParameters,
               data: _data,
             )

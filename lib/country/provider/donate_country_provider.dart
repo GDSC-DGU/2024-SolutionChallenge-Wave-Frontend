@@ -1,133 +1,92 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wave/common/model/common_response.dart';
+import 'package:wave/country/model/donate_countries_response.dart';
 import 'package:wave/country/model/donate_country_detail_response.dart';
 import 'package:wave/country/model/donate_country_response.dart';
 import 'package:wave/country/repository/donate_country_repository.dart';
 import '../model/donate_country_detail_model.dart';
 import '../model/donate_country_model.dart';
+import 'package:collection/collection.dart';
 
-/// 데이터(T? data), 에러(ErrorResponse? error), 로딩 상태(bool isLoading)를 포함하는 범용 상태 클래스
-/// 어떤 유형의 데이터에 대해서도 로딩 중, 성공, 에러 상태를 표현할 수 있음
 
-class AsyncState<T> {
-  final T? data;
-  final ErrorResponse? error;
-  final bool isLoading;
-
-  AsyncState({this.data, this.error, this.isLoading = false});
-}
-
-/// DonateCountriesNotifierProvider
-final donateCountriesNotifierProvider = StateNotifierProvider<
-    DonateCountriesNotifier, AsyncState<List<DonateCountryModel>>>((ref) {
-  return DonateCountriesNotifier(ref.watch(donateCountryRepositoryProvider));
+final donateNotifierProvider = ChangeNotifierProvider<DonateNotifier>((ref) {
+  final repository = ref.watch(donateCountryRepositoryProvider);
+  return DonateNotifier(repository);
 });
 
-/// DonateCountryNotifierProvider
-final donateCountryNotifierProvider = StateNotifierProvider.family<
-    DonateCountryNotifier, AsyncState<DonateCountryModel>, int>((ref, id) {
-  return DonateCountryNotifier(ref.watch(donateCountryRepositoryProvider), id);
-});
-
-/// DonateCountryDetailNotifierProvider
-final donateCountryDetailNotifierProvider = StateNotifierProvider.family<
-    DonateCountryDetailNotifier,
-    AsyncState<DonateCountryDetailModel>,
-    int>((ref, id) {
-  return DonateCountryDetailNotifier(
-      ref.watch(donateCountryRepositoryProvider), id);
-});
-
-/// 비동기 작업을 수행하고 상태를 업데이트하는 헬퍼 함수
-Future<void> handleAsyncOperation<T>(
-  StateNotifier<AsyncState<T>> notifier,
-  Future<T> Function() operation,
-) async {
-  notifier.state = AsyncState<T>(isLoading: true);
-  try {
-    final result = await operation();
-    notifier.state = AsyncState<T>(data: result);
-  } catch (error) {
-    notifier.state = AsyncState<T>(error: ErrorResponse(code: -1, message: error.toString()));
-  }
-}
-
-/// DonateCountriesNotifier
-class DonateCountriesNotifier
-    extends StateNotifier<AsyncState<List<DonateCountryModel>>> {
+class DonateNotifier extends ChangeNotifier {
   final DonateCountryRepository _repository;
+  DonateCountryModel? donateCountry;
+  DonateCountryDetailModel? donateCountryDetail;
+  bool isCountryLoading = false; // 기존 국가 정보 로딩 상태
+  bool isCountriesLoading = false; // 기존 국가 정보 로딩 상태
+  bool isDetailLoading = false; // 상세 정보 로딩 상태 추가
+  List<DonateCountryModel>? donateCountries;
 
-  DonateCountriesNotifier(this._repository)
-      : super(AsyncState(isLoading: true)) {
-    _fetchDonateCountries();
+  DonateNotifier(this._repository);
+
+  // 기존 메서드는 유지하면서, 여러 국가 정보를 가져오는 메서드 추가
+  Future<void> fetchDonateCountries() async {
+    isCountriesLoading = true;
+    notifyListeners();
+    try {
+      final response = await _repository.getDonateCountries();
+      if (response.success && response.data != null) {
+        donateCountries = response.data!.countries; // DonateCountriesDataModel에서 국가 목록 추출
+      }
+    } catch (error) {
+      print('Error fetching countries: $error');
+    } finally {
+      isCountriesLoading = false;
+      notifyListeners();
+    }
   }
 
-  Future<void> _fetchDonateCountries() async {
-    await handleAsyncOperation<List<DonateCountryModel>>(
-      this,
-      () async {
-        final response = await _repository.getDonateCountries();
-        // API 응답에서 data 필드가 null이 아니고 List<DonateCountryModel> 타입으로 안전하게 변환할 수 있는지 확인합니다.
-        if (response.success && response.data != null) {
-          // List<dynamic>에서 List<DonateCountryModel>로 명시적으로 변환
-          final countries = response.data!.countries
-              .map(
-                  (e) => DonateCountryModel.fromJson(e as Map<String, dynamic>))
-              .toList();
-          return countries;
-        } else {
-          // 변환할 수 없는 경우 빈 리스트를 반환합니다.
-          return <DonateCountryModel>[];
-        }
-      },
-    );
+  // 기존 국가 정보 로드
+  Future<void> fetchDonateCountry(int id) async {
+    isCountryLoading = true;
+    notifyListeners();
+    try {
+      final response = await _repository.getDonateCountry(id: id);
+      if (response.success && response.data != null) {
+        donateCountry = response.data;
+      }
+    } catch (error) {
+      print('Error fetching country: $error');
+    } finally {
+      isCountryLoading = false;
+      notifyListeners();
+    }
   }
-}
-
-/// DonateCountryNotifier
-class DonateCountryNotifier
-    extends StateNotifier<AsyncState<DonateCountryModel>> {
-  final DonateCountryRepository _repository;
-  final int _id;
-
-  DonateCountryNotifier(this._repository, this._id)
-      : super(AsyncState(isLoading: true)) {
-    _fetchDonateCountry();
-  }
-
-  Future<void> _fetchDonateCountry() async {
-    await handleAsyncOperation(
-        this, () async => (await _repository.getDonateCountry(id: _id)));
-  }
-}
-
-
-/// DonateCountryDetailNotifier
-class DonateCountryDetailNotifier
-    extends StateNotifier<AsyncState<DonateCountryDetailModel>> {
-  final DonateCountryRepository _repository;
-  final int _id;
-
-  DonateCountryDetailNotifier(this._repository, this._id)
-      : super(AsyncState<DonateCountryDetailModel>(isLoading: true)) {
-    _fetchDonateCountryDetail();
+  // 상세 국가 정보 로드
+  Future<void> fetchDonateCountryDetail(int id) async {
+    isDetailLoading = true;
+    notifyListeners();
+    try {
+      final response = await _repository.getDonateCountryDetail(id: id);
+      if (response.success && response.data != null) {
+        // 상세 정보 업데이트
+        donateCountryDetail = response.data;
+        // 해당 국가의 기본 정보도 업데이트
+        donateCountry = donateCountries?.firstWhereOrNull((country) => country.id == id);
+        print('donateCountryDetailNowNowNow: $donateCountryDetail');
+        print('donateCountryMatchedMatched: $donateCountry');
+      }
+    } catch (error) {
+      print('Error fetching country detail: $error');
+    } finally {
+      isDetailLoading = false;
+      notifyListeners();
+    }
   }
 
-  Future<void> _fetchDonateCountryDetail() async {
-    await handleAsyncOperation<DonateCountryDetailModel>(
-      this,
-          () async {
-        final result = await _repository.getDonateCountryDetail(id: _id);
-        print(result.success);
-        if (result.success && result.data != null) {
-          // API 호출이 성공하고 데이터가 존재하는 경우
-          return result.data!;
-        } else {
-          // API 호출에 실패하거나 데이터가 존재하지 않는 경우
-          throw Exception('Failed to load country detail');
-        }
-      },
-    );
+  Future<DonateCountriesResponse> getDonateCountries() async {
+    try {
+      return await _repository.getDonateCountries();
+    } catch (error) {
+      throw Exception('Failed to load countries');
+    }
   }
 
 }
