@@ -124,6 +124,7 @@ class _DonationListScreenState extends State<DonationListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Donation list'),
+        centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),

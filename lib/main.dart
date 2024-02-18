@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wave/common/provider/go_router.dart';
 import 'package:wave/map/view/global_map_screen.dart';
 import 'package:wave/onboarding/onboarding_screen.dart';
+import 'package:wave/user/view/donation_list_screen.dart';
 import 'package:wave/user/view/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:wave/user/view/my_page_screen.dart';
@@ -63,7 +64,7 @@ class _App extends ConsumerWidget {
 //         fontFamily: 'Pretendard',
 //       ),
 //       debugShowCheckedModeBanner: false,
-//       home: LoginScreen(), // 여기 원하는 스크린 대입 ✅
+//       home: DonationListScreen(), // 여기 원하는 스크린 대입 ✅
 //     );
 //   }
 // }
