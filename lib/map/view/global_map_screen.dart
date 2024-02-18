@@ -27,15 +27,18 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
   double currentZoomLevel = 6;
 
   // api call로 받아온 데이터를 저장할 위험 국가 리스트 ID
-   List<int> lowRiskCountriesId = [];
-   List<int> midRiskCountriesId = [];
-   List<int> highRiskCountriesId = [];
-   List<int> importantCountriesId = [];
+  List<int> lowRiskCountriesId = [];
+  List<int> midRiskCountriesId = [];
+  List<int> highRiskCountriesId = [];
+  List<int> importantCountriesId = [];
+  List<int> donatePossibleCountriesId = [];
 
   // 변경: 리스크 레벨별 상태 관리
   bool _showLowRisk = false;
   bool _showMidRisk = false;
   bool _showHighRisk = false;
+
+  List features = [];
 
   @override
   void initState() {
@@ -58,13 +61,12 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
     print('kikiki@@@@@@@@@2');
   }
 
-
   Future<void> _updateDataSource() async {
     print('now is time');
     final jsonString =
-    await rootBundle.loadString('assets/maps/world_map.json');
+        await rootBundle.loadString('assets/maps/world_map.json');
     final jsonResponse = json.decode(jsonString);
-    final features = jsonResponse['features'] as List;
+    features = jsonResponse['features'] as List;
 
     setState(() {
       _dataSource = MapShapeSource.asset(
@@ -72,18 +74,17 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
         shapeDataField: 'name',
         dataCount: features.length,
         primaryValueMapper: (int index) =>
-        features[index]['properties']['name'],
+            features[index]['properties']['name'],
         shapeColorValueMapper: (int index) =>
             _getRiskLevelColor(features[index]['properties']['id']),
         dataLabelMapper: (int index) =>
-        jsonResponse['features'][index]['properties']['name'],
+            jsonResponse['features'][index]['properties']['name'],
       );
       print('dataSource: $_dataSource');
     });
   }
 
   Color _getRiskLevelColor(int countryId) {
-
     print(_showMidRisk);
     print(countryId);
     if (lowRiskCountriesId.contains(countryId) && _showLowRisk) {
@@ -99,16 +100,14 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
   }
 
   void _updateRiskCountriesLists(ImportantCountriesModel data) {
-
     // emergency, alert, caution 리스트를 업데이트하는 로직 구현
     lowRiskCountriesId = data.caution?.map((e) => e.id).toList() ?? [];
     midRiskCountriesId = data.alert?.map((e) => e.id).toList() ?? [];
     highRiskCountriesId = data.emergency?.map((e) => e.id).toList() ?? [];
     importantCountriesId = data.important ?? [];
+    donatePossibleCountriesId = data.donatePossibleList ?? [];
     print('lowRiskCountriesId: $lowRiskCountriesId');
-
   }
-
 
   final maxHeight =
       MediaQueryData.fromWindow(WidgetsBinding.instance!.window).size.height;
@@ -137,93 +136,99 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
         // _showHighRisk = true;
       }
     }
-    return _isLoading ? LoadingScreen(): DefaultLayout(
-      title: 'World Conflict Map',
-      child: Container(
-        height: maxHeight * 0.9,
-        child: Stack(
-          children: [
-            SfMaps(
-              layers: [
-                MapShapeLayer(
-                  onSelectionChanged: (int index) {
-                    print(_dataSource!.dataLabelMapper!(index));
-
-                    setState(() {
-                      final int countryId =
-                          _dataSource!.dataLabelMapper!(index) as int;
-                      if (importantCountriesId.contains(countryId)) {
-                        showCustomModal(context, countryId); // 여기에서 모달을 표시
-                      }
-                    });
-                  },
-                  source: _dataSource!,
-                  zoomPanBehavior: _zoomPanBehavior,
-                  showDataLabels: true,
-                  dataLabelSettings: getDataLabelSettings(currentZoomLevel),
-                  onWillZoom: (MapZoomDetails details) {
-                    setState(() {
-                      if (details.newZoomLevel != null) {
-                        print(
-                            "Zoom Level before zoom: ${details.previousZoomLevel}");
-                        print("Zoom Level after zoom: ${details.newZoomLevel}");
-                        currentZoomLevel = details.newZoomLevel!;
-                        _updateDataSource();
-                      }
-                    });
-                    return true;
-                  },
-                  selectionSettings: MapSelectionSettings(
-                    color: Colors.indigo,
-                    strokeColor: Colors.indigo,
-                  ),
-                ),
-              ],
-            ),
-            Positioned(
-              left: 10,
-              child: Row(
+    return _isLoading
+        ? LoadingScreen()
+        : DefaultLayout(
+            title: 'World Conflict Map',
+            child: Container(
+              height: maxHeight * 0.9,
+              child: Stack(
                 children: [
-                  RiskLevelButton(
-                    riskLevel: 'Caution',
-                    isSelected: _showLowRisk,
-                    color: PRIMARY_BLUE_COLOR,
-                    onPressed: () {
-                      setState(() {
-                        _showLowRisk = !_showLowRisk;
-                        _updateDataSource();
-                      });
-                    },
+                  SfMaps(
+                    layers: [
+                      MapShapeLayer(
+                        onSelectionChanged: (int index) {
+                          print('importantCountriesId: $importantCountriesId');
+                          setState(() {
+                           final importantIdx =  features[index]['properties']['id'];
+                            print(importantIdx);
+                            if (donatePossibleCountriesId.contains(importantIdx)) {
+                              showCustomModal(context, importantIdx,ref); // 여기에서 모달을 표시
+                            }else if(importantCountriesId.contains(importantIdx)){
+                              print('importantIdx: $importantIdx');
+                              showCustomModal(context, importantIdx,ref);
+                            }
+                          });
+                        },
+                        source: _dataSource,
+                        zoomPanBehavior: _zoomPanBehavior,
+                        showDataLabels: true,
+                        dataLabelSettings:
+                            getDataLabelSettings(currentZoomLevel),
+                        onWillZoom: (MapZoomDetails details) {
+                          setState(() {
+                            if (details.newZoomLevel != null) {
+                              print(
+                                  "Zoom Level before zoom: ${details.previousZoomLevel}");
+                              print(
+                                  "Zoom Level after zoom: ${details.newZoomLevel}");
+                              currentZoomLevel = details.newZoomLevel!;
+                              _updateDataSource();
+                            }
+                          });
+                          return true;
+                        },
+                        selectionSettings: MapSelectionSettings(
+                          color: Colors.indigo,
+                          strokeColor: Colors.indigo,
+                        ),
+                      ),
+                    ],
                   ),
-                  RiskLevelButton(
-                    riskLevel: 'Emergency',
-                    isSelected: _showHighRisk,
-                    color: PRIMARY_BLUE_COLOR,
-                    onPressed: () {
-                      setState(() {
-                        _showHighRisk = !_showHighRisk;
-                        _updateDataSource();
-                      });
-                    },
+                  Positioned(
+                    left: 10,
+                    child: Row(
+                      children: [
+                        RiskLevelButton(
+                          riskLevel: 'Caution',
+                          isSelected: _showLowRisk,
+                          color: PRIMARY_BLUE_COLOR,
+                          onPressed: () {
+                            setState(() {
+                              _showLowRisk = !_showLowRisk;
+                              _updateDataSource();
+                            });
+                          },
+                        ),
+                        RiskLevelButton(
+                          riskLevel: 'Emergency',
+                          isSelected: _showHighRisk,
+                          color: PRIMARY_BLUE_COLOR,
+                          onPressed: () {
+                            setState(() {
+                              _showHighRisk = !_showHighRisk;
+                              _updateDataSource();
+                            });
+                          },
+                        ),
+                        RiskLevelButton(
+                          riskLevel: 'Alert',
+                          isSelected: _showMidRisk,
+                          color: PRIMARY_BLUE_COLOR,
+                          onPressed: () {
+                            setState(() {
+                              _showMidRisk = !_showMidRisk;
+                              _updateDataSource();
+                            });
+                          },
+                        )
+                      ],
+                    ),
                   ),
-                  RiskLevelButton(
-                    riskLevel: 'Alert',
-                    isSelected: _showMidRisk,
-                    color: PRIMARY_BLUE_COLOR,
-                    onPressed: () {
-                      setState(() {
-                        _showMidRisk = !_showMidRisk;
-                        _updateDataSource();
-                      });
-                    },
-                  )
                 ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
   }
 }
 
@@ -240,25 +245,32 @@ Widget BuildCustomCard(int countryId) {
   );
 }
 
-void showCustomModal(BuildContext context, int countryId) {
+void showCustomModal(BuildContext context, int countryId, WidgetRef ref) {
   showDialog(
     context: context,
     barrierDismissible: true,
     builder: (BuildContext context) {
+      // 상태 변경 요청을 비동기적으로 스케줄링합니다.
+      Future.microtask(() =>
+          ref.read(donateNotifierProvider.notifier).fetchDonateCountry(countryId)
+      );
       return Consumer(
         builder: (context, ref, child) {
+          print('counryId: $countryId');
+
           // DonateNotifier의 상태를 구독
-          final donateNotifier = ref.watch(donateNotifierProvider);
+          final donateNotifier = ref.read(donateNotifierProvider);
           print('nope');
           // 상태에 따른 조건부 렌더링
           if (donateNotifier.isCountryLoading) {
             // 로딩 상태인 경우 로딩 인디케이터 표시
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(
                 color: PRIMARY_BLUE_COLOR,
               ),
             );
           } else if (donateNotifier.donateCountry != null) {
+            print('nowbrow');
             // 데이터 로드 완료된 경우 DonateCountryCard 표시
             return Dialog(
               child: DonateCountryCard.fromModel(
