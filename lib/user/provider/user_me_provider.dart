@@ -53,12 +53,15 @@ class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
     required this.storage,
   }) : super(UserModelLoading()) {
     // 내 정보 가져오기
+    // logout();
      getMe();
   }
 
   Future<void> getMe() async {
     final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+
+    print('startGetMe');
 
     if (refreshToken == null || accessToken == null) {
       state = null;
@@ -108,6 +111,7 @@ class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
         print('userResp.data: ${userResp.data}');
         print('userResp.data Without Null: ${userResp.data!}');
         state = userResp.data!;
+        print('state: $state');
       } else {
         // 로그인 실패 상태로 변경
         state = UserModelError(message: 'Google 로그인에 실패했습니다.');

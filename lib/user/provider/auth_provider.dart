@@ -111,28 +111,28 @@ class AuthProvider extends ChangeNotifier {
   // 로그인 스크린으로 보내줄지
   // 홈 스크린으로 보내줄지 확인하는 과정이 필요하다.
   String? redirectLogic(BuildContext context, GoRouterState state) {
-
-    return '/';
-    // return null;
+    // return '/';
     // // return null;
+    // // // return null;
 
-    // final UserModelBase? user = ref.read(userMeProvider);
-    //
-    // final logginIn = state.matchedLocation == '/login';
-    //
-    // if(user == null){
-    //   return logginIn ? null : '/login';
-    // }
-    //
-    // if(user is UserModel){
-    //   return logginIn || state.matchedLocation == '/splash' ? '/' : null;
-    // }
-    //
-    // // UserModelError
-    // if (user is UserModelError) {
-    //   return !logginIn ? '/login' : null;
-    // }
+      final UserModelBase? user = ref.read(userMeProvider);
 
-    return null;
+      final logginIn = state.matchedLocation == '/login';
+
+      if(user == null){
+        return logginIn ? null : '/login';
+      }
+
+      if(user is UserModel){
+        return logginIn || state.matchedLocation == '/splash' ? '/' : null;
+      }
+
+      // UserModelError
+      if (user is UserModelError) {
+        return !logginIn ? '/login' : null;
+      }
+
+      return null;
+
   }
 }

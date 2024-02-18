@@ -60,6 +60,8 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
     final userState = ref.watch(userMeProvider);
     UserModel? user;
 
+    print('titi');
+
     if(userState is UserModel){
       user = userState;
     }
