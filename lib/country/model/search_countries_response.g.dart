@@ -10,9 +10,9 @@ SearchCountriesResponse _$SearchCountriesResponseFromJson(
         Map<String, dynamic> json) =>
     SearchCountriesResponse(
       success: json['success'] as bool,
-      data: (json['data'] as List<dynamic>?)
-          ?.map((e) => SearchCountryModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      data: json['data'] == null
+          ? null
+          : SearchCountriesData.fromJson(json['data'] as Map<String, dynamic>),
       error: json['error'],
     );
 

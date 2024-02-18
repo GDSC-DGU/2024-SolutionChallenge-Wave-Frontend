@@ -70,7 +70,7 @@ class DonateCountriesNotifier
         // API 응답에서 data 필드가 null이 아니고 List<DonateCountryModel> 타입으로 안전하게 변환할 수 있는지 확인합니다.
         if (response.success && response.data != null) {
           // List<dynamic>에서 List<DonateCountryModel>로 명시적으로 변환
-          final countries = response.data!
+          final countries = response.data!.countries
               .map(
                   (e) => DonateCountryModel.fromJson(e as Map<String, dynamic>))
               .toList();

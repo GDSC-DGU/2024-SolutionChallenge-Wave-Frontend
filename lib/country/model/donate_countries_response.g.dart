@@ -10,9 +10,9 @@ DonateCountriesResponse _$DonateCountriesResponseFromJson(
         Map<String, dynamic> json) =>
     DonateCountriesResponse(
       success: json['success'] as bool,
-      data: (json['data'] as List<dynamic>?)
-          ?.map((e) => DonateCountryModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      data: json['data'] == null
+          ? null
+          : DonateCountriesData.fromJson(json['data'] as Map<String, dynamic>),
       error: json['error'],
     );
 

@@ -1,14 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:wave/common/model/common_response.dart';
-import 'package:wave/country/model/search_country_model.dart';
-
-import 'donate_country_model.dart';
+import 'search_countries_data.dart'; // SearchCountriesData 클래스를 import합니다.
 
 part 'search_countries_response.g.dart';
 
 @JsonSerializable()
 class SearchCountriesResponse extends CommonResponse {
-  final List<SearchCountryModel>? data;
+  final SearchCountriesData? data; // SearchCountriesData 타입으로 변경됨
 
   SearchCountriesResponse({
     required bool success,
@@ -19,5 +17,6 @@ class SearchCountriesResponse extends CommonResponse {
   factory SearchCountriesResponse.fromJson(Map<String, dynamic> json) =>
       _$SearchCountriesResponseFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$SearchCountriesResponseToJson(this);
 }
