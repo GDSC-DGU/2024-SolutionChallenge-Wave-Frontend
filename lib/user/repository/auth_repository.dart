@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:wave/common/model/common_response.dart';
 import 'package:wave/common/model/login_response.dart';
 
 import '../../common/const/data.dart';
@@ -20,4 +21,16 @@ abstract class AuthRepository {
   Future<LoginResponse> googleLogin({
     @Body() required GoogleLoginModel googleLoginModel,
   });
+
+  @PATCH('/logout')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<CommonResponse> logout();
+
+  @PATCH('/sign-out')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<CommonResponse> signOut();
 }

@@ -11,7 +11,7 @@ UserInfoResponse _$UserInfoResponseFromJson(Map<String, dynamic> json) =>
       success: json['success'] as bool,
       data: json['data'] == null
           ? null
-          : UserInfoModel.fromJson(json['data'] as Map<String, dynamic>),
+          : UserModel.fromJson(json['data'] as Map<String, dynamic>),
       error: json['error'],
     );
 

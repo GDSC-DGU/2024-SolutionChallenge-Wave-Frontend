@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:wave/user/model/user_info_response.dart';
 
 import '../../common/const/data.dart';
 import '../../common/dio/dio.dart';
@@ -12,7 +13,7 @@ final userMeRepositoryProvider = Provider<UserMeRepository>(
   (ref) {
     final dio = ref.watch(dioProvider);
 
-    return UserMeRepository(dio, baseUrl: '$ip/api/v1/user');
+    return UserMeRepository(dio, baseUrl: '$ip/api/v1/users');
   },
 );
 
@@ -21,9 +22,11 @@ final userMeRepositoryProvider = Provider<UserMeRepository>(
 abstract class UserMeRepository {
   factory UserMeRepository(Dio dio, {String baseUrl}) = _UserMeRepository;
 
-  @GET('/me')
+  @GET('/')
   @Headers({
     'accessToken': 'true',
   })
-  Future<UserModel> getMe();
+  Future<UserInfoResponse> getMe(); // token authentication 용 test api
+
+
 }

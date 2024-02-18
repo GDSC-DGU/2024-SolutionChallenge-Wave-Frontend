@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:wave/common/const/data.dart';
+import 'package:wave/common/model/common_response.dart';
 import 'package:wave/common/secure_storage/secure_storage.dart';
 import 'package:wave/user/model/user_model.dart';
 
@@ -45,10 +46,8 @@ class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
       state = null;
       return;
     }
-
     final resp = await repository.getMe();
-
-    state = resp;
+    state = resp.data;
   }
 
   // UserMeStateNotifier 클래스 내부에 추가
@@ -68,7 +67,7 @@ class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
         // 저장된 토큰을 이용하여 사용자 정보 가져오기
         final userResp = await repository.getMe();
         // 상태를 업데이트하고 사용자 정보 반환
-        state = userResp;
+        state = userResp.data;
       } else {
         // 로그인 실패 상태로 변경
         state = UserModelError(message: 'Google 로그인에 실패했습니다.');
@@ -80,14 +79,40 @@ class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
   }
 
 
-  Future<void> logout() async {
+  Future<CommonResponse> logout() async {
     state = null;
-
-    await Future.wait(
-      [
-        storage.delete(key: REFRESH_TOKEN_KEY),
-        storage.delete(key: ACCESS_TOKEN_KEY),
-      ],
-    );
+    // 토큰 삭제
+    await Future.wait([
+      storage.delete(key: REFRESH_TOKEN_KEY),
+      storage.delete(key: ACCESS_TOKEN_KEY),
+    ]);
+    print('In Provider, Start logout');
+    try{
+      // 서버에 로그아웃 요청
+      final resp = await authRepository.logout();
+      print('성공적 로그아웃');
+      return resp;
+    }catch(e){
+      print('logoutError?');
+      throw e;
+    }
   }
+
+  Future<CommonResponse> signOut() async {
+    state = null;
+    // 토큰 삭제
+    await Future.wait([
+      storage.delete(key: REFRESH_TOKEN_KEY),
+      storage.delete(key: ACCESS_TOKEN_KEY),
+    ]);
+    try {
+      final resp = await authRepository.signOut();
+      print('성공적 탈퇴');
+      return resp;
+    } catch (e) {
+      print('signoutError?');
+      throw e;
+    }
+  }
+
 }

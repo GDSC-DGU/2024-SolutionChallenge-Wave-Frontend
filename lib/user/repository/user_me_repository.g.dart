@@ -19,26 +19,26 @@ class _UserMeRepository implements UserMeRepository {
   String? baseUrl;
 
   @override
-  Future<UserModel> getMe() async {
+  Future<UserInfoResponse> getMe() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<UserModel>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<UserInfoResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
             .compose(
               _dio.options,
-              '/me',
+              '/',
               queryParameters: queryParameters,
               data: _data,
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = UserModel.fromJson(_result.data!);
+    final value = UserInfoResponse.fromJson(_result.data!);
     return value;
   }
 
