@@ -4,39 +4,31 @@ import 'package:wave/map/model/important_countries_model.dart';
 import 'package:wave/map/repository/global_map_repository.dart';
 import 'package:wave/map/model/important_countries_response.dart';
 
-final importantCountriesProvider = StateNotifierProvider<ImportantCountriesNotifier, ImportantCountriesState>(
+final importantCountriesProvider = StateNotifierProvider<ImportantCountriesNotifier, ImportantCountriesBase>(
       (ref) => ImportantCountriesNotifier(ref.read(globalMapRepositoryProvider)),
 );
 
-class ImportantCountriesNotifier extends StateNotifier<ImportantCountriesState> {
+class ImportantCountriesNotifier extends StateNotifier<ImportantCountriesBase> {
   final GlobalMapRepository _repository;
 
   ImportantCountriesNotifier(this._repository) : super(ImportantCountriesLoading()) {
+
     _fetchImportantCountries();
   }
 
   Future<void> _fetchImportantCountries() async {
+    print('kiki');
     try {
       final response = await _repository.getImportantCountries();
+      print('why');
       if (response.success && response.data != null) {
-        state = ImportantCountriesLoaded(response.data!);
+        print('nuya');
+        state = response.data!;
       } else {
-        state = ImportantCountriesError("Failed to load countries");
+        state = ImportantCountriesError(message: 'important countries data loading error in else in provider folder');
       }
     } catch (e) {
-      state = ImportantCountriesError(e.toString());
+      state = ImportantCountriesError(message: 'important countries data loading error in catch provider folder');
     }
   }
-}
-
-// 상태 정의
-abstract class ImportantCountriesState {}
-class ImportantCountriesLoading extends ImportantCountriesState {}
-class ImportantCountriesLoaded extends ImportantCountriesState {
-  final ImportantCountriesModel data;
-  ImportantCountriesLoaded(this.data);
-}
-class ImportantCountriesError extends ImportantCountriesState {
-  final String message;
-  ImportantCountriesError(this.message);
 }
