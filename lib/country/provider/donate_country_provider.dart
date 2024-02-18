@@ -43,22 +43,29 @@ class DonateNotifier extends ChangeNotifier {
     }
   }
 
-  // 기존 국가 정보 로드
-  Future<void> fetchDonateCountry(int id) async {
+  Future<DonateCountryResponse?> fetchDonateCountry(int id) async {
     isCountryLoading = true;
-    notifyListeners();
+    notifyListeners(); // 상태 변경 알림 시작
     try {
       final response = await _repository.getDonateCountry(id: id);
       if (response.success && response.data != null) {
-        donateCountry = response.data;
+        print('isCountryLoading: $isCountryLoading');
+        donateCountry = response.data!;
+        isCountryLoading = false;
+        print('isCountryLoading: $isCountryLoading');
+        notifyListeners(); // 상태 변경 알림 완료
+        return response;
       }
     } catch (error) {
       print('Error fetching country: $error');
     } finally {
-      isCountryLoading = false;
-      notifyListeners();
+      isCountryLoading = false; // 여기서 상태 변경
+      notifyListeners(); // 상태 변경 알림 완료
     }
+    return null;
   }
+
+
   // 상세 국가 정보 로드
   Future<void> fetchDonateCountryDetail(int id) async {
     isDetailLoading = true;
