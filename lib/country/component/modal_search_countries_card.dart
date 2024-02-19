@@ -7,7 +7,7 @@ import 'package:wave/country/model/search_country_detail_model.dart';
 import 'package:wave/country/model/search_country_model.dart';
 import 'package:wave/country/view/search_country_detail_screen.dart';
 
-class SearchCountryCard extends StatelessWidget {
+class ModalSearchCountryCard extends StatelessWidget {
   final String category;
   final String mainTitle;
   final String subTitle;
@@ -23,7 +23,7 @@ class SearchCountryCard extends StatelessWidget {
   final List<News>? news;
   final int id;
 
-  const SearchCountryCard({
+  const ModalSearchCountryCard({
     required this.category,
     required this.mainTitle,
     required this.subTitle,
@@ -41,11 +41,11 @@ class SearchCountryCard extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  factory SearchCountryCard.fromModel({
+  factory ModalSearchCountryCard.fromModel({
     required SearchCountryModel model,
     bool isDetail = false,
   }) {
-    return SearchCountryCard(
+    return ModalSearchCountryCard(
       id: model.id,
       category: model.category,
       mainTitle: model.mainTitle,
@@ -58,13 +58,13 @@ class SearchCountryCard extends StatelessWidget {
       isDetail: isDetail,
       heroKey: model.id,
       imageProducer:
-          model is SearchCountryDetailModel ? model.imageProducer : null,
+      model is SearchCountryDetailModel ? model.imageProducer : null,
       contents: model is SearchCountryDetailModel ? model.contents : null,
       detailImage: model is SearchCountryDetailModel ? model.detailImage : null,
       detailImageTitle:
-          model is SearchCountryDetailModel ? model.detailImageTitle : null,
+      model is SearchCountryDetailModel ? model.detailImageTitle : null,
       detailImageProducer:
-          model is SearchCountryDetailModel ? model.detailImageProducer : null,
+      model is SearchCountryDetailModel ? model.detailImageProducer : null,
       news: model is SearchCountryDetailModel ? model.news : null,
     );
   }
@@ -73,6 +73,7 @@ class SearchCountryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 300,
+      height: 410,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: isDetail ==  true ? BorderRadius.zero : const BorderRadius.all(
@@ -98,9 +99,9 @@ class SearchCountryCard extends StatelessWidget {
                     borderRadius: isDetail
                         ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
                         : const BorderRadius.only(
-                            topLeft: Radius.circular(15.0),
-                            topRight: Radius.circular(15.0),
-                          ),
+                      topLeft: Radius.circular(15.0),
+                      topRight: Radius.circular(15.0),
+                    ),
                     child: image,
                   ),
                 ),
@@ -109,9 +110,9 @@ class SearchCountryCard extends StatelessWidget {
                   borderRadius: isDetail
                       ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
                       : BorderRadius.only(
-                          topLeft: Radius.circular(15.0),
-                          topRight: Radius.circular(15.0),
-                        ),
+                    topLeft: Radius.circular(15.0),
+                    topRight: Radius.circular(15.0),
+                  ),
                   child: Container(
                     height: 130,
                     width: 300,

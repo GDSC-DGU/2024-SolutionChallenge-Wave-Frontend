@@ -7,6 +7,7 @@ import 'package:syncfusion_flutter_maps/maps.dart';
 import 'package:wave/common/const/colors.dart';
 import 'package:wave/common/layout/default_layout.dart';
 import 'package:wave/country/component/donate_countries_card.dart';
+import 'package:wave/country/component/modal_search_countries_card.dart';
 import 'package:wave/country/component/search_countries_card.dart';
 import 'package:wave/country/model/donate_country_model.dart';
 import 'package:wave/country/provider/donate_country_provider.dart';
@@ -33,7 +34,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
   MapShapeSource? _dataSource;
  MapZoomPanBehavior? _zoomPanBehavior;
   bool _isLoading = true;
-  double currentZoomLevel = 2;
+  double currentZoomLevel = 3;
 
   // api call로 받아온 데이터를 저장할 위험 국가 리스트 ID
   List<int> lowRiskCountriesId = [];
@@ -61,10 +62,9 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
       focalLatLng: const MapLatLng(34.8149, 49.02),
       enableDoubleTapZooming: true,
       enablePanning: true,
-      enablePinching: true,
       zoomLevel: currentZoomLevel,
       minZoomLevel: 1,
-      maxZoomLevel: 10,
+      maxZoomLevel: 12,
     );
 
   }
@@ -303,7 +303,7 @@ void showCustomSearchModal(BuildContext context, int countryId, WidgetRef ref) a
             return const Center(child: CircularProgressIndicator(color: PRIMARY_BLUE_COLOR));
           } else {
             return Dialog(
-              child: SearchCountryCard.fromModel(
+              child: ModalSearchCountryCard.fromModel(
                 model: searchNotifier.searchCountry!,
                 isDetail: false, // 상세 페이지용 카드로 표시
               ),
