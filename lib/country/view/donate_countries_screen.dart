@@ -111,43 +111,60 @@ import 'package:wave/loading/loading_screen.dart';
 
 import '../model/donate_country_model.dart';
 
-class DonateCountriesScreen extends ConsumerWidget {
+class DonateCountriesScreen extends ConsumerStatefulWidget {
   static String get routeName => 'donateCountry';
+
   const DonateCountriesScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(donateNotifierProvider);
-
-    return state.isCountriesLoading
-        ? const LoadingScreen()
-        : DefaultLayout(
-            isSingleChildScrollViewNeeded: false,
-            title: 'Sending Waves',
-            child: _buildCountriesList(state.donateCountries!),
-          );
-  }
+  ConsumerState<DonateCountriesScreen> createState() => _DonateCountriesScreenState();
 }
 
-Widget _buildCountriesList(List<DonateCountryModel> countries) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: countries
-        .map((country) => Column(
-              children: [
-                DonateCountryLabel(countryName: country.mainTitle),
-                DonateCountryCard(
-                  id: country.id,
-                  category: country.category,
-                  mainTitle: country.mainTitle,
-                  subTitle: country.subTitle,
-                  image: Image.network(country.image, fit: BoxFit.cover),
-                  allWave: country.allWave,
-                  lastWave: country.lastWave,
-                  casualties: country.casualties,
-                ),
-              ],
-            ))
-        .toList(),
-  );
+class _DonateCountriesScreenState extends ConsumerState<DonateCountriesScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() =>
+        ref.read(donateNotifierProvider.notifier).fetchDonateCountries());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer(builder: (context, ref, child) {
+      final state = ref.watch(donateNotifierProvider);
+
+      if (state.isCountriesLoading || state.donateCountries == null) {
+        return const LoadingScreen();
+      } else {
+        return DefaultLayout(
+          isSingleChildScrollViewNeeded: true,
+          title: 'Sending Waves',
+          child: _buildCountriesList(state.donateCountries!),
+        );
+      }
+    });
+  }
+
+  Widget _buildCountriesList(List<DonateCountryModel> countries) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: countries
+          .map((country) => Column(
+        children: [
+          DonateCountryLabel(countryName: country.mainTitle),
+          DonateCountryCard(
+            id: country.id,
+            category: country.category,
+            mainTitle: country.mainTitle,
+            subTitle: country.subTitle,
+            image: Image.network(country.image, fit: BoxFit.cover),
+            allWave: country.allWave,
+            lastWave: country.lastWave,
+            casualties: country.casualties,
+          ),
+        ],
+      ))
+          .toList(),
+    );
+  }
 }
