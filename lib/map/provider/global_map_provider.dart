@@ -4,9 +4,13 @@ import 'package:wave/map/model/important_countries_model.dart';
 import 'package:wave/map/repository/global_map_repository.dart';
 import 'package:wave/map/model/important_countries_response.dart';
 
-final importantCountriesProvider = StateNotifierProvider<ImportantCountriesNotifier, ImportantCountriesBase>(
+// autoDispose - 해당 프로바이더를 사용하는 위젯이 dispose될때 같이 dispose됨
+// why? -> Map 탭은 항상 초기화 되어야함(다른 탭 이동하고 돌아와도 초기화 되어야함)
+
+final importantCountriesProvider = StateNotifierProvider.autoDispose<ImportantCountriesNotifier, ImportantCountriesBase>(
       (ref) => ImportantCountriesNotifier(ref.read(globalMapRepositoryProvider)),
 );
+
 
 class ImportantCountriesNotifier extends StateNotifier<ImportantCountriesBase> {
   final GlobalMapRepository _repository;

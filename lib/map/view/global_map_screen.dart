@@ -22,8 +22,8 @@ class GlobalMapScreen extends ConsumerStatefulWidget {
 }
 
 class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
-  late MapShapeSource _dataSource;
-  late MapZoomPanBehavior _zoomPanBehavior;
+  MapShapeSource? _dataSource;
+ MapZoomPanBehavior? _zoomPanBehavior;
   bool _isLoading = true;
   double currentZoomLevel = 6;
 
@@ -43,6 +43,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
 
   @override
   void initState() {
+    _isLoading = true;
     super.initState();
     _zoomPanBehavior = MapZoomPanBehavior(
       focalLatLng: const MapLatLng(34.8149, 39.02),
@@ -58,6 +59,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
       // _fetchImportantCountriesDataAndInitialize();
     });
     _updateDataSource();
+
   }
 
   Future<void> _updateDataSource() async {
@@ -118,20 +120,18 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
       );
     } else if (state is ImportantCountriesModel) {
       // 데이터 로딩이 완료되었을 때만 데이터 소스를 업데이트합니다.
-      if (_isLoading) {
+      print('sibal');
+      print('OMG1');
+      if (_isLoading || _dataSource == null) {
         _updateRiskCountriesLists(state);
         _updateDataSource();
         print('kikiki');
-
+        print('OMG2');
         _isLoading = false;
-        // _showLowRisk = true;
-        // _showMidRisk = true;
-        // _showHighRisk = true;
       }
     }
-    return _isLoading
-        ? LoadingScreen()
-        : DefaultLayout(
+    print('OMG3');
+    return DefaultLayout(
             title: 'World Conflict Map',
             child: Container(
               height: maxHeight * 0.9,
@@ -147,13 +147,13 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
                             print(importantIdx);
                             if (donatePossibleCountriesId.contains(importantIdx)) {
                               showCustomModal(context, importantIdx,ref);
-                              print('whyehyhey');
+
                             }else if(importantCountriesId.contains(importantIdx)){
                               showCustomModal(context, importantIdx,ref);
                             }
                           });
                         },
-                        source: _dataSource,
+                        source: _dataSource!,
                         zoomPanBehavior: _zoomPanBehavior,
                         showDataLabels: true,
                         dataLabelSettings:
@@ -238,43 +238,43 @@ Widget BuildCustomCard(int countryId) {
   );
 }
 
-void showCustomModal(BuildContext context, int countryId, WidgetRef ref) {
-  print('now?');
-  Future.microtask(() =>
-      ref.watch(donateNotifierProvider.notifier).fetchDonateCountry(countryId)
-  );
-  print('now?@@');
+void showCustomModal(BuildContext context, int countryId, WidgetRef ref) async {
+  // 상태 초기화
+  bool isLoaded = false;
+
+  // 데이터 로딩 시작
+  await ref.read(donateNotifierProvider.notifier).fetchDonateCountry(countryId);
+
+
+  print('OMG');
+  // 데이터 로딩 완료 후 다이얼로그 표시
   showDialog(
     context: context,
     barrierDismissible: true,
     builder: (BuildContext context) {
-      final donateNotifier = ref.watch(donateNotifierProvider);
-
-      print('riverse');
-
-      print(donateNotifier.isCountryLoading);
-      // DonateNotifier의 상태에 따라 조건부 렌더링을 수행합니다.
-      if (donateNotifier.donateCountry == null) {
-        print('sibal1: ${donateNotifier.isCountryLoading}');
-        print(donateNotifier.donateCountry);
-        // 로딩 상태인 경우 로딩 인디케이터를 표시합니다.
-        return const Center(
-          child: CircularProgressIndicator(color: PRIMARY_BLUE_COLOR),
-        );
-
-        print(donateNotifier.isCountryLoading);
-      } else{
-
-        print(donateNotifier.isCountryLoading);
-        // 데이터 로드 완료된 경우 DonateCountryCard를 표시합니다.
-        print('rightnownow');
-        return Dialog(
-          child: DonateCountryCard.fromModel(
-            model: donateNotifier.donateCountry!,
-            isDetail: false, // 상세 페이지용 카드로 표시
-          ),
-        );
-      }
+      // Provider를 통해 최신 상태를 구독
+      return Consumer(
+        builder: (context, ref, _) {
+          final donateNotifier = ref.watch(donateNotifierProvider);
+          // 데이터 로딩 여부 확인
+          if (!isLoaded && donateNotifier.donateCountry != null) {
+            // 데이터 로딩 완료 상태로 변경
+            isLoaded = true;
+          }
+          // 로딩 상태에 따라 UI 분기
+          if (!isLoaded) {
+            return const Center(child: CircularProgressIndicator(color: PRIMARY_BLUE_COLOR));
+          } else {
+            return Dialog(
+              child: DonateCountryCard.fromModel(
+                model: donateNotifier.donateCountry!,
+                isDetail: false, // 상세 페이지용 카드로 표시
+              ),
+            );
+          }
+        },
+      );
     },
   );
 }
+
