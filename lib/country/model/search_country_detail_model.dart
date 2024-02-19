@@ -20,6 +20,7 @@ class SearchCountryDetailModel extends SearchCountryModel {
     required String image,
     required int views,
     required int id,
+    required String country,
     required this.imageProducer,
     required this.contents,
     required this.detailImage,
@@ -33,6 +34,7 @@ class SearchCountryDetailModel extends SearchCountryModel {
     image: image,
     views: views,
     id: id,
+    country: country,
   );
 
   factory SearchCountryDetailModel.fromJson(Map<String, dynamic> json) =>

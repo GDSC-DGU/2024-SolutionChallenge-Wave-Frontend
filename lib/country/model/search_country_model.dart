@@ -10,9 +10,7 @@ class SearchCountryModel implements IModelWithId {
   final String category;
   final String mainTitle;
   final String subTitle;
-  @JsonKey(
-    fromJson: DataUtils.pathToUrl,
-  )
+  final String country;
   final String image;
   final int views;
   final int id;
@@ -24,6 +22,7 @@ class SearchCountryModel implements IModelWithId {
     required this.image,
     required this.views,
     required this.id,
+    required this.country,
   });
 
   factory SearchCountryModel.fromJson(Map<String, dynamic> json) =>

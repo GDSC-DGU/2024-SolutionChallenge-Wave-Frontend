@@ -32,7 +32,7 @@ class _SearchCountryRepository implements SearchCountryRepository {
     )
             .compose(
               _dio.options,
-              '/',
+              '/search',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -55,7 +55,7 @@ class _SearchCountryRepository implements SearchCountryRepository {
     )
             .compose(
               _dio.options,
-              '/${id}',
+              '/search/${id}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -79,7 +79,7 @@ class _SearchCountryRepository implements SearchCountryRepository {
     )
             .compose(
               _dio.options,
-              '/${id}/detail',
+              '/search/${id}/details',
               queryParameters: queryParameters,
               data: _data,
             )

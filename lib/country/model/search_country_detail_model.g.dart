@@ -12,9 +12,10 @@ SearchCountryDetailModel _$SearchCountryDetailModelFromJson(
       category: json['category'] as String,
       mainTitle: json['mainTitle'] as String,
       subTitle: json['subTitle'] as String,
-      image: DataUtils.pathToUrl(json['image'] as String),
+      image: json['image'] as String,
       views: json['views'] as int,
       id: json['id'] as int,
+      country: json['country'] as String,
       imageProducer: json['imageProducer'] as String,
       contents: (json['contents'] as List<dynamic>)
           .map((e) => Content.fromJson(e as Map<String, dynamic>))
@@ -33,6 +34,7 @@ Map<String, dynamic> _$SearchCountryDetailModelToJson(
       'category': instance.category,
       'mainTitle': instance.mainTitle,
       'subTitle': instance.subTitle,
+      'country': instance.country,
       'image': instance.image,
       'views': instance.views,
       'id': instance.id,

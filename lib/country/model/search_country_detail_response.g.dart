@@ -12,7 +12,7 @@ SearchCountryDetailResponse _$SearchCountryDetailResponseFromJson(
       success: json['success'] as bool,
       data: json['data'] == null
           ? null
-          : DonateCountryDetailModel.fromJson(
+          : SearchCountryDetailModel.fromJson(
               json['data'] as Map<String, dynamic>),
       error: json['error'],
     );

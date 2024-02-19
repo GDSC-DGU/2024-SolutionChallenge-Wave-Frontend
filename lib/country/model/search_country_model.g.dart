@@ -11,9 +11,10 @@ SearchCountryModel _$SearchCountryModelFromJson(Map<String, dynamic> json) =>
       category: json['category'] as String,
       mainTitle: json['mainTitle'] as String,
       subTitle: json['subTitle'] as String,
-      image: DataUtils.pathToUrl(json['image'] as String),
+      image: json['image'] as String,
       views: json['views'] as int,
       id: json['id'] as int,
+      country: json['country'] as String,
     );
 
 Map<String, dynamic> _$SearchCountryModelToJson(SearchCountryModel instance) =>
@@ -21,6 +22,7 @@ Map<String, dynamic> _$SearchCountryModelToJson(SearchCountryModel instance) =>
       'category': instance.category,
       'mainTitle': instance.mainTitle,
       'subTitle': instance.subTitle,
+      'country': instance.country,
       'image': instance.image,
       'views': instance.views,
       'id': instance.id,

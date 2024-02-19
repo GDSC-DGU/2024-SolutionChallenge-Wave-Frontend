@@ -15,7 +15,7 @@ part 'search_country_repository.g.dart';
 final searchCountryRepositoryProvider = Provider<SearchCountryRepository>((ref) {
   final dio = ref.watch(dioProvider);
 
-  final repository = SearchCountryRepository(dio, baseUrl: '$ip/api/v1/countries/search');
+  final repository = SearchCountryRepository(dio, baseUrl: '$ip/api/v1/countries');
 
   return repository;
 });
@@ -24,18 +24,18 @@ final searchCountryRepositoryProvider = Provider<SearchCountryRepository>((ref) 
 abstract class SearchCountryRepository {
   factory SearchCountryRepository(Dio dio, {String baseUrl}) = _SearchCountryRepository;
 
-  @GET('/')
+  @GET('/search')
   /// RESP 수정 필요
   Future<SearchCountriesResponse> getSearchCountries();
 
   // /api/v1/countries/search/{id}
-  @GET('/{id}')
+  @GET('/search/{id}')
   Future<SearchCountryResponse> getSearchCountry({
     @Path() required int id,
   });
 
   // /api/v1/countries/search/{id}/detail
-  @GET('/{id}/detail')
+  @GET('/search/{id}/details')
   Future<SearchCountryDetailResponse> getSearchCountryDetail({
     @Path() required int id,
   });
