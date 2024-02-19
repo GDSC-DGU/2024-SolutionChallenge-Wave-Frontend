@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wave/common/const/colors.dart';
 import 'package:wave/country/component/category_button.dart';
 import 'package:wave/country/component/forward_detail_button.dart';
 import 'package:wave/country/model/search_country_detail_model.dart';
@@ -180,11 +181,18 @@ class SearchCountryCard extends StatelessWidget {
                 });
               },
               width: 250,
-              height: 45,
+              height: 55,
               isSearch: true,
             ),
           ),
-          const SizedBox(height: 18.0),
+          Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: Divider(
+              color: BUTTON_BACKGROUND_COLOR,
+              height: 1.5,
+              thickness: 1.5,
+            ),
+          ),
         ],
       ),
     );

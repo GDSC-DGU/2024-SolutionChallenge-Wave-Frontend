@@ -32,15 +32,17 @@ class _SearchCountryDetailScreenState
     print('written id : ${widget.id}');
 
     super.initState();
-    Future.microtask(() =>
-        ref.read(searchNotifierProvider.notifier).fetchSearchCountryDetail(widget.id.toInt()));
+    Future.microtask(() => ref
+        .read(searchNotifierProvider.notifier)
+        .fetchSearchCountryDetail(widget.id.toInt()));
   }
 
   @override
   Widget build(BuildContext context) {
     final searchNotifier = ref.watch(searchNotifierProvider);
     final searchCountryModel = searchNotifier.searchCountry; // 기존 상태
-    final searchCountryDetailModel = searchNotifier.searchCountryDetail; // 상세 정보
+    final searchCountryDetailModel =
+        searchNotifier.searchCountryDetail; // 상세 정보
 
     // 로딩 중 또는 데이터 없음 처리
     if (searchCountryModel == null) {
@@ -61,7 +63,8 @@ class _SearchCountryDetailScreenState
                 // 상세 정보 로딩 상태 처리
                 if (searchCountryDetailModel == null) renderLoading(),
                 // 상세 정보가 로드되었다면, 상세 정보 UI 구성
-                if (searchCountryDetailModel != null) renderDetail(model: searchCountryDetailModel),
+                if (searchCountryDetailModel != null)
+                  renderDetail(model: searchCountryDetailModel),
               ],
             ),
           ),
@@ -75,20 +78,48 @@ class _SearchCountryDetailScreenState
   }) {
     return SliverPadding(
       padding: EdgeInsets.symmetric(
-        vertical: 16.0,
         horizontal: 16.0,
       ),
       sliver: SliverList(
-        delegate: SliverChildListDelegate(
-          [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 32.0),
-              child: Text(
-                model.detailImageTitle, ///테스트 테스트
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-            ),
-          ],
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            // index를 2로 나눈 몫을 사용하여 contents 리스트의 인덱스를 계산합니다.
+            // 이렇게 함으로써, 각 contents 객체에 대해 두 개의 위젯(타이틀과 컨텐츠)을 생성합니다.
+            int itemIndex = index ~/ 2;
+
+            // 홀수 인덱스의 경우 title, 짝수 인덱스의 경우 content를 표시합니다.
+            bool isTitle = index % 2 == 0;
+            Content content = model.contents[itemIndex];
+
+            if (isTitle) {
+              // 타이틀 표시
+              return Padding(
+                padding: const EdgeInsets.only(
+                    top: 30.0, bottom: 10.0), // 타이틀 위아래 패딩
+                child: Text(
+                  content.title,
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              );
+            } else {
+              // 컨텐츠 표시
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 30.0), // 컨텐츠 아래 패딩
+                child: Text(
+                  content.content,
+                  style: TextStyle(
+                    fontSize: 16.0,
+                  ),
+                ),
+              );
+            }
+          },
+          // contents 리스트의 길이의 2배만큼 위젯을 생성합니다.
+          // contents 객체당 타이틀과 컨텐츠 위젯이 하나씩 생성되므로, 총 위젯 수는 contents 객체 수의 2배입니다.
+          childCount: model.contents.length * 2,
         ),
       ),
     );
@@ -97,7 +128,7 @@ class _SearchCountryDetailScreenState
   SliverToBoxAdapter renderTop({
     required SearchCountryModel model,
   }) {
-    return  SliverToBoxAdapter(
+    return SliverToBoxAdapter(
       child: SearchCountryCard.fromModel(
         model: model, // 기존에 전달받은 모델 데이터 사용
         isDetail: true,
@@ -115,7 +146,7 @@ class _SearchCountryDetailScreenState
         delegate: SliverChildListDelegate(
           List.generate(
             3,
-                (index) => Padding(
+            (index) => Padding(
               padding: const EdgeInsets.only(bottom: 32.0),
               child: SkeletonParagraph(
                 style: const SkeletonParagraphStyle(

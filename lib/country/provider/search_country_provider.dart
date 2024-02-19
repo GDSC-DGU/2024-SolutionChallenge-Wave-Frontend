@@ -87,6 +87,7 @@ class SearchNotifier extends ChangeNotifier {
 
         if(searchCountry!=null){
           print('걸렸다ㅎㅎ@@@');
+          _setState(SearchState.loaded);
           return;
         }
 
