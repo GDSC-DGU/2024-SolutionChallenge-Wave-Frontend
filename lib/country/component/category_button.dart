@@ -10,13 +10,13 @@ class CategoryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     Color backgroundColor;
     switch (category) {
-      case 'Emergency':
+      case 'EMERGENCY':
         backgroundColor = EMERGENCY_RED_COLOR;
         break;
-      case 'Alert':
+      case 'AlERT':
         backgroundColor = ALERT_ORANGE_COLOR;
         break;
-      case 'Caution':
+      case 'CAUTION':
         backgroundColor = CAUTION_YELLO_COLOR;
         break;
       default:
