@@ -124,7 +124,7 @@ class SearchCountryCard extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -134,33 +134,34 @@ class SearchCountryCard extends StatelessWidget {
                       child: Text(
                         mainTitle,
                         style: TextStyle(
-                          fontSize: 16.0, // 조절된 글꼴 크기
-                          fontWeight: FontWeight.bold,
+                          fontSize: 14.7,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black.withOpacity(0.9),
                         ),
                       ),
                     ),
                     SvgPicture.asset('assets/icons/view.svg',
-                        width: 16, height: 16),
-                    SizedBox(width: 4),
+                        width: 12, height: 12),
+                    SizedBox(width: 3),
                     Text(
                       views.toString(),
                       style: TextStyle(fontSize: 14.0), // View 카운트 글꼴 크기
                     ),
                   ],
                 ),
-                SizedBox(height: 4.0),
                 Text(
                   subTitle,
                   style: TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 14.7,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.black.withOpacity(0.9),
                   ), // 조절된 subTitle 글꼴 크기
                 ),
               ],
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: ForwardDetailButton(
               buttonName: 'Learn their pain',
               onPressed: () {
@@ -169,10 +170,11 @@ class SearchCountryCard extends StatelessWidget {
                 });
               },
               width: 250,
+              height: 45,
               isSearch: true,
             ),
           ),
-          const SizedBox(height: 16.0),
+          const SizedBox(height: 18.0),
         ],
       ),
     );
