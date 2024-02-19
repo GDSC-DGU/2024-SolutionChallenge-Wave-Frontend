@@ -9,6 +9,7 @@ import 'package:wave/loading/loading_screen.dart';
 
 import '../model/donate_country_detail_model.dart';
 import 'package:skeletons/skeletons.dart';
+import 'package:wave/country/component/back_button.dart';
 
 class DonateCountryDetailScreen extends ConsumerStatefulWidget {
   static String get routeName => 'donateCountryDetail';
@@ -22,19 +23,41 @@ class DonateCountryDetailScreen extends ConsumerStatefulWidget {
       _DonateCountryDetailScreenState();
 }
 
-class _DonateCountryDetailScreenState
-    extends ConsumerState<DonateCountryDetailScreen> {
-  final ScrollController controller = ScrollController();
+class _DonateCountryDetailScreenState extends ConsumerState<DonateCountryDetailScreen> {
+  final ScrollController _scrollController = ScrollController();
+  Color _iconColor = Colors.white; // 초기 아이콘 색상은 흰색으로 설정
 
   @override
   void initState() {
-    // TODO: implement initState
-    print('written id : ${widget.id}');
-
     super.initState();
-    Future.microtask(() => ref
-        .read(donateNotifierProvider.notifier)
-        .fetchDonateCountryDetail(widget.id.toInt()));
+    _scrollController.addListener(_scrollListener); // 스크롤 리스너 등록
+
+    Future.microtask(() =>
+        ref.read(donateNotifierProvider.notifier).fetchDonateCountryDetail(widget.id));
+  }
+
+  void _scrollListener() {
+    const double threshold = 80; // 스크롤 임계값
+    if (_scrollController.offset >= threshold) {
+      if (_iconColor != Colors.black) {
+        setState(() {
+          _iconColor = Colors.black; // 스크롤 위치에 따라 아이콘 색상을 검정색으로 변경
+        });
+      }
+    } else {
+      if (_iconColor != Colors.white) {
+        setState(() {
+          _iconColor = Colors.white; // 스크롤 위치가 임계값 미만이면 아이콘 색상을 흰색으로 변경
+        });
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener); // 리스너 제거
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -51,11 +74,10 @@ class _DonateCountryDetailScreenState
     }
 
     return DefaultLayout(
-      child: Column(
+      child: Stack(
         children: [
-          Expanded(
-            child: CustomScrollView(
-              controller: controller,
+          CustomScrollView(
+            controller: _scrollController, // 여기에 _scrollController 할당
               slivers: [
                 renderTop(
                   model: donateCountryModel, // 기존 모델 사용
@@ -67,7 +89,11 @@ class _DonateCountryDetailScreenState
                   renderDetail(model: donateCountryDetailModel),
               ],
             ),
-          ),
+            // 뒤로가기 버튼
+            CustomBackButton(
+              iconColor: _iconColor, // 동적으로 변하는 아이콘 색상
+              onPressed: () => Navigator.of(context).pop(),
+            ),
         ],
       ),
     );
