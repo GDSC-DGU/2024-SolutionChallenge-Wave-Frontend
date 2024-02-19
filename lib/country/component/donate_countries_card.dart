@@ -85,7 +85,7 @@ class DonateCountryCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white, // 카드의 배경색을 설정합니다.
-        borderRadius: BorderRadius.circular(12.0), // 카드의 모서리를 둥글게 처리합니다.
+        borderRadius: BorderRadius.circular(15.0), // 카드의 모서리를 둥글게 처리합니다.
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
@@ -106,8 +106,8 @@ class DonateCountryCard extends StatelessWidget {
                     borderRadius: isDetail
                         ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
                         : const BorderRadius.only(
-                            topLeft: Radius.circular(12.0),
-                            topRight: Radius.circular(12.0),
+                            topLeft: Radius.circular(15.0),
+                            topRight: Radius.circular(15.0),
                           ),
                     child: image,
                   ),
@@ -117,11 +117,11 @@ class DonateCountryCard extends StatelessWidget {
                   borderRadius: isDetail
                       ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
                       : const BorderRadius.only(
-                          topLeft: Radius.circular(12.0),
-                          topRight: Radius.circular(12.0),
+                          topLeft: Radius.circular(15.0),
+                          topRight: Radius.circular(15.0),
                         ),
                   child: Container(
-                    height: 160,
+                    height: 180,
                     width: double.infinity,
                     child: image,
                   ),
@@ -136,7 +136,7 @@ class DonateCountryCard extends StatelessWidget {
                 child: Text(
                   "$mainTitle\n$subTitle",
                   style: const TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 18.0,
                       fontWeight: FontWeight.w700,
                       color: Colors.white),
                 ),
@@ -153,7 +153,7 @@ class DonateCountryCard extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 16.0,
+              horizontal: 26.0,
               vertical: 10,
             ),
             child: ForwardDetailButton(

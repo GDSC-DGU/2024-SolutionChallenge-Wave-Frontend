@@ -16,6 +16,7 @@ DonateCountryModel _$DonateCountryModelFromJson(Map<String, dynamic> json) =>
       lastWave: json['lastWave'] as int,
       casualties: json['casualties'] as int,
       id: json['id'] as int,
+      country: json['country'] as String,
     );
 
 Map<String, dynamic> _$DonateCountryModelToJson(DonateCountryModel instance) =>
@@ -27,5 +28,6 @@ Map<String, dynamic> _$DonateCountryModelToJson(DonateCountryModel instance) =>
       'allWave': instance.allWave,
       'lastWave': instance.lastWave,
       'casualties': instance.casualties,
+      'country': instance.country,
       'id': instance.id,
     };

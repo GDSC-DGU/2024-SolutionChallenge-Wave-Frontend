@@ -7,7 +7,7 @@ class CardVerticalDivider extends StatelessWidget {
 
   const CardVerticalDivider({
     Key? key,
-    this.height = 60,
+    this.height = 70,
     this.color = BUTTON_BACKGROUND_COLOR,
   }) : super(key: key);
 

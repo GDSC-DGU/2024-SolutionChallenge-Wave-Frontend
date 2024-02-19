@@ -77,7 +77,7 @@ class SearchCountryCard extends StatelessWidget {
       width: 270,
       decoration: BoxDecoration(
         color: Colors.white, // 카드의 배경색을 설정합니다.
-        borderRadius: BorderRadius.circular(12.0), // 카드의 모서리를 둥글게 처리합니다.
+        borderRadius: BorderRadius.circular(15.0), // 카드의 모서리를 둥글게 처리합니다.
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
@@ -98,8 +98,8 @@ class SearchCountryCard extends StatelessWidget {
                     borderRadius: isDetail
                         ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
                         : const BorderRadius.only(
-                            topLeft: Radius.circular(12.0),
-                            topRight: Radius.circular(12.0),
+                            topLeft: Radius.circular(15.0),
+                            topRight: Radius.circular(15.0),
                           ),
                     child: image,
                   ),
@@ -109,8 +109,8 @@ class SearchCountryCard extends StatelessWidget {
                   borderRadius: isDetail
                       ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
                       : BorderRadius.only(
-                          topLeft: Radius.circular(12.0),
-                          topRight: Radius.circular(12.0),
+                          topLeft: Radius.circular(15.0),
+                          topRight: Radius.circular(15.0),
                         ),
                   child: Container(
                     height: 160,

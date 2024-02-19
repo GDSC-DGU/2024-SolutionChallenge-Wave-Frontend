@@ -27,7 +27,7 @@ class ForwardDetailButton extends StatelessWidget {
         primary: BUTTON_BACKGROUND_COLOR, // 버튼 배경색 사용
         minimumSize: Size(buttonWidth, 54), // 동적으로 너비 설정
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(13.5),
         ),
       ),
       child: Row(
@@ -37,15 +37,15 @@ class ForwardDetailButton extends StatelessWidget {
             buttonName,
             style: TextStyle(
               color: BUTTON_TEXT_COLOR, // 버튼 텍스트 색상 사용
-              fontWeight: FontWeight.w600,
-              fontSize: isSearch == true ? 16 : 20, // isSearch가 true이면 폰트 크기를 14로 설정
+              fontWeight: FontWeight.w500,
+              fontSize: isSearch == true ? 16 : 18, // isSearch가 true이면 폰트 크기를 14로 설정
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 15),
             child: SvgPicture.asset(
               'assets/icons/rightArrow.svg', // SVG 아이콘 사용
-              height: isSearch == true ? 16 : 20, // isSearch가 true이면 SVG 아이콘 크기를 14로 설정
+              height: isSearch == true ? 16 : 18, // isSearch가 true이면 SVG 아이콘 크기를 14로 설정
             ),
           ),
         ],

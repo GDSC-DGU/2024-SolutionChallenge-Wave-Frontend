@@ -34,22 +34,37 @@ class DonateCardRow extends StatelessWidget {
 
   Column _buildStatColumn(String label, String value, Color color) {
     return Column(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 14,
+          style: TextStyle(
+            fontSize: 12,
             fontWeight: FontWeight.w600,
+            color: Colors.black.withOpacity(0.7),
           ),
         ),
+        SizedBox(height: 2,),
         Text(
           value,
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 19,
             fontWeight: FontWeight.w600,
             color: color, // Use the color parameter here
           ),
         ),
+        if (label == 'All Waves')
+          Text(
+            'Wave per 1USD',
+            style: TextStyle(
+              fontSize: 8.5,
+              fontWeight: FontWeight.w300,
+              color: Colors.black.withOpacity(0.6),
+            ),
+          )
+        else
+          const SizedBox(height: 8.5 + 4),
       ],
     );
   }

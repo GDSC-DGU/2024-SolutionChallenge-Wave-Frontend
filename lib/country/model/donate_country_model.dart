@@ -15,6 +15,7 @@ class DonateCountryModel implements IModelWithId {
   final int allWave;
   final int lastWave;
   final int casualties;
+  final String country;
   @override
   final int id;
 
@@ -27,6 +28,8 @@ class DonateCountryModel implements IModelWithId {
     required this.lastWave,
     required this.casualties,
     required this.id,
+    required this.country,
+
   });
 
   factory  DonateCountryModel.fromJson(Map<String, dynamic> json) =>

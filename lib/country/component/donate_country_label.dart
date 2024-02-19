@@ -12,11 +12,15 @@ class DonateCountryLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
-      child: Text(
-        countryName,
-        style: const TextStyle(
-          fontWeight: FontWeight.w600,
-          fontSize: 18,
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          countryName,
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 18,
+            color: Colors.black.withOpacity(0.9),
+          ),
         ),
       ),
     );

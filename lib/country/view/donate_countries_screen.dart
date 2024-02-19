@@ -139,7 +139,10 @@ class _DonateCountriesScreenState extends ConsumerState<DonateCountriesScreen> {
         return DefaultLayout(
           isSingleChildScrollViewNeeded: true,
           title: 'Sending Waves',
-          child: _buildCountriesList(state.donateCountries!),
+          child: Padding(
+            padding: const EdgeInsets.all(15), // 여기에 패딩을 추가합니다.
+            child: _buildCountriesList(state.donateCountries!),
+          ),
         );
       }
     });
@@ -151,7 +154,7 @@ class _DonateCountriesScreenState extends ConsumerState<DonateCountriesScreen> {
       children: countries
           .map((country) => Column(
         children: [
-          DonateCountryLabel(countryName: country.mainTitle),
+          DonateCountryLabel(countryName: country.country),
           DonateCountryCard(
             id: country.id,
             category: country.category,
