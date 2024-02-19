@@ -6,7 +6,7 @@ import 'package:wave/country/model/search_countries_response.dart';
 import 'package:wave/country/model/search_country_response.dart';
 import 'package:wave/country/model/search_country_detail_model.dart';
 import 'package:wave/country/model/search_country_model.dart';
-
+import 'package:collection/collection.dart';
 enum SearchState { idle, loading, loaded, error }
 
 final searchNotifierProvider = ChangeNotifierProvider((ref) => SearchNotifier(ref.watch(searchCountryRepositoryProvider)));
@@ -53,7 +53,7 @@ class SearchNotifier extends ChangeNotifier {
         searchCountriesData = response.data;
         _setState(SearchState.loaded);
         print('searchCountriesData: $searchCountriesData');
-        print('SearchState.loaded: ${state.index}');
+        print('SearchState.loaded1: ${state.index}');
       } else {
         _setError("Failed to load search countries data.");
       }
@@ -69,6 +69,7 @@ class SearchNotifier extends ChangeNotifier {
       if (response.success && response.data != null) {
         searchCountry = response.data;
         _setState(SearchState.loaded);
+        print('SearchState.loaded2: ${state.index}');
       } else {
         _setError("Failed to load search country data.");
       }
@@ -83,6 +84,16 @@ class SearchNotifier extends ChangeNotifier {
       final response = await _repository.getSearchCountryDetail(id: id);
       if (response.success && response.data != null) {
         searchCountryDetail = response.data!;
+
+        if(searchCountry!=null){
+          print('걸렸다ㅎㅎ@@@');
+          return;
+        }
+
+        searchCountry = searchCountriesData?.emergency?.firstWhereOrNull((country) => country.id == id) ??
+            searchCountriesData?.alert?.firstWhereOrNull((country) => country.id == id) ??
+            searchCountriesData?.caution?.firstWhereOrNull((country) => country.id == id);
+
         _setState(SearchState.loaded);
       } else {
         _setError("Failed to load search country detail.");
@@ -91,4 +102,5 @@ class SearchNotifier extends ChangeNotifier {
       _setError("Error fetching search country detail: $error");
     }
   }
+
 }
