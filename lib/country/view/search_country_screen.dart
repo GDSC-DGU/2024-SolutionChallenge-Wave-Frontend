@@ -30,8 +30,6 @@ class _SearchCountriesScreenState extends ConsumerState<SearchCountriesScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     final state = ref.watch(searchNotifierProvider);
 
     if (state.state != SearchState.loaded) {
@@ -45,14 +43,14 @@ class _SearchCountriesScreenState extends ConsumerState<SearchCountriesScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildSectionTitle(context, 'Emergency'),
+            _buildSectionTitle(context, 'EMERGENCY'),
             _buildCountryList(context, ref,
                 ref.watch(searchNotifierProvider.notifier)
                     .getEmergencyCountries()),
-            _buildSectionTitle(context, 'Alert'),
+            _buildSectionTitle(context, 'ALERT'),
             _buildCountryList(context, ref,
                 ref.watch(searchNotifierProvider.notifier).getAlertCountries()),
-            _buildSectionTitle(context, 'Caution'),
+            _buildSectionTitle(context, 'CAUTION'),
             _buildCountryList(context, ref,
                 ref.watch(searchNotifierProvider.notifier)
                     .getCautionCountries()),

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wave/common/const/colors.dart';
 import 'package:wave/country/component/category_button.dart';
 import 'package:wave/country/component/donate_card_row.dart';
+import 'package:wave/country/component/donatet_button.dart';
 import 'package:wave/country/component/forward_detail_button.dart';
 import 'package:wave/country/model/donate_country_detail_model.dart';
 import 'package:wave/country/view/donate_country_detail_screen.dart';
@@ -79,11 +82,13 @@ class DonateCountryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white, // 카드의 배경색을 설정합니다.
-        borderRadius: BorderRadius.circular(15.0), // 카드의 모서리를 둥글게 처리합니다.
+        color: Colors.white,
+        borderRadius: isDetail ==  true ? BorderRadius.zero : const BorderRadius.all(
+          Radius.circular(15.0),
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: isDetail ==  true ? Colors.transparent : Colors.grey.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 5,
             offset: Offset(0, 3), // changes position of shadow
@@ -94,7 +99,7 @@ class DonateCountryCard extends StatelessWidget {
         children: [
           Stack(
             children: [
-              if (heroKey != null)
+              if (heroKey != null) // heroKey != null => detail이 아닌 경우(지도에서 클릭시랑 2번째 탭화면)
                 Hero(
                   tag: ObjectKey(heroKey),
                   child: ClipRRect(
@@ -121,9 +126,10 @@ class DonateCountryCard extends StatelessWidget {
                     child: image,
                   ),
                 ),
-              Positioned(
-                child: CategoryButton(category: category),
-              ),
+              if (heroKey == null) // heroKey가 null => detail인 경우(컬러 카테고리 보여줄 필요 없음)
+                Positioned(
+                  child: CategoryButton(category: category),
+                ),
               Positioned(
                 bottom: 8,
                 left: 18,
@@ -146,6 +152,7 @@ class DonateCountryCard extends StatelessWidget {
               casualties: casualties,
             ),
           ),
+          if (!isDetail)
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 26.0,
@@ -154,30 +161,60 @@ class DonateCountryCard extends StatelessWidget {
             child: ForwardDetailButton(
               buttonName: 'Sending Waves',
               onPressed: () {
-                // Navigator를 사용해 상세 화면으로 이동
-                // 여기서는 `id`를 DonateCountryCard가 받은 `id` 프로퍼티를 사용
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => DonateCountryDetailScreen(id: id),
-                //   ),
-                // );
-
                 print('kiki');
                 context.pushNamed(DonateCountryDetailScreen.routeName,
                     pathParameters: {
                       'id': id.toString(),
                     });
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => DonateCountryDetailScreen(id: id),
-                //   ),
-                // );
               },
             ),
           ),
-          const SizedBox(height: 16.0),
+          if(isDetail)
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(12, 6, 6, 6),
+                  child: Container(
+                    width: 50, // 너비 50
+                    height: 50, // 높이 50
+                    decoration: BoxDecoration(
+                      color: Color(0xFFE2E2E8), // SVG 배경색
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5), // 그림자 색상과 투명도
+                          spreadRadius: 5, // 그림자 범위
+                          blurRadius: 7, // 그림자 퍼짐 정도
+                          offset: Offset(0, 3), // 그림자 위치
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(8), // 모서리 둥글게 처리
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0), // 내부 여백
+                      child: SvgPicture.asset(
+                        'assets/icons/share.svg', // SVG 이미지 경로. assets 디렉토리에 위치해야 합니다.
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: DonateButton(buttonName: 'Donate', onPressed: () {
+                      // 버튼 클릭 시 수행할 작업
+                    }),
+                  ),
+                ),
+              ],
+            ),
+         if(isDetail)
+           Padding(
+             padding: const EdgeInsets.symmetric(vertical: 10),
+             child: Divider(
+               color: BUTTON_BACKGROUND_COLOR,
+               thickness: 1.5,
+             ),
+           ),
         ],
       ),
     );
