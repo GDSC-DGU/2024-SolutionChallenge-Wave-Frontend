@@ -10,6 +10,8 @@ import 'package:wave/loading/loading_screen.dart';
 import '../model/donate_country_detail_model.dart';
 import 'package:skeletons/skeletons.dart';
 import 'package:wave/country/component/back_button.dart';
+import 'package:wave/country/component/country_detail_image.dart';
+import 'package:wave/country/component/custom_divider.dart';
 
 class DonateCountryDetailScreen extends ConsumerStatefulWidget {
   static String get routeName => 'donateCountryDetail';
@@ -82,11 +84,14 @@ class _DonateCountryDetailScreenState extends ConsumerState<DonateCountryDetailS
                 renderTop(
                   model: donateCountryModel, // 기존 모델 사용
                 ),
-                // 상세 정보 로딩 상태 처리
+               // 상세 정보 로딩 상태 처리
                 if (donateCountryDetailModel == null) renderLoading(),
                 // 상세 정보가 로드되었다면, 상세 정보 UI 구성
                 if (donateCountryDetailModel != null)
                   renderDetail(model: donateCountryDetailModel),
+                if (donateCountryDetailModel != null)
+                  renderCountryDetailImage(model: donateCountryDetailModel),
+                const CustomDividerSliver(),
               ],
             ),
             // 뒤로가기 버튼
@@ -186,4 +191,22 @@ class _DonateCountryDetailScreenState extends ConsumerState<DonateCountryDetailS
       ),
     );
   }
+  SliverToBoxAdapter renderCountryDetailImage({
+    required DonateCountryDetailModel model,
+  }) {
+    // detailImage, detailImageTitle, detailImageProducer가 null이 아닌 경우에만 CountryDetailImage 컴포넌트를 렌더링합니다.
+    if (model.detailImage != null && model.detailImageTitle != null && model.detailImageProducer != null) {
+      return SliverToBoxAdapter(
+        child: CountryDetailImage(
+          imageUrl: model.detailImage!,
+          title: model.detailImageTitle!,
+          producer: model.detailImageProducer!,
+        ),
+      );
+    } else {
+      // 필요한 정보가 없는 경우 빈 컨테이너를 반환합니다.
+      return SliverToBoxAdapter(child: Container());
+    }
+  }
+
 }

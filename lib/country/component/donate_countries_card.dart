@@ -81,7 +81,7 @@ class DonateCountryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: isDetail ==  true ? 500 : 380,
+      height: isDetail ==  true ? 500 : 360,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: isDetail ==  true ? BorderRadius.zero : const BorderRadius.all(
