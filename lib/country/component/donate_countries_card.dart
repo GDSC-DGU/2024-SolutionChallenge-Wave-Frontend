@@ -57,11 +57,6 @@ class DonateCountryCard extends StatelessWidget {
         model.image,
         fit: BoxFit.cover,
       ),
-      /// Test Image
-      // image: Image.asset(
-      //   'assets/images/testImg.png',
-      //   fit: BoxFit.cover,
-      // ),
       allWave: model.allWave,
       lastWave: model.lastWave,
       casualties: model.casualties,

@@ -7,8 +7,10 @@ import 'package:syncfusion_flutter_maps/maps.dart';
 import 'package:wave/common/const/colors.dart';
 import 'package:wave/common/layout/default_layout.dart';
 import 'package:wave/country/component/donate_countries_card.dart';
+import 'package:wave/country/component/search_countries_card.dart';
 import 'package:wave/country/model/donate_country_model.dart';
 import 'package:wave/country/provider/donate_country_provider.dart';
+import 'package:wave/country/provider/search_country_provider.dart';
 import 'package:wave/loading/loading_screen.dart';
 import 'package:wave/map/component/current_zoom_level.dart';
 import 'package:wave/map/component/risk_level_button.dart';
@@ -152,7 +154,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
                               showCustomModal(context, importantIdx,ref);
 
                             }else if(importantCountriesId.contains(importantIdx)){
-                              showCustomModal(context, importantIdx,ref);
+                              showCustomSearchModal(context, importantIdx,ref);
                             }
                           });
                         },
@@ -244,12 +246,8 @@ Widget BuildCustomCard(int countryId) {
 void showCustomModal(BuildContext context, int countryId, WidgetRef ref) async {
   // 상태 초기화
   bool isLoaded = false;
-
   // 데이터 로딩 시작
   await ref.read(donateNotifierProvider.notifier).fetchDonateCountry(countryId);
-
-
-  print('OMG');
   // 데이터 로딩 완료 후 다이얼로그 표시
   showDialog(
     context: context,
@@ -271,6 +269,42 @@ void showCustomModal(BuildContext context, int countryId, WidgetRef ref) async {
             return Dialog(
               child: DonateCountryCard.fromModel(
                 model: donateNotifier.donateCountry!,
+                isDetail: false, // 상세 페이지용 카드로 표시
+              ),
+            );
+          }
+        },
+      );
+    },
+  );
+}
+
+void showCustomSearchModal(BuildContext context, int countryId, WidgetRef ref) async {
+  // 상태 초기화
+  bool isLoaded = false;
+  // 데이터 로딩 시작
+  await ref.read(searchNotifierProvider.notifier).fetchSearchCountry(countryId);
+  // 데이터 로딩 완료 후 다이얼로그 표시
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      // Provider를 통해 최신 상태를 구독
+      return Consumer(
+        builder: (context, ref, _) {
+          final searchNotifier = ref.watch(searchNotifierProvider);
+          // 데이터 로딩 여부 확인
+          if (!isLoaded && searchNotifier.state == SearchState.loaded) {
+            // 데이터 로딩 완료 상태로 변경
+            isLoaded = true;
+          }
+          // 로딩 상태에 따라 UI 분기
+          if (!isLoaded) {
+            return const Center(child: CircularProgressIndicator(color: PRIMARY_BLUE_COLOR));
+          } else {
+            return Dialog(
+              child: SearchCountryCard.fromModel(
+                model: searchNotifier.searchCountry!,
                 isDetail: false, // 상세 페이지용 카드로 표시
               ),
             );
