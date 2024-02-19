@@ -165,9 +165,9 @@ class _DonateCountriesScreenState extends ConsumerState<DonateCountriesScreen> {
             lastWave: country.lastWave,
             casualties: country.casualties,
           ),
+          const SizedBox(height: 30,)
         ],
-      ))
-          .toList(),
+      )).toList(),
     );
   }
 }
