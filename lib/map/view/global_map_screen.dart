@@ -54,12 +54,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
       minZoomLevel: 1,
       maxZoomLevel: 10,
     );
-    // 중요 국가 데이터를 가져와서 초기화
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // _fetchImportantCountriesDataAndInitialize();
-    });
     _updateDataSource();
-
   }
 
   Future<void> _updateDataSource() async {
@@ -112,8 +107,8 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
   Widget build(BuildContext context) {
     final state = ref.watch(importantCountriesProvider);
     // 데이터 로딩 상태에 따른 UI 렌더링
-    if (state is ImportantCountriesLoading) {
-      return LoadingScreen();
+    if (state is ImportantCountriesLoading || _dataSource == null) {
+      return const LoadingScreen();
     } else if (state is ImportantCountriesError) {
       return DefaultLayout(
         child: Center(child: Text('⭐️ Error ⭐️: ${state.message}')),
