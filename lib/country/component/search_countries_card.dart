@@ -74,7 +74,7 @@ class SearchCountryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 270,
+      width: 300,
       decoration: BoxDecoration(
         color: Colors.white, // 카드의 배경색을 설정합니다.
         borderRadius: BorderRadius.circular(15.0), // 카드의 모서리를 둥글게 처리합니다.
@@ -113,7 +113,7 @@ class SearchCountryCard extends StatelessWidget {
                           topRight: Radius.circular(15.0),
                         ),
                   child: Container(
-                    height: 160,
+                    height: 150,
                     width: 300,
                     child: image,
                   ),
@@ -160,7 +160,7 @@ class SearchCountryCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 30.0),
             child: ForwardDetailButton(
               buttonName: 'Learn their pain',
               onPressed: () {

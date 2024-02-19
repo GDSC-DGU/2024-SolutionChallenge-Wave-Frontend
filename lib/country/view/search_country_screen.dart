@@ -37,21 +37,25 @@ class _SearchCountriesScreenState extends ConsumerState<SearchCountriesScreen> {
     if (state.state != SearchState.loaded) {
       return const Center(child: CircularProgressIndicator());
     }
-
     return DefaultLayout(
       isSingleChildScrollViewNeeded: true,
       title: 'Attention Countries',
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildSectionTitle(context, 'Emergency'),
-            _buildCountryList(context, ref, ref.watch(searchNotifierProvider.notifier).getEmergencyCountries()),
+            _buildCountryList(context, ref,
+                ref.watch(searchNotifierProvider.notifier)
+                    .getEmergencyCountries()),
             _buildSectionTitle(context, 'Alert'),
-            _buildCountryList(context, ref, ref.watch(searchNotifierProvider.notifier).getAlertCountries()),
+            _buildCountryList(context, ref,
+                ref.watch(searchNotifierProvider.notifier).getAlertCountries()),
             _buildSectionTitle(context, 'Caution'),
-            _buildCountryList(context, ref, ref.watch(searchNotifierProvider.notifier).getCautionCountries()),
+            _buildCountryList(context, ref,
+                ref.watch(searchNotifierProvider.notifier)
+                    .getCautionCountries()),
           ],
         ),
       ),
@@ -59,33 +63,53 @@ class _SearchCountriesScreenState extends ConsumerState<SearchCountriesScreen> {
   }
 
   Widget _buildSectionTitle(BuildContext context, String title) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        DonateCountryLabel(countryName: title),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(left: 5, top: 12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          DonateCountryLabel(countryName: title),
+        ],
+      ),
     );
   }
 
-  Widget _buildCountryList(BuildContext context, WidgetRef ref, List<SearchCountryModel> countries) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: countries.map((country) => Padding(
-          padding: const EdgeInsets.only(right: 20),
-          child: SearchCountryCard(
-            category: country.category,
-            mainTitle: country.mainTitle,
-            subTitle: country.subTitle,
-            image: Image.network(
-              country.image,
-              fit: BoxFit.cover,
+  Widget _buildCountryList(BuildContext context, WidgetRef ref,
+      List<SearchCountryModel> countries) {
+    return Column(
+      children: [
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Padding(
+            padding: const EdgeInsets.all(6), // 여기서 Row 전체에 대한 패딩을 설정합니다.
+            child: Row(
+              children: countries.map((country) =>
+                  Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    // 각 요소의 오른쪽에만 패딩을 적용합니다.
+                    child: SearchCountryCard(
+                      category: country.category,
+                      mainTitle: country.mainTitle,
+                      subTitle: country.subTitle,
+                      image: Image.network(
+                        country.image,
+                        fit: BoxFit.cover,
+                      ),
+                      views: country.views,
+                      id: country.id,
+                    ),
+                  )).toList(),
             ),
-            views: country.views,
-            id: country.id,
           ),
-        )).toList(),
-      ),
+        ),
+        SizedBox(height: 24,),
+        Container(
+          width: double.infinity, // 화면 전체 너비
+          height: 1.5, // 선의 굵기
+          color: Colors.black.withOpacity(0.1), // 색상 및 투명도 설정
+        ),
+        SizedBox(height: 5,)
+      ],
     );
   }
 }

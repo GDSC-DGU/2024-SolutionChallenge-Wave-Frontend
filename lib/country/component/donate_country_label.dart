@@ -11,7 +11,7 @@ class DonateCountryLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
+      padding: const EdgeInsets.fromLTRB(0, 3, 0, 10),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(
