@@ -16,6 +16,12 @@ import 'package:wave/map/model/important_countries_model.dart';
 
 import '../provider/global_map_provider.dart';
 
+/// todolist
+//1. 지도 화면에 그리기
+//2. 위험 국가 리스트 받아오기
+//3. 위험 국가 리스트에 따라 색상 변경하기
+
+
 class GlobalMapScreen extends ConsumerStatefulWidget {
   @override
   _GlobalMapScreenState createState() => _GlobalMapScreenState();
@@ -45,6 +51,10 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
   void initState() {
     _isLoading = true;
     super.initState();
+    _showHighRisk = !_showHighRisk;
+    _showMidRisk = !_showMidRisk;
+    _showLowRisk = !_showLowRisk;
+    _updateDataSource();
     _zoomPanBehavior = MapZoomPanBehavior(
       focalLatLng: const MapLatLng(34.8149, 39.02),
       enableDoubleTapZooming: true,
@@ -54,7 +64,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
       minZoomLevel: 1,
       maxZoomLevel: 10,
     );
-    _updateDataSource();
+
   }
 
   Future<void> _updateDataSource() async {
@@ -114,12 +124,10 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
         child: Center(child: Text('⭐️ Error ⭐️: ${state.message}')),
       );
     } else if (state is ImportantCountriesModel) {
-      // 데이터 로딩이 완료되었을 때만 데이터 소스를 업데이트합니다.
-      print('sibal');
       print('OMG1');
       if (_isLoading || _dataSource == null) {
         _updateRiskCountriesLists(state);
-        _updateDataSource();
+        // _updateDataSource();
         print('kikiki');
         print('OMG2');
         _isLoading = false;
