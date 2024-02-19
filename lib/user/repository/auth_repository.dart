@@ -22,7 +22,7 @@ abstract class AuthRepository {
     @Body() required GoogleLoginModel googleLoginModel,
   });
 
-  @PATCH('/logout')
+  @POST('/logout')
   @Headers({
     'accessToken': 'true',
   })

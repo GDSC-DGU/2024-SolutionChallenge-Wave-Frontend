@@ -24,7 +24,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
 
   final screens = [
     GlobalMapScreen(),
-    const DonateCountriesScreen(),
+    DonateCountriesScreen(),
     const SearchCountriesScreen(),
     const MyPageScreen(),
   ];
