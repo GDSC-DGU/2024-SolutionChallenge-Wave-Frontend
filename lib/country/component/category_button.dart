@@ -13,7 +13,7 @@ class CategoryButton extends StatelessWidget {
       case 'EMERGENCY':
         backgroundColor = EMERGENCY_RED_COLOR;
         break;
-      case 'AlERT':
+      case 'ALERT':
         backgroundColor = ALERT_ORANGE_COLOR;
         break;
       case 'CAUTION':
