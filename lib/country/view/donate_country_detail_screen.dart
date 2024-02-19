@@ -119,8 +119,7 @@ class _DonateCountryDetailScreenState
               );
             }
           },
-          childCount: model.contents.length * 2 -
-              1, // 타이틀과 내용을 모두 포함하되, 마지막에 추가 간격을 두지 않기 위해 -1 조정
+          childCount: model.contents.length * 2
         ),
       ),
     );
