@@ -22,16 +22,11 @@ class _DonationListScreenState extends ConsumerState<DonationListScreen> {
     final donationStateNotifier = ref.watch(userMeProvider.notifier);
     final donationResponse = donationStateNotifier.donationResponse; // 기부 목록 데이터
 
-    // donations 리스트가 null이거나 비어있지 않을 때 리스트를 보여줍니다.
-    //final DonationResponseModel donations = donationsDummy; //TODO: dummy data. 나중에 지우기
 
-    if (donationResponse == null) {
-      // 로딩 화면 또는 기부 목록이 없는 경우의 처리
-      return LoadingScreen();
-    } else {
+
       // 기부 목록이 있는 경우의 UI 구성
-      final donations = donationResponse.data.donateList;
-      final totalWave = donationResponse.data.totalWave;
+      final donations = donationResponse?.data.donateList ?? [];
+      final totalWave = donationResponse?.data.totalWave ?? 0;
       return Scaffold(
         appBar: _buildAppBar(), // _buildAppBar()는 별도로 정의된 상단 바를 반환하는 함수로 가정합니다.
         body: Column(
@@ -48,7 +43,8 @@ class _DonationListScreenState extends ConsumerState<DonationListScreen> {
               ),
             ),
             const SizedBox(height: 40,),
-            Expanded(
+            donations.isNotEmpty
+                ? Expanded(
               child: ListView.builder(
                 itemCount: donations.length,
                 itemBuilder: (context, index) {
@@ -56,11 +52,23 @@ class _DonationListScreenState extends ConsumerState<DonationListScreen> {
                   return DonationListTile(donation: donation.toJson());
                 },
               ),
+            )
+                : Expanded(
+              child: Center(
+                child: Text(
+                  'There is no history of donation.\nPlease give rise to 🌊Wave🌊\nthat will make a difference in the world!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black.withOpacity(0.7),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
             ),
           ],
         ),
       );
-    }
   }
 
   AppBar _buildAppBar() {
@@ -81,56 +89,3 @@ class _DonationListScreenState extends ConsumerState<DonationListScreen> {
     );
   }
 }
-
-//TODO: dummy data. 나중에 지우기
-// final DonationResponseModel donationsDummy = DonationResponseModel(
-//   success: true,
-//   data: DonationResponseData(
-//     totalWave: 1000,
-//     donateList: [
-//       DonationModel(
-//         date: '1.27',
-//         country: '🇺🇦 Ukraine',
-//         time: '22:38',
-//         waves: 130,
-//       ),
-//       DonationModel(
-//         date: '1.27',
-//         country: '🇵🇸 Palestine - Israel',
-//         time: '17:29',
-//         waves: 54,
-//       ),
-//       DonationModel(
-//         date: '1.27',
-//         country: '🇵🇸 Palestine - Israel',
-//         time: '17:29',
-//         waves: 54,
-//       ),
-//       DonationModel(
-//         date: '1.27',
-//         country: '🇵🇸 Palestine - Israel',
-//         time: '17:29',
-//         waves: 54,
-//       ),
-//       DonationModel(
-//         date: '1.27',
-//         country: '🇵🇸 Palestine - Israel',
-//         time: '17:29',
-//         waves: 54,
-//       ),
-//       DonationModel(
-//         date: '1.27',
-//         country: '🇵🇸 Palestine - Israel',
-//         time: '17:29',
-//         waves: 54,
-//       ),
-//       DonationModel(
-//         date: '1.27',
-//         country: '🇵🇸 Palestine - Israel',
-//         time: '17:29',
-//         waves: 54,
-//       ),
-//     ],
-//   ),
-//   error: null,
-// );

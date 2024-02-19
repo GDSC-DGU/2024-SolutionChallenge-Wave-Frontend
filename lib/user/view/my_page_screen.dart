@@ -72,99 +72,102 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
       return DefaultLayout(
         title: 'My Page',
         isSingleChildScrollViewNeeded: true,
-        child: Column(
-          children: [
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Donation Profile',
-                style: TextStyle(fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black),
-              ),
-            ),
-            const SizedBox(height: 8),
-            Container(
-              padding: const EdgeInsets.all(20.0),
-              decoration: BoxDecoration(
-                color: const Color(0xFF247EF4),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Column(
-                children: [
-                  Row(
+          child: Padding(
+          padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Donation Profile',
+                    style: TextStyle(fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Container(
+                  padding: const EdgeInsets.all(20.0),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF247EF4),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
                     children: [
-                      Expanded(
-                        child: Text(
-                          user.nickname,
-                          style: const TextStyle(fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white),
-                        ),
-                      ),
-                      OutlinedButton(
-                        onPressed: () =>
-                            showConfirmationDialog(
-                              context,
-                              'Do you want to logout?',
-                              'You will be returned to the login screen.',
-                              _logout,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              user.nickname,
+                              style: const TextStyle(fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white),
                             ),
-                        style: OutlinedButton.styleFrom(
-                          side: const BorderSide(
-                              color: Colors.white, width: 1.2),
-                          minimumSize: const Size(80, 30),
-                        ),
-                        child: const Text('Log out', style: TextStyle(
-                            color: Colors.white, fontSize: 10)),
+                          ),
+                          OutlinedButton(
+                            onPressed: () =>
+                                showConfirmationDialog(
+                                  context,
+                                  'Do you want to logout?',
+                                  'You will be returned to the login screen.',
+                                  _logout,
+                                ),
+                            style: OutlinedButton.styleFrom(
+                              side: const BorderSide(
+                                  color: Colors.white, width: 1.2),
+                              minimumSize: const Size(80, 30),
+                            ),
+                            child: const Text('Log out', style: TextStyle(
+                                color: Colors.white, fontSize: 10)),
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: 35),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF242424), // 내부 박스 색상 변경
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: buildInfoSection(
+                            user.totalWave, user.donationCountryCnt),
+                      )
                     ],
                   ),
-                  const SizedBox(height: 35),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF242424), // 내부 박스 색상 변경
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: buildInfoSection(
-                        user.totalWave, user.donationCountryCnt),
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(height: 24),
-            ...[
-              'Donation list',
-              'Terms and conditions',
-              'Privacy policy',
-              'Unscribing membership'
-            ]
-                .map(
-                  (title) =>
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 8),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFF1F1F7),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(26, 10, 10, 10),
-                      child: ListTile(
-                        title: Text(
-                          title,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black.withOpacity(0.9),
+                ),
+                const SizedBox(height: 24),
+                ...[
+                  'Donation list',
+                  'Terms and conditions',
+                  'Privacy policy',
+                  'Unscribing membership'
+                ]
+                    .map(
+                      (title) =>
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 8),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFF1F1F7),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(26, 10, 10, 10),
+                          child: ListTile(
+                            title: Text(
+                              title,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black.withOpacity(0.9),
+                              ),
+                            ),
+                            trailing: const Icon(Icons.arrow_forward_ios),
+                            onTap: actions[title]!,
                           ),
                         ),
-                        trailing: const Icon(Icons.arrow_forward_ios),
-                        onTap: actions[title]!,
                       ),
-                    ),
-                  ),
-            ).toList(),
-          ],
-        ),
+                ).toList(),
+              ],
+            ),
+          )
       );
     }
   }
