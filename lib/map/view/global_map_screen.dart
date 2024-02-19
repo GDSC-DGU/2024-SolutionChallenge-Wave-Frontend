@@ -7,6 +7,7 @@ import 'package:syncfusion_flutter_maps/maps.dart';
 import 'package:wave/common/const/colors.dart';
 import 'package:wave/common/layout/default_layout.dart';
 import 'package:wave/country/component/donate_countries_card.dart';
+import 'package:wave/country/component/modal_donate_countries_card.dart';
 import 'package:wave/country/component/modal_search_countries_card.dart';
 import 'package:wave/country/component/search_countries_card.dart';
 import 'package:wave/country/model/donate_country_model.dart';
@@ -267,7 +268,7 @@ void showCustomModal(BuildContext context, int countryId, WidgetRef ref) async {
             return const Center(child: CircularProgressIndicator(color: PRIMARY_BLUE_COLOR));
           } else {
             return Dialog(
-              child: DonateCountryCard.fromModel(
+              child: ModalDonateCountryCard.fromModel(
                 model: donateNotifier.donateCountry!,
                 isDetail: false, // 상세 페이지용 카드로 표시
               ),
