@@ -7,8 +7,9 @@ MapDataLabelSettings getDataLabelSettings(double currentZoomLevel) {
     return const MapDataLabelSettings(
       overflowMode: MapLabelOverflow.visible,
       textStyle: TextStyle(
-        color: PRIMARY_BLUE_COLOR,
-        fontWeight: FontWeight.bold,
+        fontFamily: 'HelveticaNeue',
+        color: MAP_COUNTRY_COLOR,
+        fontWeight: FontWeight.w600,
         fontSize: 18,
       ),
     );
@@ -16,8 +17,9 @@ MapDataLabelSettings getDataLabelSettings(double currentZoomLevel) {
     return const MapDataLabelSettings(
       overflowMode: MapLabelOverflow.hide,
       textStyle: TextStyle(
-        color: PRIMARY_BLUE_COLOR,
-        fontWeight: FontWeight.bold,
+        fontFamily: 'HelveticaNeue',
+        color: MAP_COUNTRY_COLOR,
+        fontWeight: FontWeight.w600,
         fontSize: 15,
       ),
     );
@@ -25,9 +27,10 @@ MapDataLabelSettings getDataLabelSettings(double currentZoomLevel) {
     return const MapDataLabelSettings(
       overflowMode: MapLabelOverflow.hide,
       textStyle: TextStyle(
-        color: PRIMARY_BLUE_COLOR,
-        fontWeight: FontWeight.bold,
-        fontSize: 12,
+        fontFamily: 'HelveticaNeue',
+        color: MAP_COUNTRY_COLOR,
+        fontWeight: FontWeight.w600,
+        fontSize: 9,
       ),
     );
   }

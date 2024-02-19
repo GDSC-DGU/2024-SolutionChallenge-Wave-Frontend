@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+const MAP_COUNTRY_COLOR = Color(0xFF003263);
 // Primary Color
 const PRIMARY_BLUE_COLOR = Color(0xFF247EF4);
 // Button Color

@@ -31,7 +31,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
   MapShapeSource? _dataSource;
  MapZoomPanBehavior? _zoomPanBehavior;
   bool _isLoading = true;
-  double currentZoomLevel = 6;
+  double currentZoomLevel = 2;
 
   // api call로 받아온 데이터를 저장할 위험 국가 리스트 ID
   List<int> lowRiskCountriesId = [];
@@ -56,7 +56,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
     _showLowRisk = !_showLowRisk;
     _updateDataSource();
     _zoomPanBehavior = MapZoomPanBehavior(
-      focalLatLng: const MapLatLng(34.8149, 39.02),
+      focalLatLng: const MapLatLng(34.8149, 49.02),
       enableDoubleTapZooming: true,
       enablePanning: true,
       enablePinching: true,
