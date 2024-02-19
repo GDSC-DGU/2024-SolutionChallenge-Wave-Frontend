@@ -140,12 +140,21 @@ class SearchCountryCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SvgPicture.asset('assets/icons/view.svg',
-                        width: 12, height: 12),
+                    Align(
+                      alignment: Alignment.topCenter, // 기본값이므로, 필요에 따라 조정할 수 있습니다.
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 2), // SvgPicture.asset을 위로 조금 이동
+                        child: SvgPicture.asset('assets/icons/view.svg', width: 12, height: 12),
+                      ),
+                    ),
                     SizedBox(width: 3),
                     Text(
                       views.toString(),
-                      style: TextStyle(fontSize: 14.0), // View 카운트 글꼴 크기
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w300,
+                        color: Color(0xFF747474),
+                      ), // View 카운트 글꼴 크기
                     ),
                   ],
                 ),
