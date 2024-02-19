@@ -12,6 +12,7 @@ import 'package:skeletons/skeletons.dart';
 import 'package:wave/country/component/back_button.dart';
 import 'package:wave/country/component/country_detail_image.dart';
 import 'package:wave/country/component/custom_divider.dart';
+import 'package:wave/country/component/news_card.dart';
 
 class DonateCountryDetailScreen extends ConsumerStatefulWidget {
   static String get routeName => 'donateCountryDetail';
@@ -92,6 +93,9 @@ class _DonateCountryDetailScreenState extends ConsumerState<DonateCountryDetailS
                 if (donateCountryDetailModel != null)
                   renderCountryDetailImage(model: donateCountryDetailModel),
                 const CustomDividerSliver(),
+                if (donateCountryDetailModel != null && donateCountryDetailModel.news != null)
+                  renderNewsSection(newsList: donateCountryDetailModel.news!),
+                const CustomDividerNoLinerSliver(),
               ],
             ),
             // 뒤로가기 버튼
@@ -209,4 +213,47 @@ class _DonateCountryDetailScreenState extends ConsumerState<DonateCountryDetailS
     }
   }
 
+  SliverToBoxAdapter renderNewsSection({
+    required List<News> newsList,
+  }) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0), // 전체에 적용할 패딩
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Text(
+                'See More News', // 타이틀 텍스트
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Container(
+              height: 230,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: newsList.length,
+                itemBuilder: (context, index) {
+                  final news = newsList[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 12.0),
+                    child: NewsCard(
+                      newsImage: news.newsImage,
+                      newsTitle: news.newsTitle,
+                      newsUrl: news.newsUrl,
+                      date: news.date,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
