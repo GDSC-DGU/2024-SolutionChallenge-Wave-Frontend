@@ -49,18 +49,19 @@ class _DonateCountryDetailScreenState
     }
 
     return DefaultLayout(
-      isSingleChildScrollViewNeeded: true,
-      child: CustomScrollView(
-        controller: controller,
-        slivers: [
-          renderTop(
-            model: donateCountryModel, // 기존 모델 사용
-          ),
-          // 상세 정보 로딩 상태 처리
-          if (donateCountryDetailModel == null) renderLoading(),
-          // 상세 정보가 로드되었다면, 상세 정보 UI 구성
-          if (donateCountryDetailModel != null) renderDetail(model: donateCountryDetailModel),
-        ],
+      child: Expanded(
+        child: CustomScrollView(
+          controller: controller,
+          slivers: [
+            renderTop(
+              model: donateCountryModel, // 기존 모델 사용
+            ),
+            // 상세 정보 로딩 상태 처리
+            if (donateCountryDetailModel == null) renderLoading(),
+            // 상세 정보가 로드되었다면, 상세 정보 UI 구성
+            if (donateCountryDetailModel != null) renderDetail(model: donateCountryDetailModel),
+          ],
+        ),
       ),
     );
   }
