@@ -10,14 +10,33 @@ import '../component/donate_countries_card.dart';
 import '../component/donate_country_label.dart';
 import '../component/search_countries_card.dart';
 
-class SearchCountriesScreen extends ConsumerWidget {
+class SearchCountriesScreen extends ConsumerStatefulWidget {
   static String get routeName => 'searchCountry';
 
-  const SearchCountriesScreen({super.key});
+  const SearchCountriesScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    ref.read(searchNotifierProvider.notifier).fetchSearchCountries(); // Trigger data fetch
+  _SearchCountriesScreenState createState() => _SearchCountriesScreenState();
+}
+
+class _SearchCountriesScreenState extends ConsumerState<SearchCountriesScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() =>
+        ref.read(searchNotifierProvider.notifier).fetchSearchCountries()
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+
+    final state = ref.watch(searchNotifierProvider);
+
+    if (state.state != SearchState.loaded) {
+      return const Center(child: CircularProgressIndicator());
+    }
 
     return DefaultLayout(
       isSingleChildScrollViewNeeded: true,

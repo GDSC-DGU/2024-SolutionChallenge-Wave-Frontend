@@ -21,7 +21,6 @@ class SearchNotifier extends ChangeNotifier {
 
   SearchNotifier(this._repository);
 
-  // Adjust getters to use the correct data structure
   List<SearchCountryModel> getEmergencyCountries() {
     return searchCountriesData?.emergency ?? [];
   }
@@ -50,8 +49,11 @@ class SearchNotifier extends ChangeNotifier {
     try {
       final response = await _repository.getSearchCountries();
       if (response.success && response.data != null) {
+        print('SearchState.loaded: ${state.index}');
         searchCountriesData = response.data;
         _setState(SearchState.loaded);
+        print('searchCountriesData: $searchCountriesData');
+        print('SearchState.loaded: ${state.index}');
       } else {
         _setError("Failed to load search countries data.");
       }
