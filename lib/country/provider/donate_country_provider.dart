@@ -49,11 +49,11 @@ class DonateNotifier extends ChangeNotifier {
     try {
       final response = await _repository.getDonateCountry(id: id);
       if (response.success && response.data != null) {
-        print('isCountryLoading: $isCountryLoading');
+
         donateCountry = response.data!;
-        print('donateCountry: $donateCountry');
+
         isCountryLoading = false;
-        print('isCountryLoading: $isCountryLoading');
+
         notifyListeners(); // 상태 변경 알림 완료
         return response;
       }
@@ -77,15 +77,15 @@ class DonateNotifier extends ChangeNotifier {
         // 상세 정보 업데이트
         donateCountryDetail = response.data!;
         if(donateCountry!=null){
-          print('걸렸다ㅎㅎ');
+          if(donateCountries?.firstWhereOrNull((country) => country.id == id) != null){
+            donateCountry = donateCountries?.firstWhereOrNull((country) => country.id == id);
+          }
+          notifyListeners();
           return;
         }
         // 해당 국가의 기본 정보도 업데이트
         donateCountry = donateCountries?.firstWhereOrNull((country) => country.id == id);
-        print('여기서 걸린다');
-        print('donateCountries?.firstWhereOrNull: ${donateCountries?.firstWhereOrNull((country) => country.id == id)}');
-        print('donateCountryDetailNowNowNow: $donateCountryDetail');
-        print('donateCountryMatchedMatched: $donateCountry');
+
       }
     } catch (error) {
       print('Error fetching country detail: $error');
