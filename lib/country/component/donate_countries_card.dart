@@ -173,26 +173,24 @@ class DonateCountryCard extends StatelessWidget {
             Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(12, 6, 6, 6),
+                  padding: const EdgeInsets.fromLTRB(15, 6, 0, 6),
                   child: Container(
-                    width: 50, // 너비 50
-                    height: 50, // 높이 50
+                    width: 60, // 너비 60
+                    height: 60, // 높이 60
                     decoration: BoxDecoration(
-                      color: Color(0xFFE2E2E8), // SVG 배경색
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5), // 그림자 색상과 투명도
-                          spreadRadius: 5, // 그림자 범위
-                          blurRadius: 7, // 그림자 퍼짐 정도
-                          offset: Offset(0, 3), // 그림자 위치
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(8), // 모서리 둥글게 처리
+                      borderRadius: BorderRadius.circular(10), // 모서리 둥글게 처리
+                      image: const DecorationImage(
+                        image: AssetImage('assets/icons/share.png'), // PNG 이미지 경로
+                        fit: BoxFit.cover, // 이미지가 컨테이너를 꽉 채우도록 설정
+                      ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0), // 내부 여백
-                      child: SvgPicture.asset(
-                        'assets/icons/share.svg', // SVG 이미지 경로. assets 디렉토리에 위치해야 합니다.
+                    child: InkWell(
+                      onTap: () {
+                        // 버튼 클릭 시 수행할 작업
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        // 버튼 내부에 다른 위젯을 추가하고 싶다면 여기에 추가
                       ),
                     ),
                   ),
@@ -200,16 +198,21 @@ class DonateCountryCard extends StatelessWidget {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(16),
-                    child: DonateButton(buttonName: 'Donate', onPressed: () {
-                      // 버튼 클릭 시 수행할 작업
-                    }),
+                    child: DonateButton(
+                      buttonName: 'Donate',
+                      onPressed: () {
+                        // 버튼 클릭 시 수행할 작업
+                      },
+                      width: 270.0, // 버튼 너비를 200.0으로 설정
+                      height: 60.0, // 버튼 높이를 50.0으로 설정
+                    ),
                   ),
                 ),
               ],
             ),
          if(isDetail)
-           Padding(
-             padding: const EdgeInsets.symmetric(vertical: 10),
+           const Padding(
+             padding: EdgeInsets.symmetric(vertical: 10),
              child: Divider(
                color: BUTTON_BACKGROUND_COLOR,
                thickness: 1.5,
