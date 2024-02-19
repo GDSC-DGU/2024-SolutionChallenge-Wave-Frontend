@@ -38,7 +38,7 @@ abstract class DonateCountryRepository {
 
   /// 3. 기부 가능 국가 id 상세 조회
   // /api/v1/countries/donate/{id}/detail
-  @GET('/donate/{id}/detail')
+  @GET('/donate/{id}/details')
   Future<DonateCountryDetailResponse> getDonateCountryDetail({
     @Path() required int id,
   });

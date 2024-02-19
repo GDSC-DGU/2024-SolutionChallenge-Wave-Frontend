@@ -79,7 +79,7 @@ class _DonateCountryRepository implements DonateCountryRepository {
     )
             .compose(
               _dio.options,
-              '/donate/${id}/detail',
+              '/donate/${id}/details',
               queryParameters: queryParameters,
               data: _data,
             )
