@@ -3,11 +3,25 @@ import 'package:flutter/services.dart';
 import 'package:path_drawing/path_drawing.dart';
 import 'package:wave/common/const/colors.dart';
 import 'package:wave/common/layout/default_layout.dart';
+import 'package:wave/payment/models/payment_request.dart';
+import 'package:wave/user/view/donate_completion_screen.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'package:xml/xml.dart';
 import 'package:wave/map/component/border_thumb_shape.dart';
+
+import 'package:wave/payment/models/payment_request.dart';
+import 'dart:developer' as dev;
+
+/// Toss Payment 💵
+import 'package:toss_payment/feature/payments/webview/payment_webview.dart';
+
+/// Toss Payment ??
+/// Toss Payments 를 사용해 앱내 결제를 할 수 있는 flutter 라이브러리입니다.
+export 'package:toss_payment/extensions/uri_extension.dart';
+export 'package:toss_payment/feature/payments/webview/payment_webview.dart';
+import 'package:toss_payment/toss_payment.dart';
 
 /// FF5039(빨강) 247EF4(파랑)
 
@@ -131,23 +145,25 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
   Widget build(BuildContext context) {
     // 금액을 문자열로 변환하는 함수
     String _formattedAmount(double value) {
-      // _countries.length가 0이 아닐 경우에만 연산 수행
-      if (_countries.isNotEmpty) {
-        return "\$${(value * (1000 / _countries.length)).toStringAsFixed(0)}";
-      } else {
-        return "\$0"; // _countries.length가 0일 경우 기본값 반환
-      }
+      return "\$${(value * (1000 / _countries.length)).toStringAsFixed(0)}";
     }
 
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: Column(
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    return DefaultLayout(
+      isSingleChildScrollViewNeeded: true,
+      isNeededCenterAppbar: true,
+      title: 'Sending waves to ${widget.selectedCountry}',
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center, // 전체 컬럼을 화면 중앙으로
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 180),
-            child: Expanded(
-              child: Center(
+            child: Center(
+              child: Container(
+                width: screenWidth,
+                height: 1, // 여기에 원하는 높이 지정
                 child: CustomPaint(
                   painter: CountryPainter(countries: _countries),
                 ),
@@ -166,43 +182,45 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
               fontSize: 33.5,
             ),
           ),
-          SizedBox(
-            width: 370, // 여기서 슬라이더의 너비를 조절하세요
-            child: SliderTheme(
-              data: SliderTheme.of(context).copyWith(
-                trackHeight: 28.0,
-                trackShape: RoundedRectSliderTrackShape(),
-                activeTrackColor: PRIMARY_BLUE_COLOR,
-                inactiveTrackColor: Color(0xFFE2E2E8).withOpacity(0.3),
-                thumbShape: CircleThumbShape(thumbRadius: 13),
-                thumbColor: Colors.white,
-                tickMarkShape: RoundSliderTickMarkShape(),
-                inactiveTickMarkColor: Colors.white,
-                valueIndicatorShape: PaddleSliderValueIndicatorShape(),
-                valueIndicatorColor: Colors.white,
-              ),
-              child: Slider(
-                min: 0,
-                max: _countries.isNotEmpty ? _countries.length.toDouble() - 1 : 1.0,
-                value: _sliderValue,
-                onChanged: (value) {
-                  setState(() {
-                    _sliderValue = value;
-                    _updateColors(_sliderValue);
-                  });
-                },
-              ),
+          SliderTheme(
+            data: SliderTheme.of(context).copyWith(
+              trackHeight: 28.0,
+              trackShape: RoundedRectSliderTrackShape(),
+              activeTrackColor: PRIMARY_BLUE_COLOR,
+              inactiveTrackColor: Colors.grey[100],
+              thumbShape: CircleThumbShape(thumbRadius: 13),
+              thumbColor: Colors.white,
+              tickMarkShape: RoundSliderTickMarkShape(),
+              inactiveTickMarkColor: Colors.white,
+              valueIndicatorShape: PaddleSliderValueIndicatorShape(), //
+              valueIndicatorColor: Colors.white,
+            ),
+            child: Slider(
+              min: 0,
+              max: _countries.isNotEmpty
+                  ? _countries.length.toDouble() - 1
+                  : 1.0,
+              value: _sliderValue,
+              onChanged: (value) {
+                setState(() {
+                  print('slider value: $value');
+                  _sliderValue = value;
+                  _updateColors(_sliderValue);
+                });
+              },
             ),
           ),
           SizedBox(height: 20), // 슬라이더와 버튼 사이의 간격
           ElevatedButton(
             onPressed: () {
-              // 'Next' 버튼이 눌렸을 때의 액션
+              PaymentRequest? ret;
+              ret = PaymentRequest.card(amount: 10000, orderId: "8ak23s", orderName: "도도", customerName: '저쟈');
+              _showPayment(context, ret);
             },
             child: Text(
               'Next',
               style: TextStyle(
-                color: Color(0xFF363636).withOpacity(0.9),
+                color: Colors.black.withOpacity(0.9),
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
               ),
@@ -221,22 +239,57 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
     );
   }
 
-  AppBar _buildAppBar() {
-    return AppBar(
-      title: Text(
-        'Sending waves to ${widget.selectedCountry}',
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
-          color: Colors.black.withOpacity(0.9),
-        ),
-      ),
-      centerTitle: true,
-      leading: IconButton(
-        icon: const Icon(Icons.chevron_left),
-        onPressed: () => Navigator.pop(context),
-        iconSize: 40,
-      ),
-    );
+  _showPayment(BuildContext context, PaymentRequest request) async {
+    print(request.url);
+    var ret = await showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        enableDrag: false,
+        isDismissible: false,
+        builder: (context) {
+          bool success = false;
+          return Container(
+            margin: const EdgeInsets.only(top: 110),
+            child: PaymentWebView(
+              title: 'Wave Payment',
+              paymentRequestUrl: request.url,
+              onPageStarted: (url) {
+                dev.log('onPageStarted.url = $url', name: "PaymentWebView");
+              },
+              onPageFinished: (url) {
+                dev.log('onPageFinished.url = $url', name: "PaymentWebView");
+                // TODO something to decide the payment is successful or not.
+                print('onPageFinished.url = $url');
+                success = url.contains('success');
+                print('성공여부 = $success');
+                if (success) {
+                  if (url.contains('amount=100')) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DonateCompletionScreen()));
+                  }
+                }
+              },
+              onDisposed: () {
+                print('성공여부2 = $success');
+              },
+              onTapCloseButton: () {
+                Navigator.of(context).pop(success);
+              },
+            ),
+          );
+        });
+    dev.log('ret = $ret', name: '_showPayment');
   }
 }
+
+extension PaymentRequestExtension on PaymentRequest {
+  Uri get url {
+    // TODO 토스페이를 위해 만든 Web 주소를 넣어주세요. 아래는 예시입니다. => Test이므로, 예제 그대로!
+    return Uri.http("localhost:8080", "payment", json);
+  }
+}
+
+
