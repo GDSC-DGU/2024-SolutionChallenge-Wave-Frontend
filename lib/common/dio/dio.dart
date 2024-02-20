@@ -100,27 +100,29 @@ class CustomInterceptor extends Interceptor {
 
     /// 토큰 재발급 요청
 
-    // 토큰을 refresh하려는 의도가 아니었는데 403에러가 났다면?
+    // 토큰을 refresh하려는 의도가 아니었는데 401에러가 났다면?(401 -> token 만료)
     if (isStatus401 && !isPathRefresh) {
       final dio = Dio();
       try {
         print('token refresh start');
         final resp = await dio.post(
-          '$ip/auth/token',
+          '$ip/api/v1/auth/refresh',
           options: Options(
             headers: {
-              'authorization': 'Bearer $refreshToken',
+              'Authorization': 'Bearer $refreshToken',
             },
           ),
         );
 
-        final newAccessToken = resp.data['accessToken'];
+        final newAccessToken = resp.headers.value('Authorization');
 
-        print('새롭게 발급된 accessToken!:  $accessToken');
-        final options = err.requestOptions;
+        print('NEW NEW NEW! $accessToken');
+
+        final options = err.requestOptions; //요청을보낼때 필요한 모든값은 equestOptions에 잇다
+
 
         options.headers.addAll({
-          'authorization': 'Bearer $accessToken',
+          'authorization': 'Bearer $newAccessToken',
         });
 
         //storage 업데이트 당연히 필요
@@ -136,7 +138,6 @@ class CustomInterceptor extends Interceptor {
         return handler.reject(e);
       }
     }
-
     return handler.reject(err);
   }
 }
