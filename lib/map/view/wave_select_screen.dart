@@ -131,7 +131,12 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
   Widget build(BuildContext context) {
     // 금액을 문자열로 변환하는 함수
     String _formattedAmount(double value) {
-      return "\$${(value * (1000 / _countries.length)).toStringAsFixed(0)}";
+      // _countries.length가 0이 아닐 경우에만 연산 수행
+      if (_countries.isNotEmpty) {
+        return "\$${(value * (1000 / _countries.length)).toStringAsFixed(0)}";
+      } else {
+        return "\$0"; // _countries.length가 0일 경우 기본값 반환
+      }
     }
 
     return Scaffold(
@@ -176,7 +181,7 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
             ),
             child: Slider(
               min: 0,
-              max: _countries.isNotEmpty ? _countries.length.toDouble()-1  : 1.0,
+              max: _countries.isNotEmpty ? _countries.length.toDouble() - 1  : 1.0,
               value: _sliderValue,
               onChanged: (value) {
                 setState(() {
@@ -195,7 +200,7 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
             child: Text(
               'Next',
               style: TextStyle(
-                color: Colors.black.withOpacity(0.9),
+                color: Color(0xFF363636).withOpacity(0.9),
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
               ),
