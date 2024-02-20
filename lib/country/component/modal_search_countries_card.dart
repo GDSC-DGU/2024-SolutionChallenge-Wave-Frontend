@@ -77,6 +77,14 @@ class ModalSearchCountryCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3), // 그림자 색상 설정
+            spreadRadius: 1, // 그림자 확산 반경
+            blurRadius: 10, // 그림자 흐림 정도
+            offset: Offset(0, 1), // 그림자의 위치 조정
+          ),
+        ],
       ),
       child: Column(
         children: [
