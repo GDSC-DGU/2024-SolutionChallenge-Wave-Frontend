@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wave/main.dart';
 
 import '../common/layout/default_layout.dart';
 import '../user/view/login_screen.dart';
@@ -20,6 +21,13 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    prefs.setBool('isFirstRun', false); // 앱이 최초로 실행되었는지 여부를 확인후, 최초일떄만 온보딩 보여주기(물론 마이페이지에서 볼 수도 있음)
+    super.initState();
+  }
 
   // 타이틀과 내용
   final List<Map<String, String>> pageData = [

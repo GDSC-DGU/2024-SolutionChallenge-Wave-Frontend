@@ -27,13 +27,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await MockServer.startServer();
-  // 앱이 최초로 실행되었는지 여부를 확인하고, 최초 실행이 아니면 isFirst 키를 false로 설정
+  // 온보딩 화면을 보여주기 위해, 최초 실행 여부를 확인
   prefs = await SharedPreferences.getInstance();
-  bool isFirstRun = prefs.getBool('isFirstRun') ?? true;
-  if (isFirstRun) {
-    // 최초 실행 시 isFirstRun 키를 false로 설정하여 다음 실행부터 온보딩이 표시되지 않도록 함
-    await prefs.setBool('isFirstRun', false);
-  }
+  prefs.setBool('isFirstRun', true);
   runApp(const ProviderScope(child: _App()));
 }
 
