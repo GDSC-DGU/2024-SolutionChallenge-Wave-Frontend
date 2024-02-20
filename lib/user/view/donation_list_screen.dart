@@ -83,8 +83,9 @@ class _DonationListScreenState extends ConsumerState<DonationListScreen> {
       ),
       centerTitle: true,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
+        icon: const Icon(Icons.arrow_back_ios),
         onPressed: () => Navigator.pop(context),
+        iconSize: 24,
       ),
     );
   }

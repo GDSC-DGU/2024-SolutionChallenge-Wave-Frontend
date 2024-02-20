@@ -226,8 +226,9 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
       ),
       centerTitle: true,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back),
+        icon: const Icon(Icons.chevron_left),
         onPressed: () => Navigator.pop(context),
+        iconSize: 40,
       ),
     );
   }
