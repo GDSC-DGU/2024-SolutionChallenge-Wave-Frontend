@@ -97,6 +97,21 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
     _loadSvgImage('assets/images/${widget.selectedCountry.toLowerCase()}.svg');
   }
 
+  double calculatePaymentAmount(double sliderValue) {
+    return sliderValue * (1200 / _countries.length) * 100;
+  }
+
+  void onPaymentButtonPressed() {
+    double amount = calculatePaymentAmount(_sliderValue); // 실제 결제 금액 계산
+    PaymentRequest request = PaymentRequest.card(
+        amount: amount.round(), // 계산된 금액을 반올림하여 정수로 변환
+        orderId: "8ak23s",
+        orderName: "도도",
+        customerName: '저쟈'
+    );
+    _showPayment(context, request); // 결제 요청
+  }
+
   Future<void> _loadSvgImage(String svgImage) async {
     final String svgContent = await rootBundle.loadString(svgImage);
     final document = XmlDocument.parse(svgContent);
@@ -212,11 +227,7 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
           ),
           SizedBox(height: 20), // 슬라이더와 버튼 사이의 간격
           ElevatedButton(
-            onPressed: () {
-              PaymentRequest? ret;
-              ret = PaymentRequest.card(amount: 10000, orderId: "8ak23s", orderName: "도도", customerName: '저쟈');
-              _showPayment(context, ret);
-            },
+            onPressed: onPaymentButtonPressed,
             child: Text(
               'Next',
               style: TextStyle(

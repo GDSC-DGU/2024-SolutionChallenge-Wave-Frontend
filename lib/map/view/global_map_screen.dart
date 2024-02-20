@@ -77,7 +77,6 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
   }
 
   Future<void> _updateDataSource() async {
-    print('now is time');
     final jsonString =
         await rootBundle.loadString('assets/maps/world_map.json');
     final jsonResponse = json.decode(jsonString);
@@ -133,16 +132,13 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
         child: Center(child: Text('⭐️ Error ⭐️: ${state.message}')),
       );
     } else if (state is ImportantCountriesModel) {
-      print('OMG1');
+
       if (_isLoading || _dataSource == null) {
         _updateRiskCountriesLists(state);
         // _updateDataSource();
-        print('kikiki');
-        print('OMG2');
         _isLoading = false;
       }
     }
-    print('OMG3');
     return DefaultLayout(
             title: 'World Conflict Map',
             child: Container(
@@ -153,10 +149,9 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
                     layers: [
                       MapShapeLayer(
                         onSelectionChanged: (int index) {
-                          print('importantCountriesId: $importantCountriesId');
                           setState(() {
                            final importantIdx =  features[index]['properties']['id'];
-                            print(importantIdx);
+
                             if (donatePossibleCountriesId.contains(importantIdx)) {
                               showCustomModal(context, importantIdx,ref);
 
@@ -173,9 +168,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
                             longitude: model.longitude,
                             child: GestureDetector(
                               onTap: () {
-                                print('마커 클릭: ${model.id}');
                                 final countryId =  model.id;
-                                print('countryId: $countryId');
                                 if (donatePossibleCountriesId.contains(countryId)) {
                                   showCustomModal(context, countryId, ref);
                                 } else if (importantCountriesId.contains(countryId)) {
@@ -197,10 +190,6 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
                           onWillZoom: (MapZoomDetails details) {
                           setState(() {
                             if (details.newZoomLevel != null) {
-                              print(
-                                  "Zoom Level before zoom: ${details.previousZoomLevel}");
-                              print(
-                                  "Zoom Level after zoom: ${details.newZoomLevel}");
                               currentZoomLevel = details.newZoomLevel!;
                               _updateDataSource();
                             }
