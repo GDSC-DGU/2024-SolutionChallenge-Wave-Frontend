@@ -6,6 +6,7 @@ import 'package:wave/common/provider/go_router.dart';
 import 'package:wave/map/view/global_map_screen.dart';
 import 'package:wave/map/view/wave_select_screen.dart';
 import 'package:wave/onboarding/onboarding_screen.dart';
+import 'package:wave/payment/services/mock_server.dart';
 import 'package:wave/user/view/donation_list_screen.dart';
 import 'package:wave/user/view/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,16 +15,18 @@ import 'firebase_options.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'loading/loading_screen.dart';
+import 'payment/models/payment_request.dart';
 
 // 전역 변수로 쓰기 위해, 메인함수 밖에서 사용해주었다.
 late SharedPreferences prefs;
 
-// //⭐️ 아래에 스크린 UI 빌딩 빠르게 볼 수 있는 주석 코드 있음 ⭐️
+//⭐️ 아래에 스크린 UI 빌딩 빠르게 볼 수 있는 주석 코드 있음 ⭐️
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await MockServer.startServer();
   // 앱이 최초로 실행되었는지 여부를 확인하고, 최초 실행이 아니면 isFirst 키를 false로 설정
   prefs = await SharedPreferences.getInstance();
   bool isFirstRun = prefs.getBool('isFirstRun') ?? true;
@@ -53,8 +56,13 @@ class _App extends ConsumerWidget {
     );
   }
 }
-
-//// ⭐️ TEST CODE: 아래처럼 UI만 보고 싶을 때 위에 기존거 주석 처리 하고 ✅
+extension PaymentRequestExtension on PaymentRequest {
+  Uri get url {
+    // TODO 토스페이를 위해 만든 Web 주소를 넣어주세요. 아래는 예시입니다. => Test이므로, 예제 그대로 8080
+    return Uri.http("localhost:8080", "payment", json);
+  }
+}
+// //// ⭐️ TEST CODE: 아래처럼 UI만 보고 싶을 때 위에 기존거 주석 처리 하고 ✅
 // void main() async{
 //   WidgetsFlutterBinding.ensureInitialized();
 //   await Firebase.initializeApp(
@@ -77,7 +85,8 @@ class _App extends ConsumerWidget {
 //         fontFamily: 'Pretendard',
 //       ),
 //       debugShowCheckedModeBanner: false,
-//       home: WaveSelectScreen(selectedCountry: 'Yemen'), // 여기 원하는 스크린 대입 ✅
+//       home: WaveSelectScreen(selectedCountry: 'israel'), // 여기 원하는 스크린 대입 ✅
 //     );
 //   }
 // }
+
