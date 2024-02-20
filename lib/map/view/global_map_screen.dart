@@ -146,7 +146,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
               child: Stack(
                 children: [
                   Positioned.fill(
-                    child: BlueGridPattern(), // 파란색 격자무늬를 그리는 커스텀 위젯
+                    child: BlueGridPattern(zoomLevel: currentZoomLevel), // 파란색 격자무늬를 그리는 커스텀 위젯
                   ),
                   SfMaps(
                     layers: [
@@ -342,34 +342,50 @@ void showCustomSearchModal(BuildContext context, int countryId, WidgetRef ref) a
 }
 
 class BlueGridPattern extends StatelessWidget {
+  final double zoomLevel;
+
+  const BlueGridPattern({Key? key, required this.zoomLevel}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: GridPainter(),
+      painter: GridPainter(zoomLevel: zoomLevel),
     );
   }
 }
 
 class GridPainter extends CustomPainter {
+  final double zoomLevel;
+
+  GridPainter({required this.zoomLevel});
+
   @override
   void paint(Canvas canvas, Size size) {
     var paint = Paint()
-      ..color = PRIMARY_BLUE_COLOR.withOpacity(0.5) // 파란색 격자무늬 색상 설정
+      ..color = Colors.blue.withOpacity(0.2)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.5;
+      ..strokeWidth = 1;
 
-    double gridSpace = 155; // 격자 간격 설정
-    for (double i = 70; i < size.width; i += gridSpace) {
+    // zoomLevel에 따라 격자 간격을 조절
+    double gridSpace = 45 * zoomLevel;
+
+    // 격자를 그림
+    for (double i = 0; i < size.width; i += gridSpace) {
       canvas.drawLine(Offset(i, 0), Offset(i, size.height), paint);
     }
-    for (double i = -100; i < size.height; i += gridSpace) {
+    for (double i = 0; i < size.height; i += gridSpace) {
       canvas.drawLine(Offset(0, i), Offset(size.width, i), paint);
     }
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant GridPainter oldDelegate) {
+    // zoomLevel이 변경되었는지 여부에 따라 다시 그릴지 결정
+    return oldDelegate.zoomLevel != zoomLevel;
+  }
 }
+
+
 
 class Model {
   const Model(this.country, this.latitude, this.longitude, this.id);
