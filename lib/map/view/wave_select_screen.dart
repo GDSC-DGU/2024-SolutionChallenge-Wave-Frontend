@@ -166,30 +166,32 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
               fontSize: 33.5,
             ),
           ),
-          SliderTheme(
-            data: SliderTheme.of(context).copyWith(
-              trackHeight: 28.0,
-              trackShape: RoundedRectSliderTrackShape(),
-              activeTrackColor: PRIMARY_BLUE_COLOR,
-              inactiveTrackColor: Colors.grey[100],
-              thumbShape: CircleThumbShape(thumbRadius: 13),
-              thumbColor: Colors.white,
-              tickMarkShape: RoundSliderTickMarkShape(),
-              inactiveTickMarkColor: Colors.white,
-              valueIndicatorShape: PaddleSliderValueIndicatorShape(), //
-              valueIndicatorColor: Colors.white,
-            ),
-            child: Slider(
-              min: 0,
-              max: _countries.isNotEmpty ? _countries.length.toDouble() - 1  : 1.0,
-              value: _sliderValue,
-              onChanged: (value) {
-                setState(() {
-                  print('slider value: $value');
-                  _sliderValue = value;
-                  _updateColors(_sliderValue);
-                });
-              },
+          SizedBox(
+            width: 370, // 여기서 슬라이더의 너비를 조절하세요
+            child: SliderTheme(
+              data: SliderTheme.of(context).copyWith(
+                trackHeight: 28.0,
+                trackShape: RoundedRectSliderTrackShape(),
+                activeTrackColor: PRIMARY_BLUE_COLOR,
+                inactiveTrackColor: Color(0xFFE2E2E8).withOpacity(0.3),
+                thumbShape: CircleThumbShape(thumbRadius: 13),
+                thumbColor: Colors.white,
+                tickMarkShape: RoundSliderTickMarkShape(),
+                inactiveTickMarkColor: Colors.white,
+                valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+                valueIndicatorColor: Colors.white,
+              ),
+              child: Slider(
+                min: 0,
+                max: _countries.isNotEmpty ? _countries.length.toDouble() - 1 : 1.0,
+                value: _sliderValue,
+                onChanged: (value) {
+                  setState(() {
+                    _sliderValue = value;
+                    _updateColors(_sliderValue);
+                  });
+                },
+              ),
             ),
           ),
           SizedBox(height: 20), // 슬라이더와 버튼 사이의 간격
