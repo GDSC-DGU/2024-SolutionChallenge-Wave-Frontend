@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
 import 'package:wave/common/const/colors.dart';
 import 'package:wave/common/layout/default_layout.dart';
@@ -50,7 +51,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
   bool _showHighRisk = false;
 
   List features = [];
-
+  late List<Model> _data;
   @override
   void initState() {
     _isLoading = true;
@@ -67,7 +68,12 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
       minZoomLevel: 1,
       maxZoomLevel: 12,
     );
-
+    _data = const <Model>[
+      Model('Ukraine', 10.5527, 38.5164,166),
+      Model('Yemen', 48.3794, 31.1656,173),
+      Model('Syria', 34.8021, 38.9968,153),
+      Model('Israel', 31.0461, 34.8516, 132),
+    ];
   }
 
   Future<void> _updateDataSource() async {
@@ -159,6 +165,30 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
                             }
                           });
                         },
+                        initialMarkersCount: 4,
+                        markerBuilder: (BuildContext context, int index) {
+                          final Model model = _data[index];
+                          return MapMarker(
+                            latitude: model.latitude,
+                            longitude: model.longitude,
+                            child: GestureDetector(
+                              onTap: () {
+                                print('마커 클릭: ${model.id}');
+                                final countryId =  model.id;
+                                print('countryId: $countryId');
+                                if (donatePossibleCountriesId.contains(countryId)) {
+                                  showCustomModal(context, countryId, ref);
+                                } else if (importantCountriesId.contains(countryId)) {
+                                  showCustomSearchModal(context, countryId, ref);
+                                }
+                              },
+                              child: SvgPicture.asset(
+                                'assets/icons/marker.svg',
+                              ),
+                            ),
+                          );
+                        },
+
                         source: _dataSource!,
                         zoomPanBehavior: _zoomPanBehavior,
                         showDataLabels: true,
@@ -315,4 +345,16 @@ void showCustomSearchModal(BuildContext context, int countryId, WidgetRef ref) a
     },
   );
 }
+
+
+class Model {
+  const Model(this.country, this.latitude, this.longitude, this.id);
+
+  final String country;
+  final double latitude;
+  final double longitude;
+  final int id;
+}
+
+
 
