@@ -136,15 +136,15 @@ class DonateCountryCard extends StatelessWidget {
                   child: CategoryButton(category: category),
                 ),
               Positioned(
-                bottom: 8,
-                left: 18,
+                bottom: 20,
+                left: 21,
                 right: 8,
                 child: Text(
                   "$mainTitle\n$subTitle",
-                  style: const TextStyle(
-                      fontSize: 18.0,
+                  style: TextStyle(
+                      fontSize: isDetail ? 21.0 : 18.0,
                       fontWeight: FontWeight.w700,
-                      color: Colors.white),
+                      color: Colors.white.withOpacity(0.9)),
                 ),
               ),
             ],

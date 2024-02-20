@@ -6,6 +6,7 @@ import 'package:wave/common/layout/default_layout.dart';
 import 'package:wave/country/component/see_all_button.dart';
 import 'package:wave/country/model/search_country_model.dart';
 import 'package:wave/country/provider/search_country_provider.dart';
+import '../../loading/loading_screen.dart';
 import '../component/donate_countries_card.dart';
 import '../component/donate_country_label.dart';
 import '../component/search_countries_card.dart';
@@ -33,7 +34,7 @@ class _SearchCountriesScreenState extends ConsumerState<SearchCountriesScreen> {
     final state = ref.watch(searchNotifierProvider);
 
     if (state.state != SearchState.loaded) {
-      return const Center(child: CircularProgressIndicator());
+      return const LoadingScreen();
     }
     return DefaultLayout(
       isSingleChildScrollViewNeeded: true,
