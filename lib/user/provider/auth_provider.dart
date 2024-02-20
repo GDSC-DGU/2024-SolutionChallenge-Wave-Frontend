@@ -2,12 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wave/common/view/initial_screen.dart';
 import 'package:wave/common/view/root_tab.dart';
 import 'package:wave/country/view/search_country_detail_screen.dart';
 import 'package:wave/country/view/search_country_screen.dart';
 import 'package:wave/country/view/donate_countries_screen.dart';
 import 'package:wave/country/view/donate_country_detail_screen.dart';
+import 'package:wave/main.dart';
 import 'package:wave/map/view/wave_select_screen.dart';
 import 'package:wave/onboarding/onboarding_screen.dart';
 import 'package:wave/user/provider/user_me_provider.dart';
@@ -117,21 +119,26 @@ class AuthProvider extends ChangeNotifier {
     // // // return null;
 
     final UserModelBase? user = ref.read(userMeProvider);
-
     final logginIn = state.matchedLocation == '/login';
+    // SharedPreferences에서 isFirstRun 값을 가져옴
+    final bool isFirstRun = prefs.getBool('isFirstRun') ?? true;
+    // 최초 실행이고 로그인 상태가 아니라면 온보딩 화면으로 리다이렉트
+    if (isFirstRun && user == null) {
+      return '/onboarding';
+    }
 
     if (user == null) {
       return logginIn ? null : '/login';
     }
 
-    if (user is UserModel) {
-      return logginIn || state.matchedLocation == '/splash' ? '/' : null;
-    }
-
-    // UserModelError
     if (user is UserModelError) {
       return !logginIn ? '/login' : null;
     }
+
+    if (user is UserModel &&
+        (state.matchedLocation == '/onboarding' ||
+            state.matchedLocation == '/login' ||
+            state.matchedLocation == '/splash')) return '/';
 
     return null;
   }

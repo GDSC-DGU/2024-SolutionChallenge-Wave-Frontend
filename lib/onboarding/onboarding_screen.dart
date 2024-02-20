@@ -7,7 +7,7 @@ import '../common/layout/default_layout.dart';
 import '../user/view/login_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
-  static String get routeName => 'onboarding1';
+  static String get routeName => 'onboarding';
 
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();

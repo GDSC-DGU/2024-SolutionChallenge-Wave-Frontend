@@ -50,6 +50,7 @@ dependencies:
   uuid: ^3.0.7
   flutter_local_notifications: ^15.1.0+1
   permission_handler: ^10.4.3
+  shared_preferences: ^2.2.2
   flutter_localization: ^0.1.13
   url_launcher: ^6.1.12
   webview_flutter: ^4.2.4
