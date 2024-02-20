@@ -86,21 +86,7 @@ class ModalDonateCountryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 380,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: isDetail ==  true ? BorderRadius.zero : const BorderRadius.all(
-          Radius.circular(15.0),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: isDetail ==  true ? Colors.transparent : Colors.grey.withOpacity(0.5),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
+      height: 310,
       child: Column(
         children: [
           Stack(
@@ -112,10 +98,16 @@ class ModalDonateCountryCard extends StatelessWidget {
                     borderRadius: isDetail
                         ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
                         : const BorderRadius.only(
-                      topLeft: Radius.circular(15.0),
-                      topRight: Radius.circular(15.0),
+                      topLeft: Radius.circular(20.0),
+                      topRight: Radius.circular(20.0),
                     ),
-                    child: image,
+                    child: Container(
+                      height: 150,
+                      width: double.infinity,
+                      child: image,
+
+                    ),
+
                   ),
                 ),
               if (heroKey == null)
@@ -162,7 +154,6 @@ class ModalDonateCountryCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 26.0,
-                vertical: 10,
               ),
               child: ForwardDetailButton(
                 buttonName: 'Sending Waves',
@@ -173,6 +164,9 @@ class ModalDonateCountryCard extends StatelessWidget {
                         'id': id.toString(),
                       });
                 },
+                width: 240, // 너비를 240으로 지정
+                height: 44, // 높이를 50으로 지정
+                isSearch: true,
               ),
             ),
           if(isDetail)
