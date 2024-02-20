@@ -122,6 +122,10 @@ class SearchCountryCard extends StatelessWidget {
                     child: image,
                   ),
                 ),
+              if (heroKey == null) // heroKey가 null => detail인 경우(컬러 카테고리 보여줄 필요 없음)
+                Positioned(
+                  child: CategoryButton(category: category),
+                ),
               if (isDetail)
                 Positioned(
                 bottom: 20,
