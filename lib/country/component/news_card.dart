@@ -70,15 +70,6 @@ class NewsCard extends StatelessWidget {
                       maxLines: 2, // 최대 2줄까지만 표시
                     ),
                   ),
-                  Text(
-                    'Read more...',
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                      color: Colors.white.withOpacity(0.9),
-                      fontWeight: FontWeight.w600,
-                      fontSize: 13,
-                    ),
-                  ),
                 ],
               ),
             ),

@@ -60,11 +60,13 @@ class News {
   final String newsImage;
   final String newsTitle;
   final String newsUrl;
+  final String date;
 
   News({
     required this.newsImage,
     required this.newsTitle,
     required this.newsUrl,
+    required this.date,
   });
 
   factory News.fromJson(Map<String, dynamic> json) => _$NewsFromJson(json);

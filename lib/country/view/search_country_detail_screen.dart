@@ -9,7 +9,10 @@ import 'package:wave/loading/loading_screen.dart';
 import 'package:skeletons/skeletons.dart';
 
 import '../model/search_country_detail_model.dart';
-
+import 'package:wave/country/component/back_button.dart';
+import 'package:wave/country/component/country_detail_image.dart';
+import 'package:wave/country/component/custom_divider.dart';
+import 'package:wave/country/component/news_card.dart';
 class SearchCountryDetailScreen extends ConsumerStatefulWidget {
   static String get routeName => 'searchCountryDetail';
 
@@ -24,17 +27,40 @@ class SearchCountryDetailScreen extends ConsumerStatefulWidget {
 
 class _SearchCountryDetailScreenState
     extends ConsumerState<SearchCountryDetailScreen> {
-  final ScrollController controller = ScrollController();
+  final ScrollController _scrollController = ScrollController();
+  Color _iconColor = Colors.white; // 초기 아이콘 색상은 흰색으로 설정
 
   @override
   void initState() {
-    // TODO: implement initState
-    print('written id : ${widget.id}');
-
     super.initState();
+    _scrollController.addListener(_scrollListener); // 스크롤 리스너 등록
     Future.microtask(() => ref
         .read(searchNotifierProvider.notifier)
         .fetchSearchCountryDetail(widget.id.toInt()));
+  }
+
+  void _scrollListener() {
+    const double threshold = 80; // 스크롤 임계값
+    if (_scrollController.offset >= threshold) {
+      if (_iconColor != Colors.black) {
+        setState(() {
+          _iconColor = Colors.black; // 스크롤 위치에 따라 아이콘 색상을 검정색으로 변경
+        });
+      }
+    } else {
+      if (_iconColor != Colors.white) {
+        setState(() {
+          _iconColor = Colors.white; // 스크롤 위치가 임계값 미만이면 아이콘 색상을 흰색으로 변경
+        });
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener); // 리스너 제거
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -51,11 +77,10 @@ class _SearchCountryDetailScreenState
     }
 
     return DefaultLayout(
-      child: Column(
+      child: Stack(
         children: [
-          Expanded(
-            child: CustomScrollView(
-              controller: controller,
+          CustomScrollView(
+              controller: _scrollController,
               slivers: [
                 renderTop(
                   model: searchCountryModel, // 기존 모델 사용
@@ -65,9 +90,19 @@ class _SearchCountryDetailScreenState
                 // 상세 정보가 로드되었다면, 상세 정보 UI 구성
                 if (searchCountryDetailModel != null)
                   renderDetail(model: searchCountryDetailModel),
+                if (searchCountryDetailModel != null)
+                  renderCountryDetailImage(model: searchCountryDetailModel),
+                const CustomDividerSliver(),
+                if (searchCountryDetailModel != null && searchCountryDetailModel.news != null)
+                  renderNewsSection(newsList: searchCountryDetailModel.news!),
+                const CustomDividerNoLinerSliver(),
               ],
             ),
-          ),
+            // 뒤로가기 버튼
+            CustomBackButton(
+              iconColor: _iconColor, // 동적으로 변하는 아이콘 색상
+              onPressed: () => Navigator.of(context).pop(),
+            ),
         ],
       ),
     );
@@ -156,6 +191,67 @@ class _SearchCountryDetailScreenState
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+  SliverToBoxAdapter renderCountryDetailImage({
+    required SearchCountryDetailModel model,
+  }) {
+    // detailImage, detailImageTitle, detailImageProducer가 null이 아닌 경우에만 CountryDetailImage 컴포넌트를 렌더링합니다.
+    if (model.detailImage != null && model.detailImageTitle != null && model.detailImageProducer != null) {
+      return SliverToBoxAdapter(
+        child: CountryDetailImage(
+          imageUrl: model.detailImage!,
+          title: model.detailImageTitle!,
+          producer: model.detailImageProducer!,
+        ),
+      );
+    } else {
+      // 필요한 정보가 없는 경우 빈 컨테이너를 반환합니다.
+      return SliverToBoxAdapter(child: Container());
+    }
+  }
+
+  SliverToBoxAdapter renderNewsSection({
+    required List<News> newsList,
+  }) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0), // 전체에 적용할 패딩
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Text(
+                'See More News', // 타이틀 텍스트
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Container(
+              height: 230,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: newsList.length,
+                itemBuilder: (context, index) {
+                  final news = newsList[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 12.0),
+                    child: NewsCard(
+                      newsImage: news.newsImage,
+                      newsTitle: news.newsTitle,
+                      newsUrl: news.newsUrl,
+                      date: news.date,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

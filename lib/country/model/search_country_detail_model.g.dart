@@ -60,10 +60,12 @@ News _$NewsFromJson(Map<String, dynamic> json) => News(
       newsImage: json['newsImage'] as String,
       newsTitle: json['newsTitle'] as String,
       newsUrl: json['newsUrl'] as String,
-    );
+      date: json['date'] as String,
+);
 
 Map<String, dynamic> _$NewsToJson(News instance) => <String, dynamic>{
       'newsImage': instance.newsImage,
       'newsTitle': instance.newsTitle,
       'newsUrl': instance.newsUrl,
-    };
+      'date': instance.date,
+};
