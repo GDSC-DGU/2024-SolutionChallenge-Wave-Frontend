@@ -73,7 +73,7 @@ class ModalSearchCountryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 300,
-      height: 410,
+      height: 370,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: isDetail ==  true ? BorderRadius.zero : const BorderRadius.all(
