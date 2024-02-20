@@ -87,6 +87,11 @@ class ModalDonateCountryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 310,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15), // 모서리를 15px 둥글게
+        color: Colors.white, // 여기에 배경색을 설정
+        // 필요하다면 여기에 boxShadow 등 다른 디자인 속성을 추가할 수 있습니다.
+      ),
       child: Column(
         children: [
           Stack(
@@ -98,8 +103,8 @@ class ModalDonateCountryCard extends StatelessWidget {
                     borderRadius: isDetail
                         ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
                         : const BorderRadius.only(
-                      topLeft: Radius.circular(20.0),
-                      topRight: Radius.circular(20.0),
+                      topLeft: Radius.circular(15.0),
+                      topRight: Radius.circular(15.0),
                     ),
                     child: Container(
                       height: 150,
@@ -109,6 +114,7 @@ class ModalDonateCountryCard extends StatelessWidget {
                     ),
 
                   ),
+
                 ),
               if (heroKey == null)
                 ClipRRect(
@@ -124,7 +130,6 @@ class ModalDonateCountryCard extends StatelessWidget {
                     child: image,
                   ),
                 ),
-              if (heroKey == null) // heroKey가 null => detail인 경우(컬러 카테고리 보여줄 필요 없음)
                 Positioned(
                   child: CategoryButton(category: category),
                 ),

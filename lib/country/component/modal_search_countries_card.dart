@@ -72,21 +72,11 @@ class ModalSearchCountryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
-      height: 370,
+      width: 310,
+      height: 300,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: isDetail ==  true ? BorderRadius.zero : const BorderRadius.all(
-          Radius.circular(15.0),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: isDetail ==  true ? Colors.transparent : Colors.grey.withOpacity(0.5),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: Offset(0, 3), // changes position of shadow
-          ),
-        ],
+        borderRadius: BorderRadius.circular(15),
       ),
       child: Column(
         children: [
@@ -94,7 +84,7 @@ class ModalSearchCountryCard extends StatelessWidget {
             children: [
               if (heroKey != null)
                 Hero(
-                  tag: ObjectKey(heroKey!),
+                  tag: ObjectKey(heroKey),
                   child: ClipRRect(
                     borderRadius: isDetail
                         ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
@@ -102,7 +92,11 @@ class ModalSearchCountryCard extends StatelessWidget {
                       topLeft: Radius.circular(15.0),
                       topRight: Radius.circular(15.0),
                     ),
-                    child: image,
+                    child: Container(
+                      height: 150,
+                      width: double.infinity,
+                      child: image,
+                    ),
                   ),
                 ),
               if (heroKey == null)
@@ -119,7 +113,6 @@ class ModalSearchCountryCard extends StatelessWidget {
                     child: image,
                   ),
                 ),
-              if (heroKey == null) // heroKey가 null => detail인 경우(컬러 카테고리 보여줄 필요 없음)
                 Positioned(
                   child: CategoryButton(category: category),
                 ),
@@ -172,7 +165,7 @@ class ModalSearchCountryCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: ForwardDetailButton(
               buttonName: 'Learn their pain',
               onPressed: () {
