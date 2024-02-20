@@ -15,6 +15,7 @@ import 'package:wave/onboarding/onboarding_screen.dart';
 import 'package:wave/user/provider/user_me_provider.dart';
 import 'package:wave/user/view/login_screen.dart';
 import 'package:wave/loading/loading_screen.dart';
+import 'package:wave/user/view/my_page_screen.dart';
 import '../../splash/splash_screen.dart';
 import '../model/user_model.dart';
 import 'package:wave/user/view/donation_list_screen.dart';
@@ -105,6 +106,11 @@ class AuthProvider extends ChangeNotifier {
           path: '/donation-list',
           name: DonationListScreen.routeName,
           builder: (_, __) => const DonationListScreen(),
+        ),
+        GoRoute(
+          path: '/myPage',
+          name: MyPageScreen.routeName,
+          builder: (_, __) => const MyPageScreen(),
         ),
       ];
 
