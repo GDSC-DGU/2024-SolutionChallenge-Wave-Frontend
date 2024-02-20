@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:wave/user/model/send_wave_model.dart';
 import 'package:wave/user/model/user_info_response.dart';
 
 import '../../common/const/data.dart';
@@ -29,10 +30,10 @@ abstract class UserMeRepository {
   })
   Future<UserInfoResponse> getMe(); // token authentication 용 test api
 
-  @GET('/donate')
+  @POST('/donate')
   @Headers({
     'accessToken': 'true',
   })
-  Future<DonationResponseModel> getDonationsResponse();
+  Future<DonationResponseModel> getDonationsResponse(@Body() SendWaveModel sendWaveModel);
 
 }

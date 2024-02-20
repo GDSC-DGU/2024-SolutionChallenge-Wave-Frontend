@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_drawing/path_drawing.dart';
 import 'package:wave/common/const/colors.dart';
 import 'package:wave/common/layout/default_layout.dart';
 import 'package:wave/payment/models/payment_request.dart';
+import 'package:wave/user/model/send_wave_model.dart';
+import 'package:wave/user/model/user_model.dart';
+import 'package:wave/user/provider/user_me_provider.dart';
 import 'package:wave/user/view/donate_completion_screen.dart';
 import 'package:xml/xml.dart' as xml;
 import 'package:flutter/material.dart';
@@ -76,18 +80,23 @@ class CountryPainter extends CustomPainter {
   }
 }
 
-class WaveSelectScreen extends StatefulWidget {
+class WaveSelectScreen extends ConsumerStatefulWidget {
   static String get routeName => 'waveSelect';
 
   final String selectedCountry;
+  final int id;
 
-  WaveSelectScreen({Key? key, required this.selectedCountry}) : super(key: key);
+  WaveSelectScreen({
+    Key? key,
+    required this.selectedCountry,
+    required this.id,
+  }) : super(key: key);
 
   @override
   _WaveSelectScreenState createState() => _WaveSelectScreenState();
 }
 
-class _WaveSelectScreenState extends State<WaveSelectScreen> {
+class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
   double _sliderValue = 0;
   List<Country> _countries = [];
 
@@ -101,14 +110,13 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
     return sliderValue * (1200 / _countries.length) * 100;
   }
 
-  void onPaymentButtonPressed() {
+  void onPaymentButtonPressed(String name) {
     double amount = calculatePaymentAmount(_sliderValue); // 실제 결제 금액 계산
     PaymentRequest request = PaymentRequest.card(
         amount: amount.round(), // 계산된 금액을 반올림하여 정수로 변환
         orderId: "8ak23s",
-        orderName: "도도",
-        customerName: '저쟈'
-    );
+        orderName: name.toString(),
+        customerName: '고객명');
     _showPayment(context, request); // 결제 요청
   }
 
@@ -227,7 +235,10 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
           ),
           SizedBox(height: 20), // 슬라이더와 버튼 사이의 간격
           ElevatedButton(
-            onPressed: onPaymentButtonPressed,
+            onPressed: () {
+              final user = ref.read(userMeProvider) as UserModel;
+              onPaymentButtonPressed(user.nickname); // 사용자 닉네임을 인자로 전달
+            },
             child: Text(
               'Next',
               style: TextStyle(
@@ -275,11 +286,19 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
                 success = url.contains('success');
                 print('성공여부 = $success');
                 if (success) {
-                  if (url.contains('amount=100')) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DonateCompletionScreen()));
+                  if (url.contains('amount=${request.amount}') &&
+                      url.contains('orderId=${request.orderId}')) {
+                    ref.read(userMeProvider.notifier).getDonationsResponse(widget.id, _sliderValue.toInt() + 1);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DonateCompletionScreen(
+                          waves: _sliderValue.toInt() + 1,
+                          country: widget
+                              .selectedCountry, // selectedCountry 값을 country 파라미터로 전달
+                        ),
+                      ),
+                    );
                   }
                 }
               },
@@ -302,5 +321,3 @@ extension PaymentRequestExtension on PaymentRequest {
     return Uri.http("localhost:8080", "payment", json);
   }
 }
-
-
