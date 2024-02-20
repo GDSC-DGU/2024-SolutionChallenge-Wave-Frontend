@@ -145,6 +145,9 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
               height: maxHeight * 0.9,
               child: Stack(
                 children: [
+                  Positioned.fill(
+                    child: BlueGridPattern(), // 파란색 격자무늬를 그리는 커스텀 위젯
+                  ),
                   SfMaps(
                     layers: [
                       MapShapeLayer(
@@ -203,6 +206,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
                       ),
                     ],
                   ),
+
                   Positioned(
                     left: 10,
                     child: Row(
@@ -337,6 +341,35 @@ void showCustomSearchModal(BuildContext context, int countryId, WidgetRef ref) a
   );
 }
 
+class BlueGridPattern extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      painter: GridPainter(),
+    );
+  }
+}
+
+class GridPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    var paint = Paint()
+      ..color = PRIMARY_BLUE_COLOR.withOpacity(0.5) // 파란색 격자무늬 색상 설정
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 0.5;
+
+    double gridSpace = 155; // 격자 간격 설정
+    for (double i = 70; i < size.width; i += gridSpace) {
+      canvas.drawLine(Offset(i, 0), Offset(i, size.height), paint);
+    }
+    for (double i = -100; i < size.height; i += gridSpace) {
+      canvas.drawLine(Offset(0, i), Offset(size.width, i), paint);
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
 
 class Model {
   const Model(this.country, this.latitude, this.longitude, this.id);
