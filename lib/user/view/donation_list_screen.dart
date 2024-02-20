@@ -25,8 +25,8 @@ class _DonationListScreenState extends ConsumerState<DonationListScreen> {
 
 
       // 기부 목록이 있는 경우의 UI 구성
-      final donations = donationResponse?.data.donateList ?? [];
-      final totalWave = donationResponse?.data.totalWave ?? 0;
+      final donations = donationResponse?.data?.donateList ?? [];
+      final totalWave = donationResponse?.data?.totalWave ?? 0;
       return Scaffold(
         appBar: _buildAppBar(), // _buildAppBar()는 별도로 정의된 상단 바를 반환하는 함수로 가정합니다.
         body: Column(

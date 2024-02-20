@@ -10,7 +10,9 @@ DonationResponseModel _$DonationResponseModelFromJson(
         Map<String, dynamic> json) =>
     DonationResponseModel(
       success: json['success'] as bool,
-      data: DonationResponseData.fromJson(json['data'] as Map<String, dynamic>),
+      data: json['data'] == null
+          ? null
+          : DonationResponseData.fromJson(json['data'] as Map<String, dynamic>),
       error: json['error'],
     );
 

@@ -6,11 +6,11 @@ part 'donation_response_model.g.dart';
 
 @JsonSerializable()
 class DonationResponseModel extends CommonResponse{
-  final DonationResponseData data;
+  final DonationResponseData? data;
 
   DonationResponseModel({
     required bool success,
-    required this.data,
+    this.data,
     dynamic error,
   }) : super(success: success, error: error);
 

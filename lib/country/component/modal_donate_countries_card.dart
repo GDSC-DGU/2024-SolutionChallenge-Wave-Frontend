@@ -71,13 +71,13 @@ class ModalDonateCountryCard extends StatelessWidget {
       isDetail: isDetail,
       heroKey: model.id,
       imageProducer:
-      model is DonateCountryDetailModel ? model.imageProducer : null,
+          model is DonateCountryDetailModel ? model.imageProducer : null,
       contents: model is DonateCountryDetailModel ? model.contents : null,
       detailImage: model is DonateCountryDetailModel ? model.detailImage : null,
       detailImageTitle:
-      model is DonateCountryDetailModel ? model.detailImageTitle : null,
+          model is DonateCountryDetailModel ? model.detailImageTitle : null,
       detailImageProducer:
-      model is DonateCountryDetailModel ? model.detailImageProducer : null,
+          model is DonateCountryDetailModel ? model.detailImageProducer : null,
       news: model is DonateCountryDetailModel ? model.news : null,
       id: model.id,
     );
@@ -104,43 +104,41 @@ class ModalDonateCountryCard extends StatelessWidget {
         children: [
           Stack(
             children: [
-              if (heroKey != null) // heroKey != null => detail이 아닌 경우(지도에서 클릭시랑 2번째 탭화면)
+              if (heroKey !=
+                  null) // heroKey != null => detail이 아닌 경우(지도에서 클릭시랑 2번째 탭화면)
                 Hero(
                   tag: ObjectKey(heroKey),
                   child: ClipRRect(
                     borderRadius: isDetail
                         ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
                         : const BorderRadius.only(
-                      topLeft: Radius.circular(15.0),
-                      topRight: Radius.circular(15.0),
-                    ),
+                            topLeft: Radius.circular(15.0),
+                            topRight: Radius.circular(15.0),
+                          ),
                     child: Container(
                       height: 150,
                       width: double.infinity,
                       child: image,
-
                     ),
-
                   ),
-
                 ),
               if (heroKey == null)
                 ClipRRect(
                   borderRadius: isDetail
                       ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
                       : const BorderRadius.only(
-                    topLeft: Radius.circular(15.0),
-                    topRight: Radius.circular(15.0),
-                  ),
+                          topLeft: Radius.circular(15.0),
+                          topRight: Radius.circular(15.0),
+                        ),
                   child: Container(
                     height: 180,
                     width: double.infinity,
                     child: image,
                   ),
                 ),
-                Positioned(
-                  child: CategoryButton(category: category),
-                ),
+              Positioned(
+                child: CategoryButton(category: category),
+              ),
               Positioned(
                 bottom: 8,
                 left: 18,
@@ -182,7 +180,7 @@ class ModalDonateCountryCard extends StatelessWidget {
                 isSearch: true,
               ),
             ),
-          if(isDetail)
+          if (isDetail)
             Row(
               children: [
                 Padding(
@@ -193,7 +191,8 @@ class ModalDonateCountryCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10), // 모서리 둥글게 처리
                       image: const DecorationImage(
-                        image: AssetImage('assets/icons/share.png'), // PNG 이미지 경로
+                        image:
+                            AssetImage('assets/icons/share.png'), // PNG 이미지 경로
                         fit: BoxFit.cover, // 이미지가 컨테이너를 꽉 채우도록 설정
                       ),
                     ),
@@ -217,7 +216,10 @@ class ModalDonateCountryCard extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => WaveSelectScreen(selectedCountry: country),
+                            builder: (context) => WaveSelectScreen(
+                              selectedCountry: country,
+                              id: id,
+                            ),
                           ),
                         );
                       },
@@ -228,7 +230,7 @@ class ModalDonateCountryCard extends StatelessWidget {
                 ),
               ],
             ),
-          if(isDetail)
+          if (isDetail)
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 10),
               child: Divider(

@@ -10,6 +10,25 @@ import 'package:collection/collection.dart';
 
 enum SearchState { idle, loading, loaded, error }
 
+final searchDetailProvider = FutureProvider.family<SearchCountryDetailModel?, int>((ref, id) async {
+  final repository = ref.watch(searchCountryRepositoryProvider);
+
+  try {
+    final response = await repository.getSearchCountryDetail(id: id);
+    if (response.success && response.data != null) {
+      return response.data!;
+    } else {
+      // 실패한 경우에는 null 반환
+      return null;
+    }
+  } catch (error) {
+    // 에러 발생 시에도 null 반환
+    print("Error fetching search country detail: $error");
+    return null;
+  }
+});
+
+
 final searchNotifierProvider = ChangeNotifierProvider(
     (ref) => SearchNotifier(ref.watch(searchCountryRepositoryProvider)));
 
@@ -23,6 +42,7 @@ class SearchNotifier extends ChangeNotifier {
 
   SearchNotifier(this._repository) {
     // Schedule fetchSearchCountries to be called once the constructor execution is complete
+    print('debugrightnow1');
     Future.microtask(() => fetchSearchCountries());
   }
 
@@ -40,17 +60,20 @@ class SearchNotifier extends ChangeNotifier {
   }
 
   void _setState(SearchState state) {
-    this.state = state;
-    notifyListeners();
+    if (this.state != state) {
+      this.state = state;
+      notifyListeners();
+    }
   }
 
-  void _setError(String message) {
+  void setError(String message) {
     errorMessage = message;
     _setState(SearchState.error);
   }
 
   Future<void> fetchSearchCountries() async {
     _setState(SearchState.loading);
+    print('debugrightnow2');
     try {
       final response = await _repository.getSearchCountries();
       if (response.success && response.data != null) {
@@ -60,10 +83,10 @@ class SearchNotifier extends ChangeNotifier {
         print('searchCountriesData: $searchCountriesData');
         print('SearchState.loaded1: ${state.index}');
       } else {
-        _setError("Failed to load search countries data.");
+        setError("Failed to load search countries data.");
       }
     } catch (error) {
-      _setError("Error fetching search countries: $error");
+      setError("Error fetching search countries: $error");
     }
   }
 
@@ -76,14 +99,15 @@ class SearchNotifier extends ChangeNotifier {
         _setState(SearchState.loaded);
         print('SearchState.loaded2: ${state.index}');
       } else {
-        _setError("Failed to load search country data.");
+        setError("Failed to load search country data.");
       }
     } catch (error) {
-      _setError("Error fetching search country: $error");
+      setError("Error fetching search country: $error");
     }
   }
 
   Future<void> fetchSearchCountryDetail(int id) async {
+    print('debugrightnow3');
     updateState(SearchState.loading);
     try {
       final response = await _repository.getSearchCountryDetail(id: id);
@@ -91,6 +115,7 @@ class SearchNotifier extends ChangeNotifier {
         searchCountryDetail = response.data!;
         updateSearchCountry(id);
         updateState(SearchState.loaded);
+        print('you finished it');
       } else {
         setError("Failed to load search country detail.");
       }
@@ -100,25 +125,23 @@ class SearchNotifier extends ChangeNotifier {
   }
 
   void updateSearchCountry(int id) {
-    // Consolidates the logic to update searchCountry based on the presence of the country in various lists
-    searchCountry = searchCountriesData?.emergency?.firstWhereOrNull((country) => country.id == id) ??
-        searchCountriesData?.alert?.firstWhereOrNull((country) => country.id == id) ??
-        searchCountriesData?.caution?.firstWhereOrNull((country) => country.id == id);
+    final List<SearchCountryModel> allCountries = [
+      ...searchCountriesData?.emergency ?? [],
+      ...searchCountriesData?.alert ?? [],
+      ...searchCountriesData?.caution ?? [],
+    ];
 
+    searchCountry = allCountries.firstWhereOrNull((country) => country.id == id);
     if (searchCountry != null) {
       print('Country found and updated.');
-    }
-  }
-
-  void updateState(SearchState newState) {
-    if (state != newState) {
-      state = newState;
       notifyListeners();
     }
   }
 
-  void setError(String message) {
-    errorMessage = message;
-    updateState(SearchState.error);
+
+  void updateState(SearchState newState) {
+    if (state != newState) {
+      state = newState;
+    }
   }
 }

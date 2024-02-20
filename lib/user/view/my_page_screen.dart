@@ -11,12 +11,29 @@ import '../../loading/loading_screen.dart';
 import 'donation_list_screen.dart';
 
 class MyPageScreen extends ConsumerStatefulWidget {
+  static String get routeName => 'myPage';
   const MyPageScreen({Key? key}) : super(key: key);
   @override
   ConsumerState<MyPageScreen> createState() => _MyPageScreenState();
 }
 
 class _MyPageScreenState extends ConsumerState<MyPageScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+  }
+
+  Future<void> _fetchUserData() async {
+    try {
+      await ref.read(userMeProvider.notifier).getMe();
+    } catch (error) {
+      print("사용자 데이터를 가져오는 중 에러 발생: $error");
+    }
+  }
+
+
   // 로그아웃 API 호출 함수
   Future<void> _logout() async {
     try{
@@ -43,6 +60,7 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     final actions = {
       'Donation list': () {
         // Donation List 스크린으로 이동
