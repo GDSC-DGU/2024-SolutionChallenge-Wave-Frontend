@@ -95,7 +95,7 @@ class _SearchCountriesScreenState extends ConsumerState<SearchCountriesScreen> {
                         fit: BoxFit.cover,
                       ),
                       views: country.views,
-                      id: country.id,
+                      id: country.id, country: country.category,
                     ),
                   )).toList(),
             ),
