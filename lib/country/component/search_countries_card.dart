@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wave/country/component/category_button.dart';
+import 'package:wave/country/component/country_category_button.dart';
 import 'package:wave/country/component/forward_detail_button.dart';
 import 'package:wave/country/model/search_country_detail_model.dart';
 import 'package:wave/country/model/search_country_model.dart';
@@ -22,6 +23,7 @@ class SearchCountryCard extends StatelessWidget {
   final String? detailImageProducer;
   final List<News>? news;
   final int id;
+  final String country;
 
   const SearchCountryCard({
     required this.category,
@@ -38,6 +40,7 @@ class SearchCountryCard extends StatelessWidget {
     this.detailImageProducer,
     this.news,
     required this.id,
+    required this.country,
     Key? key,
   }) : super(key: key);
 
@@ -46,6 +49,7 @@ class SearchCountryCard extends StatelessWidget {
     bool isDetail = false,
   }) {
     return SearchCountryCard(
+      country: model.country,
       id: model.id,
       category: model.category,
       mainTitle: model.mainTitle,
@@ -53,6 +57,16 @@ class SearchCountryCard extends StatelessWidget {
       image: Image.network(
         model.image,
         fit: BoxFit.cover,
+        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+          if (loadingProgress == null) return child; // 로딩 완료
+          return Center(
+            child: CircularProgressIndicator(
+              value: loadingProgress.expectedTotalBytes != null ?
+              loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                  : null,
+            ),
+          );
+        },
       ),
       views: model.views,
       isDetail: isDetail,
@@ -97,7 +111,7 @@ class SearchCountryCard extends StatelessWidget {
             children: [
               if (heroKey != null)
                 Hero(
-                  tag: ObjectKey(heroKey!),
+                  tag: ObjectKey(heroKey),
                   child: ClipRRect(
                     borderRadius: isDetail
                         ? BorderRadius.zero
@@ -124,7 +138,7 @@ class SearchCountryCard extends StatelessWidget {
                 ),
               if (heroKey == null) // heroKey가 null => detail인 경우(컬러 카테고리 보여줄 필요 없음)
                 Positioned(
-                  child: CategoryButton(category: category),
+                  child: CountryCategoryButton(category: category, countryName: country,),
                 ),
               if (isDetail)
                 Positioned(
