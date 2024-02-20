@@ -283,6 +283,7 @@ void showCustomModal(BuildContext context, int countryId, WidgetRef ref) async {
   showDialog(
     context: context,
     barrierDismissible: true,
+    barrierColor: Colors.white.withOpacity(0.3), // 반투명한 흰색 배경
     builder: (BuildContext context) {
       // Provider를 통해 최신 상태를 구독
       return Consumer(
@@ -319,6 +320,7 @@ void showCustomSearchModal(BuildContext context, int countryId, WidgetRef ref) a
   showDialog(
     context: context,
     barrierDismissible: true,
+    barrierColor: Colors.white.withOpacity(0.3), // 반투명한 흰색 배경
     builder: (BuildContext context) {
       // Provider를 통해 최신 상태를 구독
       return Consumer(

@@ -90,6 +90,14 @@ class ModalDonateCountryCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15), // 모서리를 15px 둥글게
         color: Colors.white, // 여기에 배경색을 설정
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3), // 그림자 색상 설정
+            spreadRadius: 1, // 그림자 확산 반경
+            blurRadius: 10, // 그림자 흐림 정도
+            offset: Offset(0, 1), // 그림자의 위치 조정
+          ),
+        ],
         // 필요하다면 여기에 boxShadow 등 다른 디자인 속성을 추가할 수 있습니다.
       ),
       child: Column(
