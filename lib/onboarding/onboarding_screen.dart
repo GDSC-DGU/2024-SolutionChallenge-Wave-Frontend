@@ -8,6 +8,10 @@ import '../user/view/login_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   static String get routeName => 'onboarding';
+  final bool showAppBar; // AppBar를 표시할지 결정하는 인자
+
+  // 생성자에서 showAppBar를 받도록 설정합니다.
+  OnboardingScreen({Key? key, this.showAppBar = false}) : super(key: key);
 
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
@@ -31,9 +35,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultLayout(
+    print('Is AppBar supposed to show? ${widget.showAppBar}');
+
+    return Scaffold(
       backgroundColor: Colors.white,
-      child: Stack(
+      appBar: widget.showAppBar // showAppBar 인자에 따라 AppBar를 표시할지 결정
+          ? _buildAppBar()
+          : null,
+      body: Stack(
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 50), // 인디케이터 공간 확보
@@ -47,7 +56,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 90),
                         Text(
                           pageData[_currentPage]['title'] ?? '',
                           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -84,7 +92,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               ],
             ),
           ),
-          Positioned(
+          if (!widget.showAppBar) // showAppBar가 false일 때만 Skip 버튼을 보여줌
+            Positioned(
             top: 50.0,
             left: 8.0,
             child: InkWell(
@@ -125,6 +134,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       ),
     );
   }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      title: Text(
+        'About Wave',
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: Colors.black.withOpacity(0.9),
+        ),
+      ),
+      centerTitle: true,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () => Navigator.pop(context),
+      ),
+    );
+  }
+
 
   @override
   void dispose() {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wave/common/layout/default_layout.dart';
+import 'package:wave/onboarding/onboarding_screen.dart';
 import 'package:wave/user/component/my_page_components.dart';
 import 'package:wave/user/component/show_confirmation_dialog.dart';
 import 'package:wave/user/model/user_model.dart';
@@ -47,6 +48,14 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
         // Donation List 스크린으로 이동
         Navigator.push(context, MaterialPageRoute(builder: (_) => const DonationListScreen()));
       },
+      'About Wave': () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => OnboardingScreen(showAppBar: true), // AppBar를 보여줍니다.
+          ),
+        );
+        },
       'Terms and conditions': () => _launchURL('https://gusty-flock-5cd.notion.site/Terms-and-conditions-for-Wave-14c3fa62bc754673a4555c45dfd7916a?pvs=4'),
       'Privacy policy': () => _launchURL('https://gusty-flock-5cd.notion.site/Privacy-Policy-for-Wave-2e85cef8f08e4b5abfd329a92cdf8c1e?pvs=4'),
       'Unscribing membership': () => showConfirmationDialog(
@@ -137,6 +146,7 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
                 const SizedBox(height: 24),
                 ...[
                   'Donation list',
+                  'About Wave',
                   'Terms and conditions',
                   'Privacy policy',
                   'Unscribing membership'

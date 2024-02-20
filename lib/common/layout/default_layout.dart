@@ -19,6 +19,7 @@ class DefaultLayout extends StatelessWidget {
     this.isSingleChildScrollViewNeeded = false, // Default to false
     this.isNeededCenterAppbar = false,
     Key? key,
+    AppBar? appBar,
   }) : super(key: key);
 
   @override
