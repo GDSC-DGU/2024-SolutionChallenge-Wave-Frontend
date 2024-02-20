@@ -9,6 +9,7 @@ import 'package:wave/country/component/donate_countries_card.dart';
 import 'package:wave/country/component/forward_detail_button.dart';
 import 'package:wave/country/model/donate_country_detail_model.dart';
 import 'package:wave/country/view/donate_country_detail_screen.dart';
+import 'package:wave/map/view/wave_select_screen.dart';
 import '../model/donate_country_model.dart';
 
 class ModalDonateCountryCard extends StatelessWidget {
@@ -28,6 +29,7 @@ class ModalDonateCountryCard extends StatelessWidget {
   final String? detailImageProducer;
   final List<News>? news;
   final int id;
+  final String country;
 
   const ModalDonateCountryCard({
     required this.category,
@@ -38,6 +40,7 @@ class ModalDonateCountryCard extends StatelessWidget {
     required this.lastWave,
     required this.casualties,
     required this.id,
+    required this.country,
     this.isDetail = false,
     this.heroKey,
     this.imageProducer,
@@ -64,6 +67,7 @@ class ModalDonateCountryCard extends StatelessWidget {
       allWave: model.allWave,
       lastWave: model.lastWave,
       casualties: model.casualties,
+      country: model.country,
       isDetail: isDetail,
       heroKey: model.id,
       imageProducer:
@@ -203,7 +207,12 @@ class ModalDonateCountryCard extends StatelessWidget {
                     child: DonateButton(
                       buttonName: 'Donate',
                       onPressed: () {
-                        // 버튼 클릭 시 수행할 작업
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => WaveSelectScreen(selectedCountry: country),
+                          ),
+                        );
                       },
                       width: 270.0, // 버튼 너비를 200.0으로 설정
                       height: 60.0, // 버튼 높이를 50.0으로 설정

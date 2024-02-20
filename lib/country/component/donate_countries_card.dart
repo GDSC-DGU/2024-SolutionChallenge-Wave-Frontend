@@ -8,6 +8,7 @@ import 'package:wave/country/component/donate_button.dart';
 import 'package:wave/country/component/forward_detail_button.dart';
 import 'package:wave/country/model/donate_country_detail_model.dart';
 import 'package:wave/country/view/donate_country_detail_screen.dart';
+import 'package:wave/map/view/wave_select_screen.dart';
 import '../model/donate_country_model.dart';
 
 class DonateCountryCard extends StatelessWidget {
@@ -27,6 +28,7 @@ class DonateCountryCard extends StatelessWidget {
   final String? detailImageProducer;
   final List<News>? news;
   final int id;
+  final String country;
 
   const DonateCountryCard({
     required this.category,
@@ -45,6 +47,7 @@ class DonateCountryCard extends StatelessWidget {
     this.detailImageTitle,
     this.detailImageProducer,
     this.news,
+    required this.country,
     Key? key,
   }) : super(key: key);
 
@@ -75,6 +78,7 @@ class DonateCountryCard extends StatelessWidget {
           model is DonateCountryDetailModel ? model.detailImageProducer : null,
       news: model is DonateCountryDetailModel ? model.news : null,
       id: model.id,
+      country: model.country,
     );
   }
 
@@ -162,7 +166,6 @@ class DonateCountryCard extends StatelessWidget {
             child: ForwardDetailButton(
               buttonName: 'Sending Waves',
               onPressed: () {
-                print('kiki');
                 context.pushNamed(DonateCountryDetailScreen.routeName,
                     pathParameters: {
                       'id': id.toString(),
@@ -202,7 +205,12 @@ class DonateCountryCard extends StatelessWidget {
                     child: DonateButton(
                       buttonName: 'Donate',
                       onPressed: () {
-                        // 버튼 클릭 시 수행할 작업
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => WaveSelectScreen(selectedCountry: country),
+                          ),
+                        );
                       },
                       width: 270.0, // 버튼 너비를 200.0으로 설정
                       height: 60.0, // 버튼 높이를 50.0으로 설정

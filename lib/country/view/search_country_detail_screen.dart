@@ -80,29 +80,29 @@ class _SearchCountryDetailScreenState
       child: Stack(
         children: [
           CustomScrollView(
-              controller: _scrollController,
-              slivers: [
-                renderTop(
-                  model: searchCountryModel, // 기존 모델 사용
-                ),
-                // 상세 정보 로딩 상태 처리
-                if (searchCountryDetailModel == null) renderLoading(),
-                // 상세 정보가 로드되었다면, 상세 정보 UI 구성
-                if (searchCountryDetailModel != null)
-                  renderDetail(model: searchCountryDetailModel),
-                if (searchCountryDetailModel != null)
-                  renderCountryDetailImage(model: searchCountryDetailModel),
-                const CustomDividerSliver(),
-                if (searchCountryDetailModel != null && searchCountryDetailModel.news != null)
-                  renderNewsSection(newsList: searchCountryDetailModel.news!),
-                const CustomDividerNoLinerSliver(),
-              ],
-            ),
-            // 뒤로가기 버튼
-            CustomBackButton(
-              iconColor: _iconColor, // 동적으로 변하는 아이콘 색상
-              onPressed: () => Navigator.of(context).pop(),
-            ),
+            controller: _scrollController,
+            slivers: [
+              renderTop(
+                model: searchCountryModel, // 기존 모델 사용
+              ),
+              // 상세 정보 로딩 상태 처리
+              if (searchCountryDetailModel == null) renderLoading(),
+              // 상세 정보가 로드되었다면, 상세 정보 UI 구성
+              if (searchCountryDetailModel != null)
+                renderDetail(model: searchCountryDetailModel),
+              if (searchCountryDetailModel != null)
+                renderCountryDetailImage(model: searchCountryDetailModel),
+              const CustomDividerSliver(),
+              if (searchCountryDetailModel != null && searchCountryDetailModel.news != null)
+                renderNewsSection(newsList: searchCountryDetailModel.news!),
+              const CustomDividerNoLinerSliver(),
+            ],
+          ),
+          // 뒤로가기 버튼
+          CustomBackButton(
+            iconColor: _iconColor, // 동적으로 변하는 아이콘 색상
+            onPressed: () => Navigator.of(context).pop(),
+          ),
         ],
       ),
     );
@@ -117,7 +117,7 @@ class _SearchCountryDetailScreenState
       ),
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
-          (BuildContext context, int index) {
+              (BuildContext context, int index) {
             // index를 2로 나눈 몫을 사용하여 contents 리스트의 인덱스를 계산합니다.
             // 이렇게 함으로써, 각 contents 객체에 대해 두 개의 위젯(타이틀과 컨텐츠)을 생성합니다.
             int itemIndex = index ~/ 2;
@@ -181,7 +181,7 @@ class _SearchCountryDetailScreenState
         delegate: SliverChildListDelegate(
           List.generate(
             3,
-            (index) => Padding(
+                (index) => Padding(
               padding: const EdgeInsets.only(bottom: 32.0),
               child: SkeletonParagraph(
                 style: const SkeletonParagraphStyle(

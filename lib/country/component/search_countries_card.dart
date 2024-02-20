@@ -171,6 +171,7 @@ class SearchCountryCard extends StatelessWidget {
               ],
             ),
           ),
+          if(!isDetail)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: ForwardDetailButton(

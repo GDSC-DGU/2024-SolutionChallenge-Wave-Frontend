@@ -79,6 +79,7 @@ class DonateNotifier extends ChangeNotifier {
         if(donateCountry!=null){
           if(donateCountries?.firstWhereOrNull((country) => country.id == id) != null){
             donateCountry = donateCountries?.firstWhereOrNull((country) => country.id == id);
+            print('gitup');
           }
           notifyListeners();
           return;

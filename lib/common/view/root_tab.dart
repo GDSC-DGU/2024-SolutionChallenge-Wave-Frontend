@@ -31,30 +31,68 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final items = List<Widget>.generate(4, (index) {
-      String iconName =
-          'tab${index + 1}${this.index == index ? 'On' : 'Off'}.svg';
-      return SvgPicture.asset('assets/icons/$iconName');
-    });
+    // final items = List<Widget>.generate(4, (index) {
+    //   String iconName =
+    //       'tab${index + 1}${this.index == index ? 'On' : 'Off'}.svg';
+    //   return SvgPicture.asset('assets/icons/$iconName');
+    // });
+    final items = [
+      BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          'assets/icons/tab1${index == 0 ? 'On' : 'Off'}.svg',
+        ),
+        label: '',
+      ),
+      BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          'assets/icons/tab2${index == 1 ? 'On' : 'Off'}.svg',
+        ),
+        label: '',
+      ),
+      BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          'assets/icons/tab3${index == 2 ? 'On' : 'Off'}.svg',
+        ), label: '',
+      ),
+      BottomNavigationBarItem(
+        icon: SvgPicture.asset(
+          'assets/icons/tab4${index == 3 ? 'On' : 'Off'}.svg',
+        ), label: '',
+      ),
+    ];
     return Scaffold(
       body: screens[index],
-      bottomNavigationBar: CurvedNavigationBar(
-        key: navigationKey, // key를 할당
-        animationCurve: Curves.linearToEaseOut,
-        animationDuration: const Duration(milliseconds: 800),
-        backgroundColor: Colors.lightBlueAccent,
-        buttonBackgroundColor:
-            PRIMARY_BLUE_COLOR, // PRIMARY_COLOR를 적절한 색상 값으로 변경
-        height: 75,
-        index: index,
+      // bottomNavigationBar: CurvedNavigationBar(
+      //   key: navigationKey, // key를 할당
+      //   animationCurve: Curves.linearToEaseOut,
+      //   animationDuration: const Duration(milliseconds: 800),
+      //   backgroundColor: PRIMARY_BLUE_COLOR,
+      //   buttonBackgroundColor:
+      //       PRIMARY_BLUE_COLOR, // PRIMARY_COLOR를 적절한 색상 값으로 변경
+      //   height: 55,
+      //   index: index,
+      //   items: items,
+      //   color: Colors.black,
+      //   onTap: (selectedIndex) {
+      //     print(selectedIndex);
+      //     setState(() {
+      //       index = selectedIndex;
+      //     });
+      //   },
+      // ),
+      bottomNavigationBar: BottomNavigationBar(
         items: items,
-        color: Colors.black,
         onTap: (selectedIndex) {
           print(selectedIndex);
           setState(() {
             index = selectedIndex;
           });
         },
+        currentIndex: index,
+        selectedItemColor: PRIMARY_BLUE_COLOR,
+        unselectedItemColor: PRIMARY_BLUE_COLOR,
+        backgroundColor: Colors.black,
+        type: BottomNavigationBarType.fixed,
       ),
     );
   }

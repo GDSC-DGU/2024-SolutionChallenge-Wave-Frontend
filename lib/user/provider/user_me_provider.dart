@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:wave/common/const/data.dart';
 import 'package:wave/common/model/common_response.dart';
 import 'package:wave/common/secure_storage/secure_storage.dart';
+import 'package:wave/country/repository/search_country_repository.dart';
 import 'package:wave/user/model/donation_response_model.dart';
 import 'package:wave/user/model/user_model.dart';
 
@@ -32,6 +33,8 @@ StateNotifierProvider<UserMeStateNotifier, UserModelBase?>(
     final authRepository = ref.watch(authRepositoryProvider);
     final userMeRepository = ref.watch(userMeRepositoryProvider);
     final storage = ref.watch(secureStorageProvider);
+
+    ref.read(searchCountryRepositoryProvider).getSearchCountries();
 
     return UserMeStateNotifier(
       authRepository: authRepository,
@@ -79,13 +82,8 @@ class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
       // AuthRepository의 googleLogin 메서드 호출
       final donationResponse = await repository.getDonationsResponse();
 
-      if (donationResponse.data != null) {
-        this.donationResponse = donationResponse; // 상태 업데이트
-      } else {
-        // 로그인 실패 상태로 변경
-        state = UserModelError(message: 'Google 로그인에 실패했습니다.');
-      }
-    } catch (e) {
+      this.donationResponse = donationResponse; // 상태 업데이트
+        } catch (e) {
       // 예외 발생 시 로그인 실패 상태로 변경
       state = UserModelError(message: 'Google 로그인에 실패했습니다.');
     }

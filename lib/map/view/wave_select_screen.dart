@@ -49,6 +49,12 @@ class CountryPainter extends CustomPainter {
 }
 
 class WaveSelectScreen extends StatefulWidget {
+  static String get routeName => 'waveSelect';
+
+  final String selectedCountry;
+
+  WaveSelectScreen({Key? key, required this.selectedCountry}) : super(key: key);
+
   @override
   _WaveSelectScreenState createState() => _WaveSelectScreenState();
 }
@@ -60,7 +66,7 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
   @override
   void initState() {
     super.initState();
-    _loadSvgImage('assets/images/syria.svg');
+    _loadSvgImage('assets/images/${widget.selectedCountry.toLowerCase()}.svg');
   }
 
   Future<void> _loadSvgImage(String svgImage) async {
@@ -93,19 +99,27 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
     int index = value.toInt();
 
     for (int i = 0; i <= index; i++) {
-      _countries[i].color = '247EF4';
+      _countries[i].color = '247EF4'; // 파란색
     }
-    for (int i = index + 1; i < _countries.length; i++) {
-      _countries[i].color = 'FF5039';
+    if(value == 0) {
+      _countries[0].color = 'FF5039';
+    }
+
+    for (int i = index + 1; i < _countries.length; i++) { // 여기를 index에서 index + 1로 변경
+      _countries[i].color = 'FF5039'; // 빨간색
     }
 
     setState(() {});
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Sending waves to country!')),
+      appBar: AppBar(title: Text('Sending waves to ${widget.selectedCountry}',style: TextStyle(
+        fontWeight: FontWeight.w500,
+        fontSize: 20,
+      ),)),
       body: Column(
         children: [
           Expanded(
@@ -115,19 +129,21 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
             ),
           ),
           Slider(
-            min: 0, // 최소값 설정
-            max: _countries.isNotEmpty
-                ? _countries.length - 1
-                : 1, // _countries가 로드되기 전에는 기본값 설정
-            divisions: _countries.isNotEmpty ? _countries.length - 1 : 1,
+            min: 0,
+            max: _countries.isNotEmpty ? _countries.length - 1 : 1,
+            divisions: _countries.isNotEmpty ? _countries.length - 1 : 1, // 여기를 수정
             value: _sliderValue,
             onChanged: (value) {
               setState(() {
+                print('slider value: $value');
                 _sliderValue = value;
                 _updateColors(_sliderValue);
               });
             },
+            activeColor: PRIMARY_BLUE_COLOR,
+            inactiveColor: Colors.white,
           )
+
         ],
       ),
     );

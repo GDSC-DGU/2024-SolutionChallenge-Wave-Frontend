@@ -8,6 +8,7 @@ import 'package:wave/country/view/search_country_detail_screen.dart';
 import 'package:wave/country/view/search_country_screen.dart';
 import 'package:wave/country/view/donate_countries_screen.dart';
 import 'package:wave/country/view/donate_country_detail_screen.dart';
+import 'package:wave/map/view/wave_select_screen.dart';
 import 'package:wave/onboarding/onboarding_screen.dart';
 import 'package:wave/user/provider/user_me_provider.dart';
 import 'package:wave/user/view/login_screen.dart';
@@ -115,24 +116,23 @@ class AuthProvider extends ChangeNotifier {
     // // return null;
     // // // return null;
 
-      final UserModelBase? user = ref.read(userMeProvider);
+    final UserModelBase? user = ref.read(userMeProvider);
 
-      final logginIn = state.matchedLocation == '/login';
+    final logginIn = state.matchedLocation == '/login';
 
-      if(user == null){
-        return logginIn ? null : '/login';
-      }
+    if (user == null) {
+      return logginIn ? null : '/login';
+    }
 
-      if(user is UserModel){
-        return logginIn || state.matchedLocation == '/splash' ? '/' : null;
-      }
+    if (user is UserModel) {
+      return logginIn || state.matchedLocation == '/splash' ? '/' : null;
+    }
 
-      // UserModelError
-      if (user is UserModelError) {
-        return !logginIn ? '/login' : null;
-      }
+    // UserModelError
+    if (user is UserModelError) {
+      return !logginIn ? '/login' : null;
+    }
 
-      return null;
-
+    return null;
   }
 }
