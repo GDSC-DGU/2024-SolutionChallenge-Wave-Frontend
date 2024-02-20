@@ -102,37 +102,41 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
     for (int i = 0; i <= index; i++) {
       _countries[i].color = '247EF4'; // 파란색
     }
-    if(value == 0) {
+    if (value == 0) {
       _countries[0].color = 'FF5039';
     }
 
-    for (int i = index + 1; i < _countries.length; i++) { // 여기를 index에서 index + 1로 변경
+    for (int i = index + 1; i < _countries.length; i++) {
+      // 여기를 index에서 index + 1로 변경
       _countries[i].color = 'FF5039'; // 빨간색
     }
 
     setState(() {});
   }
 
-
   @override
   Widget build(BuildContext context) {
     // 금액을 문자열로 변환하는 함수
     String _formattedAmount(double value) {
-      return "\$${(value * (1000 / _countries.length )).toStringAsFixed(0)}";
+      return "\$${(value * (1000 / _countries.length)).toStringAsFixed(0)}";
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text('Sending waves to ${widget.selectedCountry}',style: TextStyle(
-        fontWeight: FontWeight.w500,
-        fontSize: 20,
-      ),)),
+      appBar: AppBar(
+          title: Text(
+        'Sending waves to ${widget.selectedCountry}',
+        style: TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: 20,
+        ),
+      )),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center, // 전체 컬럼을 화면 중앙으로
         children: [
           Expanded(
             child: Center(
               child: AspectRatio(
-                aspectRatio: 1, // 지도의 가로세로 비율을 1:1로 설정
+                aspectRatio: 2, // 지도의 가로세로 비율을 1:1로 설정
                 child: CustomPaint(
                   painter: CountryPainter(countries: _countries),
                 ),
@@ -153,17 +157,20 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
           ),
           SliderTheme(
             data: SliderTheme.of(context).copyWith(
-              activeTrackColor: Colors.blue,
-              inactiveTrackColor: Colors.blue.withOpacity(0.3),
               trackHeight: 28.0,
-              thumbShape: BorderThumbShape(thumbRadius: 13.0),
-              overlayColor: Colors.blue.withAlpha(32),
-              overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
+              trackShape: RoundedRectSliderTrackShape(),
+              activeTrackColor: PRIMARY_BLUE_COLOR,
+              inactiveTrackColor: Colors.grey[100],
+              thumbShape: CircleThumbShape(thumbRadius: 15),
               thumbColor: Colors.white,
-          ),
+              tickMarkShape: RoundSliderTickMarkShape(),
+              inactiveTickMarkColor: Colors.white,
+              valueIndicatorShape: PaddleSliderValueIndicatorShape(), //
+              valueIndicatorColor: Colors.white,
+            ),
             child: Slider(
               min: 0,
-              max: _countries.isNotEmpty ? _countries.length.toDouble() : 1.0,
+              max: _countries.isNotEmpty ? _countries.length.toDouble()-1  : 1.0,
               value: _sliderValue,
               onChanged: (value) {
                 setState(() {
@@ -172,8 +179,6 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
                   _updateColors(_sliderValue);
                 });
               },
-              activeColor: PRIMARY_BLUE_COLOR,
-              inactiveColor: Colors.white,
             ),
           ),
           SizedBox(height: 20), // 슬라이더와 버튼 사이의 간격
@@ -198,10 +203,8 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
             ),
           ),
           SizedBox(height: 100), // 슬라이더와 버튼 사이의 간격
-
         ],
       ),
     );
   }
-
 }
