@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wave/common/provider/go_router.dart';
 import 'package:wave/map/view/global_map_screen.dart';
+import 'package:wave/map/view/wave_select_screen.dart';
 import 'package:wave/onboarding/onboarding_screen.dart';
 import 'package:wave/user/view/donation_list_screen.dart';
 import 'package:wave/user/view/login_screen.dart';
@@ -17,66 +18,66 @@ import 'loading/loading_screen.dart';
 // 전역 변수로 쓰기 위해, 메인함수 밖에서 사용해주었다.
 late SharedPreferences prefs;
 
-//⭐️ 아래에 스크린 UI 빌딩 빠르게 볼 수 있는 주석 코드 있음 ⭐️
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  // 앱이 최초로 실행되었는지 여부를 확인하고, 최초 실행이 아니면 isFirst 키를 false로 설정
-  prefs = await SharedPreferences.getInstance();
-  bool isFirstRun = prefs.getBool('isFirstRun') ?? true;
-  if (isFirstRun) {
-    // 최초 실행 시 isFirstRun 키를 false로 설정하여 다음 실행부터 온보딩이 표시되지 않도록 함
-    await prefs.setBool('isFirstRun', false);
-  }
-  runApp(const ProviderScope(child: _App()));
-}
-
-
-class _App extends ConsumerWidget {
-  const _App({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final router = ref.watch(routerProvider);
-
-    return MaterialApp.router(
-      theme: ThemeData(
-        fontFamily: 'Pretendard',
-      ),
-      debugShowCheckedModeBanner: false,
-      routerDelegate: router.routerDelegate,
-      routeInformationParser: router.routeInformationParser,
-      routeInformationProvider: router.routeInformationProvider,
-    );
-  }
-}
-
-// //// ⭐️ TEST CODE: 아래처럼 UI만 보고 싶을 때 위에 기존거 주석 처리 하고 ✅
-// void main() async{
+// //⭐️ 아래에 스크린 UI 빌딩 빠르게 볼 수 있는 주석 코드 있음 ⭐️
+// void main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
 //   await Firebase.initializeApp(
 //     options: DefaultFirebaseOptions.currentPlatform,
 //   );
-//   runApp(
-//     ProviderScope( // ProviderScope 추가
-//       child: _App(),
-//     ),
-//   );
+//   // 앱이 최초로 실행되었는지 여부를 확인하고, 최초 실행이 아니면 isFirst 키를 false로 설정
+//   prefs = await SharedPreferences.getInstance();
+//   bool isFirstRun = prefs.getBool('isFirstRun') ?? true;
+//   if (isFirstRun) {
+//     // 최초 실행 시 isFirstRun 키를 false로 설정하여 다음 실행부터 온보딩이 표시되지 않도록 함
+//     await prefs.setBool('isFirstRun', false);
+//   }
+//   runApp(const ProviderScope(child: _App()));
 // }
 //
-// class _App extends StatelessWidget {
+//
+// class _App extends ConsumerWidget {
 //   const _App({Key? key}) : super(key: key);
 //
 //   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     final router = ref.watch(routerProvider);
+//
+//     return MaterialApp.router(
 //       theme: ThemeData(
 //         fontFamily: 'Pretendard',
 //       ),
 //       debugShowCheckedModeBanner: false,
-//       home: DonationListScreen(), // 여기 원하는 스크린 대입 ✅
+//       routerDelegate: router.routerDelegate,
+//       routeInformationParser: router.routeInformationParser,
+//       routeInformationProvider: router.routeInformationProvider,
 //     );
 //   }
 // }
+
+//// ⭐️ TEST CODE: 아래처럼 UI만 보고 싶을 때 위에 기존거 주석 처리 하고 ✅
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(
+    ProviderScope( // ProviderScope 추가
+      child: _App(),
+    ),
+  );
+}
+
+class _App extends StatelessWidget {
+  const _App({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'Pretendard',
+      ),
+      debugShowCheckedModeBanner: false,
+      home: WaveSelectScreen(selectedCountry: 'Yemen'), // 여기 원하는 스크린 대입 ✅
+    );
+  }
+}

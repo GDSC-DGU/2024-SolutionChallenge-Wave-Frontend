@@ -7,6 +7,8 @@ class DefaultLayout extends StatelessWidget {
   final Widget? bottomNavigationBar;
   final Widget? floatingActionButton;
   final bool isSingleChildScrollViewNeeded; // Make it non-optional with a default value
+  final bool isNeededCenterAppbar;
+
 
   const DefaultLayout({
     required this.child,
@@ -15,6 +17,7 @@ class DefaultLayout extends StatelessWidget {
     this.bottomNavigationBar,
     this.floatingActionButton,
     this.isSingleChildScrollViewNeeded = false, // Default to false
+    this.isNeededCenterAppbar = false,
     Key? key,
   }) : super(key: key);
 
@@ -37,7 +40,7 @@ class DefaultLayout extends StatelessWidget {
     } else {
       return AppBar(
         title: Align(
-          alignment: Alignment.centerLeft,
+          alignment: isNeededCenterAppbar ? Alignment.center : Alignment.centerLeft,
           child: Text(
             title!,
             style: const TextStyle(

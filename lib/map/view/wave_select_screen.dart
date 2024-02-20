@@ -31,14 +31,27 @@ class CountryPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint();
+    Path allPaths = Path(); // 모든 경로를 저장할 Path 객체
+
     for (var country in countries) {
-      // 각 국가의 color 속성에서 색상 값을 파싱하여 Paint 객체에 적용
-      paint.color = Color(int.parse("0xFF${country.color}"));
-
-      // parseSvgPathData를 사용하여 SVG 경로 데이터를 Path 객체로 변환
+      // 각 국가의 경로를 Path 객체로 변환하고 allPaths에 추가
       var path = parseSvgPathData(country.path);
+      allPaths.addPath(path, Offset.zero); // Offset.zero를 사용하여 원본 위치에 경로 추가
+    }
 
-      // 변환된 Path 객체를 캔버스에 그림
+    // 모든 경로를 포함하는 allPaths의 경계를 계산
+    Rect bounds = allPaths.getBounds();
+
+    // 캔버스의 중앙과 SVG의 중앙 사이의 차이를 계산하여 SVG를 캔버스 중앙에 배치
+    double offsetX = size.width / 2 - bounds.center.dx;
+    double offsetY = size.height / 2 - bounds.center.dy;
+
+    canvas.translate(offsetX, offsetY); // 캔버스 시작 위치를 조정
+
+    // 조정된 위치에서 모든 경로를 그림
+    for (var country in countries) {
+      paint.color = Color(int.parse("0xFF${country.color}"));
+      var path = parseSvgPathData(country.path);
       canvas.drawPath(path, paint);
     }
   }
@@ -121,22 +134,17 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
       return "\$${(value * (1000 / _countries.length)).toStringAsFixed(0)}";
     }
 
-    return Scaffold(
-      appBar: AppBar(
-          title: Text(
-        'Sending waves to ${widget.selectedCountry}',
-        style: TextStyle(
-          fontWeight: FontWeight.w500,
-          fontSize: 20,
-        ),
-      )),
-      body: Column(
+    return DefaultLayout(
+      isSingleChildScrollViewNeeded: true,
+      isNeededCenterAppbar: true,
+      title: 'Sending waves to ${widget.selectedCountry}',
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center, // 전체 컬럼을 화면 중앙으로
         children: [
-          Expanded(
-            child: Center(
-              child: AspectRatio(
-                aspectRatio: 2, // 지도의 가로세로 비율을 1:1로 설정
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 180),
+            child: Expanded(
+              child: Center(
                 child: CustomPaint(
                   painter: CountryPainter(countries: _countries),
                 ),
@@ -161,7 +169,7 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
               trackShape: RoundedRectSliderTrackShape(),
               activeTrackColor: PRIMARY_BLUE_COLOR,
               inactiveTrackColor: Colors.grey[100],
-              thumbShape: CircleThumbShape(thumbRadius: 15),
+              thumbShape: CircleThumbShape(thumbRadius: 13),
               thumbColor: Colors.white,
               tickMarkShape: RoundSliderTickMarkShape(),
               inactiveTickMarkColor: Colors.white,
