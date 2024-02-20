@@ -53,7 +53,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.only(bottom: 50), // 인디케이터 공간 확보
+            padding: widget.showAppBar // showAppBar 인자에 따라 AppBar를 표시할지 결정
+                ? const EdgeInsets.only(bottom: 50) // 인디케이터 공간 확보
+                : const EdgeInsets.only(bottom: 50, top: 90),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
