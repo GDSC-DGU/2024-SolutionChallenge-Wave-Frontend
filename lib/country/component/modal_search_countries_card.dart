@@ -129,7 +129,7 @@ class ModalSearchCountryCard extends StatelessWidget {
                       child: Text(
                         mainTitle,
                         style: TextStyle(
-                          fontSize: 14.7,
+                          fontSize: 14,
                           fontWeight: FontWeight.w700,
                           color: Colors.black.withOpacity(0.9),
                         ),
@@ -156,7 +156,7 @@ class ModalSearchCountryCard extends StatelessWidget {
                 Text(
                   subTitle,
                   style: TextStyle(
-                    fontSize: 14.7,
+                    fontSize: 14,
                     fontWeight: FontWeight.w700,
                     color: Colors.black.withOpacity(0.9),
                   ), // 조절된 subTitle 글꼴 크기
