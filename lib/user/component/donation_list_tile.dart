@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:wave/user/model/donation_model.dart';
 
 class DonationListTile extends StatelessWidget {
-  final Map<String, dynamic> donation;
+  final DonationModel donation;
 
   const DonationListTile({Key? key, required this.donation}) : super(key: key);
 
@@ -16,7 +17,7 @@ class DonationListTile extends StatelessWidget {
             children: [
               const SizedBox(height: 4), // 상단 간격 조절을 위한 SizedBox
               Text(
-                donation['date'],
+                donation.date,
                 style: TextStyle(
                   color: Colors.black.withOpacity(0.8),
                   fontSize: 18,
@@ -29,7 +30,7 @@ class DonationListTile extends StatelessWidget {
             children: [
               const SizedBox(width: 15), // title에 대한 간격
               Text(
-                donation['country'],
+                donation.country,
                 style: TextStyle(
                   color: Colors.black.withOpacity(0.8),
                   fontSize: 20,
@@ -43,7 +44,7 @@ class DonationListTile extends StatelessWidget {
               const SizedBox(width: 15), // subtitle에 대한 간격
               Expanded(
                 child: Text(
-                  '${donation['time']} | donation',
+                  '${donation.time} | donation',
                   style: TextStyle(
                     color: Colors.black.withOpacity(0.4),
                     fontSize: 14,
@@ -58,7 +59,7 @@ class DonationListTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '🌊${donation['waves']}',
+                '🌊${donation.wave}',
                 style: TextStyle(
                   color: Colors.black.withOpacity(0.8),
                   fontSize: 20,
@@ -66,7 +67,7 @@ class DonationListTile extends StatelessWidget {
                 ),
               ),
               Text(
-                ' \$${donation['waves'].toStringAsFixed(2)}',
+                ' \$${donation.wave.toStringAsFixed(2)}',
                 style: TextStyle(
                   color: Colors.black.withOpacity(0.8),
                   fontSize: 14,

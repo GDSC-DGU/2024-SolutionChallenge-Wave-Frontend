@@ -11,7 +11,8 @@ DonationModel _$DonationModelFromJson(Map<String, dynamic> json) =>
       date: json['date'] as String,
       country: json['country'] as String,
       time: json['time'] as String,
-      waves: json['waves'] as int,
+      id: json['id'] as int,
+      wave: json['wave'] as int,
     );
 
 Map<String, dynamic> _$DonationModelToJson(DonationModel instance) =>
@@ -19,5 +20,6 @@ Map<String, dynamic> _$DonationModelToJson(DonationModel instance) =>
       'date': instance.date,
       'country': instance.country,
       'time': instance.time,
-      'waves': instance.waves,
+      'wave': instance.wave,
+      'id': instance.id,
     };

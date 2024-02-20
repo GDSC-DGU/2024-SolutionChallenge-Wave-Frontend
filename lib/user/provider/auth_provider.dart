@@ -124,6 +124,10 @@ class AuthProvider extends ChangeNotifier {
     // // return null;
     // // // return null;
 
+    if(state.matchedLocation == '/donation-list'){
+      return null;
+    }
+
     final UserModelBase? user = ref.read(userMeProvider);
     final logginIn = state.matchedLocation == '/login';
     // SharedPreferences에서 isFirstRun 값을 가져옴
@@ -132,6 +136,8 @@ class AuthProvider extends ChangeNotifier {
     if (isFirstRun && user == null) {
       return '/onboarding';
     }
+
+
 
     if (user == null) {
       return logginIn ? null : '/login';
