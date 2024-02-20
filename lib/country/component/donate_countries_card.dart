@@ -138,7 +138,7 @@ class DonateCountryCard extends StatelessWidget {
                 child: Text(
                   "$mainTitle\n$subTitle",
                   style: TextStyle(
-                      fontSize: 21.0,
+                      fontSize: isDetail ? 21.0 : 18.0,
                       fontWeight: FontWeight.w700,
                       color: Colors.white.withOpacity(0.9)),
                 ),
