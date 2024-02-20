@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:wave/common/const/colors.dart';
+import 'package:wave/user/view/my_page_screen.dart';
 import '../../map/view/global_map_screen.dart';
 
-class DonateCompletionScreen extends StatefulWidget {
-  const DonateCompletionScreen({Key? key}) : super(key: key);
+class DonateCompletionScreen extends StatelessWidget {
+  final int waves;
+  final String country;
 
   static const String routeName = '/donation-completion';
 
-  @override
-  State<DonateCompletionScreen> createState() => _DonateCompletionScreenState();
-}
+  DonateCompletionScreen({
+    super.key,
+    required this.waves,
+    required this.country,
+  });
 
-class _DonateCompletionScreenState extends State<DonateCompletionScreen> {
-  bool isLoading = true; // 로딩 상태를 관리하는 변수 //TODO: 로딩 스크린 띄워 줘야할 수 도 있어서?
-  static const waves = 34; //TODO: 상태관리로 가져와야함!
+  bool isLoading = true;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +44,7 @@ class _DonateCompletionScreenState extends State<DonateCompletionScreen> {
               ),
               const SizedBox(height: 8),
               Text(
-                "$waves waves were delivered to Ukraine.", //TODO: 상태관리로 가져와야함!
+                "$waves waves were delivered to $country",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
@@ -58,10 +62,10 @@ class _DonateCompletionScreenState extends State<DonateCompletionScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 31),
               child: ElevatedButton(
                 onPressed: () {
-                  //Navigator.push(context, MaterialPageRoute(builder: (_) => GlobalMapScreen())); //TODO: ProviderScope가 없어서 에러 터짐.
+                  context.go('/myPage');
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF247EF4),
+                  backgroundColor: PRIMARY_BLUE_COLOR,
                   minimumSize: const Size(353, 62),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
