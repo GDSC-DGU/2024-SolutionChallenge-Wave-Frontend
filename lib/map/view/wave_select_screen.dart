@@ -134,11 +134,9 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
       return "\$${(value * (1000 / _countries.length)).toStringAsFixed(0)}";
     }
 
-    return DefaultLayout(
-      isSingleChildScrollViewNeeded: true,
-      isNeededCenterAppbar: true,
-      title: 'Sending waves to ${widget.selectedCountry}',
-      child: Column(
+    return Scaffold(
+      appBar: _buildAppBar(),
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.center, // 전체 컬럼을 화면 중앙으로
         children: [
           Padding(
@@ -212,6 +210,24 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
           ),
           SizedBox(height: 100), // 슬라이더와 버튼 사이의 간격
         ],
+      ),
+    );
+  }
+
+  AppBar _buildAppBar() {
+    return AppBar(
+      title: Text(
+        'Sending waves to ${widget.selectedCountry}',
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.w600,
+          color: Colors.black.withOpacity(0.9),
+        ),
+      ),
+      centerTitle: true,
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () => Navigator.pop(context),
       ),
     );
   }
