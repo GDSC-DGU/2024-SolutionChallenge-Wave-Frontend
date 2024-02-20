@@ -24,8 +24,9 @@ class _SearchCountriesScreenState extends ConsumerState<SearchCountriesScreen> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => ref.read(searchNotifierProvider.notifier).fetchSearchCountries());
+    Future.microtask(() =>
+        ref.read(searchNotifierProvider.notifier).fetchSearchCountries()
+    );
   }
 
   @override
@@ -44,21 +45,15 @@ class _SearchCountriesScreenState extends ConsumerState<SearchCountriesScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildSectionTitle(context, 'EMERGENCY'),
-            _buildCountryList(
-                context,
-                ref,
-                ref
-                    .watch(searchNotifierProvider.notifier)
+            _buildCountryList(context, ref,
+                ref.watch(searchNotifierProvider.notifier)
                     .getEmergencyCountries()),
             _buildSectionTitle(context, 'ALERT'),
             _buildCountryList(context, ref,
                 ref.watch(searchNotifierProvider.notifier).getAlertCountries()),
             _buildSectionTitle(context, 'CAUTION'),
-            _buildCountryList(
-                context,
-                ref,
-                ref
-                    .watch(searchNotifierProvider.notifier)
+            _buildCountryList(context, ref,
+                ref.watch(searchNotifierProvider.notifier)
                     .getCautionCountries()),
           ],
         ),
@@ -78,8 +73,8 @@ class _SearchCountriesScreenState extends ConsumerState<SearchCountriesScreen> {
     );
   }
 
-  Widget _buildCountryList(
-      BuildContext context, WidgetRef ref, List<SearchCountryModel> countries) {
+  Widget _buildCountryList(BuildContext context, WidgetRef ref,
+      List<SearchCountryModel> countries) {
     return Column(
       children: [
         SingleChildScrollView(
@@ -87,38 +82,33 @@ class _SearchCountriesScreenState extends ConsumerState<SearchCountriesScreen> {
           child: Padding(
             padding: const EdgeInsets.all(6), // 여기서 Row 전체에 대한 패딩을 설정합니다.
             child: Row(
-              children: countries
-                  .map((country) => Padding(
-                        padding: const EdgeInsets.only(right: 16),
-                        // 각 요소의 오른쪽에만 패딩을 적용합니다.
-                        child: SearchCountryCard(
-                          category: country.category,
-                          mainTitle: country.mainTitle,
-                          subTitle: country.subTitle,
-                          image: Image.network(
-                            country.image,
-                            fit: BoxFit.cover,
-                          ),
-                          views: country.views,
-                          id: country.id,
-                          country: country.country,
-                        ),
-                      ))
-                  .toList(),
+              children: countries.map((country) =>
+                  Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    // 각 요소의 오른쪽에만 패딩을 적용합니다.
+                    child: SearchCountryCard(
+                      country: country.country,
+                      category: country.category,
+                      mainTitle: country.mainTitle,
+                      subTitle: country.subTitle,
+                      image: Image.network(
+                        country.image,
+                        fit: BoxFit.cover,
+                      ),
+                      views: country.views,
+                      id: country.id,
+                    ),
+                  )).toList(),
             ),
           ),
         ),
-        SizedBox(
-          height: 24,
-        ),
+        SizedBox(height: 24,),
         Container(
           width: double.infinity, // 화면 전체 너비
           height: 1.5, // 선의 굵기
           color: Colors.black.withOpacity(0.1), // 색상 및 투명도 설정
         ),
-        SizedBox(
-          height: 5,
-        )
+        SizedBox(height: 5,)
       ],
     );
   }

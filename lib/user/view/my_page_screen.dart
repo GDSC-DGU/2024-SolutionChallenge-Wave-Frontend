@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wave/common/layout/default_layout.dart';
 import 'package:wave/onboarding/onboarding_screen.dart';
@@ -64,7 +65,7 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
     final actions = {
       'Donation list': () {
         // Donation List 스크린으로 이동
-        Navigator.push(context, MaterialPageRoute(builder: (_) => const DonationListScreen()));
+        context.push(DonationListScreen.routeName);
       },
       'About Wave': () {
         Navigator.push(

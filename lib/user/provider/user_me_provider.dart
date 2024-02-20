@@ -28,23 +28,6 @@ final userMeProvider =
   },
 );
 
-final donateResponseProvider =
-    StateNotifierProvider<UserMeStateNotifier, UserModelBase?>(
-  (ref) {
-    final authRepository = ref.watch(authRepositoryProvider);
-    final userMeRepository = ref.watch(userMeRepositoryProvider);
-    final storage = ref.watch(secureStorageProvider);
-
-    ref.read(searchCountryRepositoryProvider).getSearchCountries();
-
-    return UserMeStateNotifier(
-      authRepository: authRepository,
-      repository: userMeRepository,
-      storage: storage,
-    );
-  },
-);
-
 class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
   final AuthRepository authRepository;
   final UserMeRepository repository;
@@ -75,14 +58,14 @@ class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
     state = resp.data;
   }
 
-  Future<void> getDonationsResponse(int id, int money) async {
+  Future<void> postDonations(int id, int money) async {
     try {
       // // 로그인 로딩 상태로 변경
       // state = UserModelLoading();
 
       // AuthRepository의 googleLogin 메서드 호출
       final donationResponse =
-          await repository.getDonationsResponse(SendWaveModel(
+          await repository.postDonations(SendWaveModel(
         id: id,
         money: money,
       ));

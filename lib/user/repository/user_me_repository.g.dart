@@ -43,7 +43,7 @@ class _UserMeRepository implements UserMeRepository {
   }
 
   @override
-  Future<DonationResponseModel> getDonationsResponse(sendWaveModel) async {
+  Future<DonationResponseModel> postDonations(sendWaveModel) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'accessToken': 'true'};
@@ -53,6 +53,30 @@ class _UserMeRepository implements UserMeRepository {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<DonationResponseModel>(Options(
       method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/donate',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = DonationResponseModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<DonationResponseModel> getDonations() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<DonationResponseModel>(Options(
+      method: 'GET',
       headers: _headers,
       extra: _extra,
     )

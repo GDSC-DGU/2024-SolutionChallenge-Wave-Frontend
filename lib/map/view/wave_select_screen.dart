@@ -114,10 +114,19 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
     double amount = calculatePaymentAmount(_sliderValue); // 실제 결제 금액 계산
     PaymentRequest request = PaymentRequest.card(
         amount: amount.round(), // 계산된 금액을 반올림하여 정수로 변환
-        orderId: "8ak23s",
+        orderId: "wre24a",
         orderName: name.toString(),
         customerName: '고객명');
-    _showPayment(context, request); // 결제 요청
+    _showPayment(context, request); // 결제
+
+    print(name.toString());
+    print(amount.round());
+    print(request);
+
+
+    // PaymentRequest? ret;
+    // ret = PaymentRequest.card(amount: 10000, orderId: "8ak23s", orderName: "도도", customerName: '저쟈');
+    // _showPayment(context, ret);
   }
 
   Future<void> _loadSvgImage(String svgImage) async {
@@ -288,7 +297,7 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
                 if (success) {
                   if (url.contains('amount=${request.amount}') &&
                       url.contains('orderId=${request.orderId}')) {
-                    ref.read(userMeProvider.notifier).getDonationsResponse(widget.id, _sliderValue.toInt() + 1);
+                    ref.read(userMeProvider.notifier).postDonations(widget.id, _sliderValue.toInt() + 1);
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

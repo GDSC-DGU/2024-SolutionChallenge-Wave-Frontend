@@ -34,6 +34,13 @@ abstract class UserMeRepository {
   @Headers({
     'accessToken': 'true',
   })
-  Future<DonationResponseModel> getDonationsResponse(@Body() SendWaveModel sendWaveModel);
+  Future<DonationResponseModel> postDonations(@Body() SendWaveModel sendWaveModel);
+
+
+  @GET('/donate')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<DonationResponseModel> getDonations();
 
 }
