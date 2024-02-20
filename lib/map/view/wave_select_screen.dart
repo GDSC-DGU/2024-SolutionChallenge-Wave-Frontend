@@ -7,6 +7,7 @@ import 'package:xml/xml.dart' as xml;
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'package:xml/xml.dart';
+import 'package:wave/map/component/border_thumb_shape.dart';
 
 /// FF5039(빨강) 247EF4(파랑)
 
@@ -115,37 +116,92 @@ class _WaveSelectScreenState extends State<WaveSelectScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // 금액을 문자열로 변환하는 함수
+    String _formattedAmount(double value) {
+      return "\$${(value * (1000 / _countries.length )).toStringAsFixed(0)}";
+    }
+
     return Scaffold(
       appBar: AppBar(title: Text('Sending waves to ${widget.selectedCountry}',style: TextStyle(
         fontWeight: FontWeight.w500,
         fontSize: 20,
       ),)),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center, // 전체 컬럼을 화면 중앙으로
         children: [
           Expanded(
-            child: CustomPaint(
-              painter: CountryPainter(countries: _countries),
-              child: Container(),
+            child: Center(
+              child: AspectRatio(
+                aspectRatio: 1, // 지도의 가로세로 비율을 1:1로 설정
+                child: CustomPaint(
+                  painter: CountryPainter(countries: _countries),
+                ),
+              ),
             ),
           ),
-          Slider(
-            min: 0,
-            max: _countries.isNotEmpty ? _countries.length - 1 : 1,
-            divisions: _countries.isNotEmpty ? _countries.length - 1 : 1, // 여기를 수정
-            value: _sliderValue,
-            onChanged: (value) {
-              setState(() {
-                print('slider value: $value');
-                _sliderValue = value;
-                _updateColors(_sliderValue);
-              });
+          _sliderValue == 0
+              ? Text("Your waves can protect them!") // 0달러일 때 텍스트 표시
+              : Text("You saved ${_sliderValue.toInt() + 1} region!"),
+          SizedBox(height: 15), // 슬라이더와 버튼 사이의 간격
+          Text(
+            _formattedAmount(_sliderValue),
+            style: TextStyle(
+              color: Colors.black.withOpacity(0.9),
+              fontWeight: FontWeight.w700,
+              fontSize: 33.5,
+            ),
+          ),
+          SliderTheme(
+            data: SliderTheme.of(context).copyWith(
+              activeTrackColor: Colors.blue,
+              inactiveTrackColor: Colors.blue.withOpacity(0.3),
+              trackHeight: 28.0,
+              thumbShape: BorderThumbShape(thumbRadius: 13.0),
+              overlayColor: Colors.blue.withAlpha(32),
+              overlayShape: RoundSliderOverlayShape(overlayRadius: 28.0),
+              thumbColor: Colors.white,
+          ),
+            child: Slider(
+              min: 0,
+              max: _countries.isNotEmpty ? _countries.length.toDouble() : 1.0,
+              value: _sliderValue,
+              onChanged: (value) {
+                setState(() {
+                  print('slider value: $value');
+                  _sliderValue = value;
+                  _updateColors(_sliderValue);
+                });
+              },
+              activeColor: PRIMARY_BLUE_COLOR,
+              inactiveColor: Colors.white,
+            ),
+          ),
+          SizedBox(height: 20), // 슬라이더와 버튼 사이의 간격
+          ElevatedButton(
+            onPressed: () {
+              // 'Next' 버튼이 눌렸을 때의 액션
             },
-            activeColor: PRIMARY_BLUE_COLOR,
-            inactiveColor: Colors.white,
-          )
+            child: Text(
+              'Next',
+              style: TextStyle(
+                color: Colors.black.withOpacity(0.9),
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            style: ElevatedButton.styleFrom(
+              primary: Color(0xFFE2E2E8),
+              fixedSize: Size(353, 62),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15), // 여기에서 borderRadius 설정
+              ),
+            ),
+          ),
+          SizedBox(height: 100), // 슬라이더와 버튼 사이의 간격
 
         ],
       ),
     );
   }
+
 }
