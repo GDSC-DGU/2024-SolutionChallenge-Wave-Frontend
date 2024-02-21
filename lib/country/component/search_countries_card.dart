@@ -148,7 +148,7 @@ class SearchCountryCard extends StatelessWidget {
                 child: Text(
                   "$mainTitle\n$subTitle",
                   style: TextStyle(
-                      fontSize: 21.0,
+                      fontSize: 19.0,
                       fontWeight: FontWeight.w700,
                       color: Colors.white.withOpacity(0.9)),
                 ),
@@ -168,7 +168,7 @@ class SearchCountryCard extends StatelessWidget {
                         child: Text(
                           mainTitle,
                           style: TextStyle(
-                            fontSize: 14.7,
+                            fontSize: 13.5,
                             fontWeight: FontWeight.w700,
                             color: Colors.black.withOpacity(0.9),
                           ),
@@ -200,7 +200,7 @@ class SearchCountryCard extends StatelessWidget {
                   Text(
                     subTitle,
                     style: TextStyle(
-                      fontSize: 14.7,
+                      fontSize: 13.5,
                       fontWeight: FontWeight.w700,
                       color: Colors.black.withOpacity(0.9),
                     ),
