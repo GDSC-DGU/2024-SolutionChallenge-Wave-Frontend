@@ -57,18 +57,20 @@ class SearchCountryCard extends StatelessWidget {
       subTitle: model.subTitle,
       image: Image.network(
         model.image,
+        width: double.infinity,
+        height: isDetail ? 300 : 145,
         fit: BoxFit.cover,
         loadingBuilder: (BuildContext context, Widget child,
             ImageChunkEvent? loadingProgress) {
           if (loadingProgress == null && isDetail == false) {
             return SizedBox(
               child: child,
-              height: 220,
+              height: 145,
             ); // 로딩 완료
           }
           else if(loadingProgress != null && isDetail == true){
             return SizedBox(
-              height: 262,
+              height: isDetail ? 300 : 145,
             );
           }
           else if (loadingProgress == null && isDetail == true) {
@@ -76,7 +78,7 @@ class SearchCountryCard extends StatelessWidget {
           }
           return const Center(
             child: SizedBox(
-              height: 220,
+              height: 145,
             ),
           );
         },
