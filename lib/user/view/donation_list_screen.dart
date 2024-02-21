@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wave/user/model/donation_model.dart';
 import 'package:wave/user/repository/user_me_repository.dart';
+import '../../common/layout/default_layout.dart';
 import '../../loading/loading_screen.dart';
 import '../component/donation_list_donated_summary.dart';
 import '../component/donation_list_tile.dart';
@@ -21,32 +22,13 @@ class _DonationListScreenState extends ConsumerState<DonationListScreen> {
   @override
   Widget build(BuildContext context) {
     final donationListAsyncValue = ref.watch(donationListProvider);
-    return Scaffold(
-      appBar: _buildAppBar(),
-      body: donationListAsyncValue.when(
+    return DefaultLayout(
+      isNeededCenterAppbar: true,
+      title: 'Donation list',
+      child: donationListAsyncValue.when(
         data: (data) => _buildDonationListUI(data.data?.donateList ?? [], data.data?.totalWave ?? 0),
         loading: () => const LoadingScreen(),
         error: (e, stack) => Center(child: Text('An error occurred: $e')),
-      ),
-    );
-  }
-
-
-  AppBar _buildAppBar() {
-    return AppBar(
-      title: Text(
-        'Donation list',
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w600,
-          color: Colors.black.withOpacity(0.9),
-        ),
-      ),
-      centerTitle: true,
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios),
-        onPressed: () => Navigator.pop(context),
-        iconSize: 24,
       ),
     );
   }

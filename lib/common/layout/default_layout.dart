@@ -26,7 +26,7 @@ class DefaultLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor ?? Colors.white,
-      appBar: renderAppBar(),
+      appBar: renderAppBar(context),
       body: isSingleChildScrollViewNeeded
           ? SingleChildScrollView(child: child) // Wrap child with SingleChildScrollView if needed
           : child,
@@ -35,13 +35,31 @@ class DefaultLayout extends StatelessWidget {
     );
   }
 
-  AppBar? renderAppBar() {
+  AppBar? renderAppBar(BuildContext context) {
     if (title == null) {
       return null;
-    } else {
+    } else if (isNeededCenterAppbar){
+      return AppBar(
+        title: Text(
+            title!,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: Colors.black.withOpacity(0.9),
+          ),
+        ),
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () => Navigator.pop(context),
+          iconSize: 24,
+        ),
+      );
+    }
+    else {
       return AppBar(
         title: Align(
-          alignment: isNeededCenterAppbar ? Alignment.center : Alignment.centerLeft,
+          alignment: Alignment.centerLeft,
           child: Text(
             title!,
             style: const TextStyle(
