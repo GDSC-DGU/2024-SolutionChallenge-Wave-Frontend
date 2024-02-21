@@ -18,7 +18,6 @@ import 'package:wave/loading/loading_screen.dart';
 import 'package:wave/map/component/current_zoom_level.dart';
 import 'package:wave/map/component/risk_level_button.dart';
 import 'package:wave/map/model/important_countries_model.dart';
-
 import '../provider/global_map_provider.dart';
 
 /// todolist
@@ -61,8 +60,12 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
       enableDoubleTapZooming: true,
       enablePanning: true,
       zoomLevel: currentZoomLevel,
-      minZoomLevel: 1,
+      minZoomLevel: 2,
       maxZoomLevel: 10,
+      latLngBounds: const MapLatLngBounds(
+        MapLatLng(71.538800, 179.148909), // 북동 경계
+        MapLatLng(-55.973798, -179.148909), // 남서 경계
+      ),
     );
     super.initState();
     _showHighRisk = !_showHighRisk;
@@ -407,4 +410,39 @@ class Model {
   final double latitude;
   final double longitude;
   final int id;
+}
+
+MapDataLabelSettings getDataLabelSettings(double currentZoomLevel) {
+  print('currentZoomLevel: $currentZoomLevel');
+  if (currentZoomLevel >= 8) {
+    return const MapDataLabelSettings(
+      overflowMode: MapLabelOverflow.visible,
+      textStyle: TextStyle(
+        fontFamily: 'HelveticaNeue',
+        color: MAP_COUNTRY_COLOR,
+        fontWeight: FontWeight.w600,
+        fontSize: 18,
+      ),
+    );
+  } else if (currentZoomLevel >= 4) {
+    return const MapDataLabelSettings(
+      overflowMode: MapLabelOverflow.hide,
+      textStyle: TextStyle(
+        fontFamily: 'HelveticaNeue',
+        color: MAP_COUNTRY_COLOR,
+        fontWeight: FontWeight.w600,
+        fontSize: 15,
+      ),
+    );
+  } else {
+    return const MapDataLabelSettings(
+      overflowMode: MapLabelOverflow.hide,
+      textStyle: TextStyle(
+        fontFamily: 'HelveticaNeue',
+        color: MAP_COUNTRY_COLOR,
+        fontWeight: FontWeight.w600,
+        fontSize: 9,
+      ),
+    );
+  }
 }
