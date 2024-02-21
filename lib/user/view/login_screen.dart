@@ -24,9 +24,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         children: [
           // 배경 이미지
           Positioned.fill(
-            child: Image.asset(
-              "assets/images/loginBackground.svg",
-              fit: BoxFit.cover,
+            child: SvgPicture.asset(
+              'assets/icons/loginBackground.svg', // SVG 이미지 경로
+              width: 60, // SVG 이미지 너비 설정
+              height: 60, // SVG 이미지 높이 설정
+              fit: BoxFit.cover, // 이미지가 컨테이너를 꽉 채우도록 설정
             ),
           ),
           // 로고 이미지와 로그인 버튼을 포함한 Column
@@ -35,7 +37,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
-                  child: Image.asset(
+                  child: SvgPicture.asset(
                     "assets/images/loginScreenLogo.svg",
                     height: 99,
                   ),

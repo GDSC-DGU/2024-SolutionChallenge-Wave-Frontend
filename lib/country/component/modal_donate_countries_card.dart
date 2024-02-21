@@ -192,7 +192,7 @@ class ModalDonateCountryCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10), // 모서리 둥글게 처리
                       image: const DecorationImage(
                         image:
-                            AssetImage('assets/icons/share.png'), // PNG 이미지 경로
+                            AssetImage('assets/icons/share.svg'),
                         fit: BoxFit.cover, // 이미지가 컨테이너를 꽉 채우도록 설정
                       ),
                     ),

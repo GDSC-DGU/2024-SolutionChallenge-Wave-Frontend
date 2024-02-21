@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wave/main.dart';
 
@@ -88,8 +89,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       });
                     },
                     children: <Widget>[
-                      Image.asset('assets/images/onBoardingImage1.svg'),
-                      Image.asset('assets/images/onBoardingImage2.svg'),
+                      SvgPicture.asset('assets/images/onBoardingImage1.svg'),
+                      SvgPicture.asset('assets/images/onBoardingImage2.svg'),
                     ],
                   ),
                 ),

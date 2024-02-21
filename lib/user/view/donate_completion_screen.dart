@@ -28,7 +28,7 @@ class DonateCompletionScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Image.asset(
-                'assets/images/donationCompletionImage.png',
+                'assets/images/donationCompletionImage.svg',
                 width: 150,
                 height: 150,
               ),

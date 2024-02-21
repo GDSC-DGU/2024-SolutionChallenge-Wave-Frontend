@@ -183,18 +183,16 @@ class DonateCountryCard extends StatelessWidget {
                     height: 60, // 높이 60
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10), // 모서리 둥글게 처리
-                      image: const DecorationImage(
-                        image: AssetImage('assets/icons/share.png'), // PNG 이미지 경로
-                        fit: BoxFit.cover, // 이미지가 컨테이너를 꽉 채우도록 설정
-                      ),
                     ),
                     child: InkWell(
                       onTap: () {
                         // 버튼 클릭 시 수행할 작업
                       },
-                      child: Container(
-                        alignment: Alignment.center,
-                        // 버튼 내부에 다른 위젯을 추가하고 싶다면 여기에 추가
+                      child: SvgPicture.asset(
+                        'assets/icons/share.svg', // SVG 이미지 경로
+                        width: 60, // SVG 이미지 너비 설정
+                        height: 60, // SVG 이미지 높이 설정
+                        fit: BoxFit.cover, // 이미지가 컨테이너를 꽉 채우도록 설정
                       ),
                     ),
                   ),

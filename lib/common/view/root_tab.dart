@@ -65,6 +65,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
 
     return Scaffold(
       body: screens[index],
+      extendBody: true,
       bottomNavigationBar: SafeArea(
         child: Container(
           height: 70,
