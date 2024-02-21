@@ -34,7 +34,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final List<Map<String, String>> pageData = [
     {
       'title': 'We are a wave',
-      'content': 'Create positive ripples in the world in the world.',
+      'content': 'Create positive ripples in the world.',
     },
     {
       'title': 'Our Goals',
