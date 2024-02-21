@@ -13,6 +13,7 @@ import 'package:wave/main.dart';
 import 'package:wave/map/view/wave_select_screen.dart';
 import 'package:wave/onboarding/onboarding_screen.dart';
 import 'package:wave/user/provider/user_me_provider.dart';
+import 'package:wave/user/view/donate_completion_screen.dart';
 import 'package:wave/user/view/login_screen.dart';
 import 'package:wave/loading/loading_screen.dart';
 import 'package:wave/user/view/my_page_screen.dart';
@@ -112,6 +113,11 @@ class AuthProvider extends ChangeNotifier {
           name: MyPageScreen.routeName,
           builder: (_, __) => const MyPageScreen(),
         ),
+        GoRoute(
+          path:  '/donation-completion',
+          name: DonateCompletionScreen.routeName,
+          builder: (_, __) => const MyPageScreen(),
+        ),
       ];
 
   // SplashScreen
@@ -124,10 +130,6 @@ class AuthProvider extends ChangeNotifier {
     // // return null;
     // // // return null;
 
-    if(state.matchedLocation == '/donation-list'){
-      return null;
-    }
-
     final UserModelBase? user = ref.read(userMeProvider);
     final logginIn = state.matchedLocation == '/login';
     // SharedPreferences에서 isFirstRun 값을 가져옴
@@ -136,8 +138,6 @@ class AuthProvider extends ChangeNotifier {
     if (isFirstRun && user == null) {
       return '/onboarding';
     }
-
-
 
     if (user == null) {
       return logginIn ? null : '/login';
