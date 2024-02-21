@@ -62,6 +62,14 @@ class DonateCountryCard extends StatelessWidget {
       image: Image.network(
         model.image,
         fit: BoxFit.cover,
+        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+          if (loadingProgress == null) return child; // 로딩 완료
+          return Center(
+            child: SizedBox(
+              height: 225,
+            ),
+          );
+        },
       ),
       allWave: model.allWave,
       lastWave: model.lastWave,
@@ -85,7 +93,6 @@ class DonateCountryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: isDetail ==  true ? 500 : 360,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: isDetail ==  true ? BorderRadius.zero : const BorderRadius.all(
@@ -104,7 +111,7 @@ class DonateCountryCard extends StatelessWidget {
         children: [
           Stack(
             children: [
-              if (heroKey != null) // heroKey != null => detail이 아닌 경우(지도에서 클릭시랑 2번째 탭화면)
+              if (heroKey != null)
                 Hero(
                   tag: ObjectKey(heroKey),
                   child: ClipRRect(
@@ -125,11 +132,7 @@ class DonateCountryCard extends StatelessWidget {
                           topLeft: Radius.circular(15.0),
                           topRight: Radius.circular(15.0),
                         ),
-                  child: Container(
-                    height: 180,
-                    width: double.infinity,
-                    child: image,
-                  ),
+                  child: image,
                 ),
               if (heroKey == null) // heroKey가 null => detail인 경우(컬러 카테고리 보여줄 필요 없음)
                 Positioned(

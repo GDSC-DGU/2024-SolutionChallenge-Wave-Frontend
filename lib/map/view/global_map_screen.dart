@@ -146,7 +146,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
               child: Stack(
                 children: [
                   Positioned.fill(
-                    child: BlueGridPattern(zoomLevel: currentZoomLevel), // 파란색 격자무늬를 그리는 커스텀 위젯
+                    child: BlueGridPattern(zoomLevel: currentZoomLevel),
                   ),
                   SfMaps(
                     layers: [

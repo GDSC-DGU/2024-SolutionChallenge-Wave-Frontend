@@ -38,8 +38,9 @@ class DonateNotifier extends ChangeNotifier {
     } catch (error) {
       print('Error fetching countries: $error');
     } finally {
-      isCountriesLoading = false;
+
       notifyListeners();
+      isCountriesLoading = false;
     }
   }
 

@@ -155,17 +155,7 @@ class _DonateCountriesScreenState extends ConsumerState<DonateCountriesScreen> {
           .map((country) => Column(
         children: [
           DonateCountryLabel(countryName: country.country),
-          DonateCountryCard(
-            id: country.id,
-            category: country.category,
-            mainTitle: country.mainTitle,
-            subTitle: country.subTitle,
-            image: Image.network(country.image, fit: BoxFit.cover),
-            allWave: country.allWave,
-            lastWave: country.lastWave,
-            casualties: country.casualties,
-            country: country.country,
-          ),
+          DonateCountryCard.fromModel(model: country, isDetail: false),
           const SizedBox(height: 30,)
         ],
       )).toList(),

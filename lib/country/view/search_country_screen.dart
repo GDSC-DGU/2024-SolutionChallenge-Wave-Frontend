@@ -86,18 +86,7 @@ class _SearchCountriesScreenState extends ConsumerState<SearchCountriesScreen> {
                   Padding(
                     padding: const EdgeInsets.only(right: 16),
                     // 각 요소의 오른쪽에만 패딩을 적용합니다.
-                    child: SearchCountryCard(
-                      country: country.country,
-                      category: country.category,
-                      mainTitle: country.mainTitle,
-                      subTitle: country.subTitle,
-                      image: Image.network(
-                        country.image,
-                        fit: BoxFit.cover,
-                      ),
-                      views: country.views,
-                      id: country.id,
-                    ),
+                    child: SearchCountryCard.fromModel(model: country, isDetail:false,),
                   )).toList(),
             ),
           ),

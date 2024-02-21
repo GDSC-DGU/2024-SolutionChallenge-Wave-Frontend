@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -58,12 +59,10 @@ class SearchCountryCard extends StatelessWidget {
         model.image,
         fit: BoxFit.cover,
         loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-          if (loadingProgress == null) return child; // 로딩 완료
+          if (loadingProgress == null) return SizedBox(child: child,height: 225,); // 로딩 완료
           return Center(
-            child: CircularProgressIndicator(
-              value: loadingProgress.expectedTotalBytes != null ?
-              loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
-                  : null,
+            child: SizedBox(
+              height: 225,
             ),
           );
         },
