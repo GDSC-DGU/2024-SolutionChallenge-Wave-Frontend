@@ -72,7 +72,7 @@ class DonateCountryCard extends StatelessWidget {
           if (loadingProgress == null) return Container(child: child); // 로딩 완료
           return Center(
             child: SizedBox(
-              height: 180,
+              height: isDetail ? 300 : 180,
             ),
           );
         },
