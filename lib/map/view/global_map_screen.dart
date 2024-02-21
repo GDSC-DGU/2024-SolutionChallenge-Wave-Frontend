@@ -204,6 +204,9 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
                       if (details.newZoomLevel != null) {
                         currentZoomLevel = details.newZoomLevel!;
                         _updateDataSource();
+                        setState(() {
+                          _zoomPanBehavior!.zoomLevel = (_zoomPanBehavior!.zoomLevel).clamp(_zoomPanBehavior!.minZoomLevel, _zoomPanBehavior!.maxZoomLevel);
+                        });
                       }
                     });
                     return true;
