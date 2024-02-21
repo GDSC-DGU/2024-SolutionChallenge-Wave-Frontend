@@ -66,30 +66,31 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
     return Scaffold(
       body: screens[index],
       extendBody: true,
-      bottomNavigationBar: SafeArea(
-        child: Container(
-          height: 70,
-          child: CustomAnimationNavBar(
-            key: navigationKey, // key를 할당
-            animationCurve: Curves.easeInOut,
-            animationDuration: const Duration(milliseconds: 700),
-            backgroundColor: PRIMARY_BLUE_COLOR,
-            buttonBackgroundColor: PRIMARY_BLUE_COLOR,
-            height:70,
-            index: index,
-            color: Color(0xFF242424),
-            onTap: (selectedIndex) {
-              print(selectedIndex);
-              setState(() {
-                index = selectedIndex;
-              });
-            },
-            items: items,
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 20), // 하단에서 20px만큼 띄우기
+        child: SafeArea(
+          child: Container(
+            height: 70,
+            child: CustomAnimationNavBar(
+              key: navigationKey, // key를 할당
+              animationCurve: Curves.easeInOut,
+              animationDuration: const Duration(milliseconds: 700),
+              backgroundColor: PRIMARY_BLUE_COLOR,
+              buttonBackgroundColor: PRIMARY_BLUE_COLOR,
+              height:70,
+              index: index,
+              color: Color(0xFF242424),
+              onTap: (selectedIndex) {
+                setState(() {
+                  index = selectedIndex;
+                });
+              },
+              items: items,
+            ),
           ),
         ),
-
       ),
-      // bottomNavigationBar: BottomNavigationBar(
+    // bottomNavigationBar: BottomNavigationBar(
       //   items: items,      //   items: items,
       //   onTap: (selectedIndex) {
       //     print(selectedIndex);

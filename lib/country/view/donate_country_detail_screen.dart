@@ -28,7 +28,7 @@ class DonateCountryDetailScreen extends ConsumerStatefulWidget {
 
 class _DonateCountryDetailScreenState extends ConsumerState<DonateCountryDetailScreen> {
   final ScrollController _scrollController = ScrollController();
-  Color _iconColor = Colors.white; // 초기 아이콘 색상은 흰색으로 설정
+  bool _showBackButton = true; // 뒤로 가기 버튼의 표시 여부를 결정하는 상태 변수
 
   @override
   void initState() {
@@ -41,18 +41,14 @@ class _DonateCountryDetailScreenState extends ConsumerState<DonateCountryDetailS
 
   void _scrollListener() {
     const double threshold = 80; // 스크롤 임계값
-    if (_scrollController.offset >= threshold) {
-      if (_iconColor != Colors.black) {
-        setState(() {
-          _iconColor = Colors.black; // 스크롤 위치에 따라 아이콘 색상을 검정색으로 변경
-        });
-      }
-    } else {
-      if (_iconColor != Colors.white) {
-        setState(() {
-          _iconColor = Colors.white; // 스크롤 위치가 임계값 미만이면 아이콘 색상을 흰색으로 변경
-        });
-      }
+    if (_scrollController.offset >= threshold && _showBackButton) {
+      setState(() {
+        _showBackButton = false; // 스크롤 위치가 임계값을 넘으면 버튼을 숨깁니다.
+      });
+    } else if (_scrollController.offset < threshold && !_showBackButton) {
+      setState(() {
+        _showBackButton = true; // 스크롤 위치가 임계값 미만이면 버튼을 다시 표시합니다.
+      });
     }
   }
 
@@ -99,8 +95,8 @@ class _DonateCountryDetailScreenState extends ConsumerState<DonateCountryDetailS
               ],
             ),
             // 뒤로가기 버튼
+          if (_showBackButton) // _showBackButton 상태에 따라 조건부 렌더링
             CustomBackButton(
-              iconColor: _iconColor, // 동적으로 변하는 아이콘 색상
               onPressed: () => Navigator.of(context).pop(),
             ),
         ],
