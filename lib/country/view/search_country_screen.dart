@@ -80,7 +80,7 @@ class _SearchCountriesScreenState extends ConsumerState<SearchCountriesScreen> {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Padding(
-            padding: const EdgeInsets.all(6), // 여기서 Row 전체에 대한 패딩을 설정합니다.
+            padding: const EdgeInsets.only(top: 12, bottom: 16, left: 10), // 여기서 Row 전체에 대한 패딩을 설정합니다.
             child: Row(
               children: countries.map((country) =>
                   Padding(
