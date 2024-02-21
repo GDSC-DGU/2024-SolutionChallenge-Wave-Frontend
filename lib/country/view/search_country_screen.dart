@@ -55,7 +55,7 @@ class _SearchCountriesScreenState extends ConsumerState<SearchCountriesScreen> {
             _buildCountryList(context, ref,
                 ref.watch(searchNotifierProvider.notifier)
                     .getCautionCountries()),
-            const SizedBox(height: 80), // 여기에 SizedBox를 추가하여 화면 하단에 공백을 추가합니다.
+            const SizedBox(height: 100), // 여기에 SizedBox를 추가하여 화면 하단에 공백을 추가합니다.
           ],
         ),
       ),

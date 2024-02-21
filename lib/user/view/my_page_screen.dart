@@ -194,7 +194,7 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
                         ),
                       ),
                 ).toList(),
-                const SizedBox(height: 80),
+                const SizedBox(height: 120),
               ],
             ),
           )

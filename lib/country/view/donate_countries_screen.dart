@@ -144,7 +144,7 @@ class _DonateCountriesScreenState extends ConsumerState<DonateCountriesScreen> {
             child: Column(
               children: [
                 _buildCountriesList(state.donateCountries!), // 기존에 구현한 리스트 빌더 함수
-                SizedBox(height: 80), // 여기에 SizedBox를 추가하여 화면 하단에 공백을 추가합니다.
+                SizedBox(height: 100), // 여기에 SizedBox를 추가하여 화면 하단에 공백을 추가합니다.
               ],
             ),
           ),
