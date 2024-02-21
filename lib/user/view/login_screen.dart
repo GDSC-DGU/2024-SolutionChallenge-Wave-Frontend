@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../model/google_login_model.dart';
@@ -24,11 +24,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         children: [
           // 배경 이미지
           Positioned.fill(
-            child: SvgPicture.asset(
-              'assets/icons/loginBackground.svg', // SVG 이미지 경로
-              width: 60, // SVG 이미지 너비 설정
-              height: 60, // SVG 이미지 높이 설정
-              fit: BoxFit.cover, // 이미지가 컨테이너를 꽉 채우도록 설정
+            child: Image.asset(
+              'assets/images/loginBackground.png', // 배경 이미지 경로
+              fit: BoxFit.cover, // 화면을 꽉 채우도록 설정
             ),
           ),
           // 로고 이미지와 로그인 버튼을 포함한 Column
@@ -37,9 +35,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
-                  child: SvgPicture.asset(
-                    "assets/images/loginScreenLogo.svg",
-                    height: 99,
+                  child: Image.asset(
+                    "assets/images/loginScreenLogo.png", // 로고 이미지 경로
+                    width: 239, // 로고 너비 설정
+                    height: 99, // 로고 높이 설정
                   ),
                 ),
               ],

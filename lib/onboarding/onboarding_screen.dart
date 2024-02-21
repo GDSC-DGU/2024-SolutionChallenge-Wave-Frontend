@@ -89,8 +89,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       });
                     },
                     children: <Widget>[
-                      SvgPicture.asset('assets/images/onBoardingImage1.svg'),
-                      SvgPicture.asset('assets/images/onBoardingImage2.svg'),
+                      SvgPicture.asset('assets/images/onBoardingImage1.svg',
+                          width: 394,
+                          height: 401
+                      ),
+                      SvgPicture.asset('assets/images/onBoardingImage2.svg',
+                          width: 353,
+                          height: 401
+                      ),
                     ],
                   ),
                 ),
