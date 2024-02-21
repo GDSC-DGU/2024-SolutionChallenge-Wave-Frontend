@@ -196,27 +196,27 @@ class DonateCountryCard extends StatelessWidget {
             Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 6, 0, 6),
+                  padding: const EdgeInsets.fromLTRB(0, 6, 0, 6),
                   child: Container(
-                    width: 60, // 너비 60
+                    //width: 60, // 너비 60
                     height: 60, // 높이 60
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10), // 모서리 둥글게 처리
                     ),
-                    child: InkWell(
-                      onTap: () async{
-                        // final String shareContent = 'Check out this interesting place: $mainTitle\n$country';
-                        // Share.share(shareContent);
-                        print('here');
-                        await Share.share('Wave', subject: 'Check out this interesting place: $mainTitle\n$country');
-                      },
-                      child: SvgPicture.asset(
-                        'assets/icons/share.svg', // SVG 이미지 경로
-                        width: 60, // SVG 이미지 너비 설정
-                        height: 60, // SVG 이미지 높이 설정
-                        fit: BoxFit.cover, // 이미지가 컨테이너를 꽉 채우도록 설정
-                      ),
-                    ),
+                    // child: InkWell(
+                    //   onTap: () async{
+                    //     // final String shareContent = 'Check out this interesting place: $mainTitle\n$country';
+                    //     // Share.share(shareContent);
+                    //     print('here');
+                    //     await Share.share('Wave', subject: 'Check out this interesting place: $mainTitle\n$country');
+                    //   },
+                    //   child: SvgPicture.asset(
+                    //     'assets/icons/share.svg', // SVG 이미지 경로
+                    //     width: 60, // SVG 이미지 너비 설정
+                    //     height: 60, // SVG 이미지 높이 설정
+                    //     fit: BoxFit.cover, // 이미지가 컨테이너를 꽉 채우도록 설정
+                    //   ),
+                    // ),
                   ),
                 ),
                 Expanded(
@@ -235,7 +235,7 @@ class DonateCountryCard extends StatelessWidget {
                           ),
                         );
                       },
-                      width: 270.0, // 버튼 너비를 200.0으로 설정
+                      width: 300.0, // 버튼 너비를 200.0으로 설정
                       height: 60.0, // 버튼 높이를 50.0으로 설정
                     ),
                   ),
