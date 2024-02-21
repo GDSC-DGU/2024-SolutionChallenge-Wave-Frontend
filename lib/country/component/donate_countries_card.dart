@@ -175,7 +175,7 @@ class DonateCountryCard extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 26.0,
-                vertical: 10,
+                vertical: 5,
               ),
               child: ForwardDetailButton(
                 buttonName: 'Sending Waves',
@@ -187,6 +187,8 @@ class DonateCountryCard extends StatelessWidget {
                 },
               ),
             ),
+          if (!isDetail)
+            SizedBox(height: 18,),
           if (isDetail)
             Row(
               children: [
