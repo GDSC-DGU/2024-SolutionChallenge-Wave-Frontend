@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:path_drawing/path_drawing.dart';
 import 'package:wave/common/const/colors.dart';
 import 'package:wave/common/layout/default_layout.dart';
@@ -26,6 +27,9 @@ import 'package:toss_payment/feature/payments/webview/payment_webview.dart';
 export 'package:toss_payment/extensions/uri_extension.dart';
 export 'package:toss_payment/feature/payments/webview/payment_webview.dart';
 import 'package:toss_payment/toss_payment.dart';
+
+import '../../country/component/edit_amount_dialog.dart';
+import '../../country/component/edit_donate_button.dart';
 
 /// FF5039(빨강) 247EF4(파랑)
 
@@ -107,7 +111,7 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
   }
 
   double calculatePaymentAmount(double sliderValue) {
-    return sliderValue * (1200 / _countries.length) * 100;
+    return sliderValue * (1000 / _countries.length) * 1400;
   }
 
   void onPaymentButtonPressed(String name) {
@@ -176,11 +180,43 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
   Widget build(BuildContext context) {
     // 금액을 문자열로 변환하는 함수
     String _formattedAmount(double value) {
-      return "\$${(value * (1200 / _countries.length)).round().toStringAsFixed(0)}";
+      // Check if _countries is empty to avoid division by zero
+      if (_countries.isEmpty) {
+        return "\$0"; // Return $0 or any appropriate value when there are no countries
+      }
+      return "\$${(value * (1000 / _countries.length)).round().toStringAsFixed(0)}";
     }
+// 선택된 금액을 저장할 변수
 
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+
+// 슬라이더의 값을 계산하고 업데이트하는 함수
+    void _updateSliderAndAmount(double amount) {
+      // 여기서는 예시로 amount를 최대 금액(예: 1000)으로 나누어 슬라이더의 최대값과 비교하는 방식을 사용합니다.
+      // 실제 구현에서는 _countries.length와 다른 조건을 기반으로 계산할 수 있습니다.
+      double sliderValue = (amount / 1000) * (_countries.isNotEmpty ? _countries.length : 1);
+
+      setState(() {
+        _sliderValue = sliderValue;
+        _updateColors(sliderValue); // 슬라이더 값에 따라 국가 색상을 업데이트
+      });
+    }
+
+    void _showEditAmountDialog() {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return EditAmountDialog(
+            onAmountEdited: (double editedAmount) {
+              _updateSliderAndAmount(editedAmount); // 사용자가 입력한 금액으로 슬라이더와 금액을 업데이트
+            },
+          );
+        },
+      );
+    }
+
+
 
     return DefaultLayout(
       isSingleChildScrollViewNeeded: true,
@@ -205,12 +241,25 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
               ? Text("Your waves can protect them!") // 0달러일 때 텍스트 표시
               : Text("You saved ${_sliderValue.toInt() + 1} region!"),
           SizedBox(height: 15), // 슬라이더와 버튼 사이의 간격
-          Text(
-            _formattedAmount(_sliderValue),
-            style: TextStyle(
-              color: Colors.black.withOpacity(0.9),
-              fontWeight: FontWeight.w700,
-              fontSize: 33.5,
+          Center(
+            child: Transform.translate(
+              offset: Offset(14, 0), // 오른쪽으로 20px 이동
+              child: Row(
+                mainAxisSize: MainAxisSize.min, // Row의 크기를 자식들의 크기에 맞춤
+                children: [
+                  Text(
+                    _formattedAmount(_sliderValue), // 여기서 _formattedAmount 함수는 슬라이더 값에 따른 문자열을 반환
+                    style: TextStyle(
+                      color: Colors.black.withOpacity(0.9),
+                      fontWeight: FontWeight.w700,
+                      fontSize: 33.5,
+                    ),
+                  ),
+                  EditDonateButton(
+                    onPressed: _showEditAmountDialog, // EditDonateButton 클릭 시 호출되는 함수
+                  ),
+                ],
+              ),
             ),
           ),
           SliderTheme(
@@ -229,7 +278,7 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
             child: Slider(
               min: 0,
               max: _countries.isNotEmpty
-                  ? _countries.length.toDouble() - 1
+                  ? _countries.length.toDouble()
                   : 1.0,
               value: _sliderValue,
               onChanged: (value) {
@@ -243,24 +292,36 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
           ),
           SizedBox(height: 20), // 슬라이더와 버튼 사이의 간격
           ElevatedButton(
-            onPressed: () {
+            onPressed: _sliderValue > 0
+                ? () {
               final user = ref.read(userMeProvider) as UserModel;
               onPaymentButtonPressed(user.nickname); // 사용자 닉네임을 인자로 전달
-            },
-            child: Text(
-              'Next',
+            }
+                : null,
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                    (Set<MaterialState> states) {
+                  if (_sliderValue > 0) {
+                    return PRIMARY_BLUE_COLOR; // 금액이 0이 아닐 때 버튼 색상
+                  }
+                  return Color(0xFFE2E2E8); // 금액이 0일 때 버튼 색상
+                },
+              ),
+              fixedSize: MaterialStateProperty.all(Size(353, 62)),
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+              ),
+            ), // _sliderValue가 0일 경우 버튼 비활성화
+            child: AnimatedDefaultTextStyle(
+              duration: const Duration(milliseconds: 200), // 텍스트 색상 변경 애니메이션 속도
               style: TextStyle(
-                color: Colors.black.withOpacity(0.9),
+                color: _sliderValue > 0 ? Colors.white : Colors.black.withOpacity(0.9),
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
               ),
-            ),
-            style: ElevatedButton.styleFrom(
-              primary: Color(0xFFE2E2E8),
-              fixedSize: Size(353, 62),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15), // 여기에서 borderRadius 설정
-              ),
+              child: Text('Next'),
             ),
           ),
           SizedBox(height: 100), // 슬라이더와 버튼 사이의 간격
@@ -272,8 +333,8 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
   _showPayment(BuildContext context, PaymentRequest request) async {
 
     int _formattedAmount(double value) {
-      print('donation list에 반영될 wave: ${((value * (1200 / _countries.length)).round())}');
-      return ((value * (1200 / _countries.length)).round());
+      print('donation list에 반영될 wave: ${((value * (1000 / _countries.length)).round())}');
+      return ((value * (1000 / _countries.length)).round());
     }
 
 
