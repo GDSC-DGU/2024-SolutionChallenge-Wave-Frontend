@@ -9,6 +9,8 @@ import 'package:wave/country/model/search_country_detail_model.dart';
 import 'package:wave/country/model/search_country_model.dart';
 import 'package:wave/country/view/search_country_detail_screen.dart';
 
+import 'package:share/share.dart';
+
 class SearchCountryCard extends StatelessWidget {
   final String category;
   final String mainTitle;

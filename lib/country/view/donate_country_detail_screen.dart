@@ -14,6 +14,8 @@ import 'package:wave/country/component/country_detail_image.dart';
 import 'package:wave/country/component/custom_divider.dart';
 import 'package:wave/country/component/news_card.dart';
 
+import 'package:share/share.dart';
+
 class DonateCountryDetailScreen extends ConsumerStatefulWidget {
   static String get routeName => 'donateCountryDetail';
 

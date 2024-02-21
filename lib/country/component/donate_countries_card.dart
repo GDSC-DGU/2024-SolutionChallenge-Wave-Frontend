@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+
 import 'package:wave/common/const/colors.dart';
 import 'package:wave/country/component/category_button.dart';
 import 'package:wave/country/component/donate_card_row.dart';
@@ -10,6 +11,8 @@ import 'package:wave/country/model/donate_country_detail_model.dart';
 import 'package:wave/country/view/donate_country_detail_screen.dart';
 import 'package:wave/map/view/wave_select_screen.dart';
 import '../model/donate_country_model.dart';
+
+import 'package:share_plus/share_plus.dart';
 
 class DonateCountryCard extends StatelessWidget {
   final String category;
@@ -201,8 +204,11 @@ class DonateCountryCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10), // 모서리 둥글게 처리
                     ),
                     child: InkWell(
-                      onTap: () {
-                        // 버튼 클릭 시 수행할 작업
+                      onTap: () async{
+                        // final String shareContent = 'Check out this interesting place: $mainTitle\n$country';
+                        // Share.share(shareContent);
+                        print('here');
+                        await Share.share('Wave', subject: 'Check out this interesting place: $mainTitle\n$country');
                       },
                       child: SvgPicture.asset(
                         'assets/icons/share.svg', // SVG 이미지 경로
