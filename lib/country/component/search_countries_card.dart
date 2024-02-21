@@ -58,11 +58,20 @@ class SearchCountryCard extends StatelessWidget {
       image: Image.network(
         model.image,
         fit: BoxFit.cover,
-        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-          if (loadingProgress == null) return SizedBox(child: child,height: 225,); // 로딩 완료
-          return Center(
+        loadingBuilder: (BuildContext context, Widget child,
+            ImageChunkEvent? loadingProgress) {
+          if (loadingProgress == null && isDetail == false) {
+            return SizedBox(
+              child: child,
+              height: 230,
+            ); // 로딩 완료
+          }
+          else if (loadingProgress == null && isDetail == true) {
+            return child; // 로딩 완료
+          }
+          return const Center(
             child: SizedBox(
-              height: 225,
+              height: 230,
             ),
           );
         },
@@ -71,13 +80,13 @@ class SearchCountryCard extends StatelessWidget {
       isDetail: isDetail,
       heroKey: model.id,
       imageProducer:
-      model is SearchCountryDetailModel ? model.imageProducer : null,
+          model is SearchCountryDetailModel ? model.imageProducer : null,
       contents: model is SearchCountryDetailModel ? model.contents : null,
       detailImage: model is SearchCountryDetailModel ? model.detailImage : null,
       detailImageTitle:
-      model is SearchCountryDetailModel ? model.detailImageTitle : null,
+          model is SearchCountryDetailModel ? model.detailImageTitle : null,
       detailImageProducer:
-      model is SearchCountryDetailModel ? model.detailImageProducer : null,
+          model is SearchCountryDetailModel ? model.detailImageProducer : null,
       news: model is SearchCountryDetailModel ? model.news : null,
     );
   }
@@ -91,8 +100,8 @@ class SearchCountryCard extends StatelessWidget {
         borderRadius: isDetail == true
             ? BorderRadius.zero
             : const BorderRadius.all(
-          Radius.circular(15.0),
-        ),
+                Radius.circular(15.0),
+              ),
         boxShadow: [
           BoxShadow(
             color: isDetail == true
@@ -115,9 +124,9 @@ class SearchCountryCard extends StatelessWidget {
                     borderRadius: isDetail
                         ? BorderRadius.zero
                         : const BorderRadius.only(
-                      topLeft: Radius.circular(15.0),
-                      topRight: Radius.circular(15.0),
-                    ),
+                            topLeft: Radius.circular(15.0),
+                            topRight: Radius.circular(15.0),
+                          ),
                     child: image,
                   ),
                 ),
@@ -126,32 +135,32 @@ class SearchCountryCard extends StatelessWidget {
                   borderRadius: isDetail
                       ? BorderRadius.zero
                       : BorderRadius.only(
-                    topLeft: Radius.circular(15.0),
-                    topRight: Radius.circular(15.0),
-                  ),
-                  child: Container(
-                    height: 130,
-                    width: 300,
-                    child: image,
-                  ),
+                          topLeft: Radius.circular(15.0),
+                          topRight: Radius.circular(15.0),
+                        ),
+                  child: image,
                 ),
-              if (heroKey == null) // heroKey가 null => detail인 경우(컬러 카테고리 보여줄 필요 없음)
+              if (heroKey ==
+                  null) // heroKey가 null => detail인 경우(컬러 카테고리 보여줄 필요 없음)
                 Positioned(
-                  child: CountryCategoryButton(category: category, countryName: country,),
+                  child: CountryCategoryButton(
+                    category: category,
+                    countryName: country,
+                  ),
                 ),
               if (isDetail)
                 Positioned(
-                bottom: 20,
-                left: 21,
-                right: 8,
-                child: Text(
-                  "$mainTitle\n$subTitle",
-                  style: TextStyle(
-                      fontSize: 19.0,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white.withOpacity(0.9)),
+                  bottom: 20,
+                  left: 21,
+                  right: 8,
+                  child: Text(
+                    "$mainTitle\n$subTitle",
+                    style: TextStyle(
+                        fontSize: 19.0,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white.withOpacity(0.9)),
+                  ),
                 ),
-              ),
             ],
           ),
           Padding(
@@ -207,23 +216,24 @@ class SearchCountryCard extends StatelessWidget {
               ],
             ),
           ),
-          if(!isDetail)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: isDetail
-                ? SizedBox.shrink()
-                : ForwardDetailButton(
-              buttonName: 'Learn their pain',
-              onPressed: () {
-                context.pushNamed(SearchCountryDetailScreen.routeName,
-                  pathParameters: {'id': id.toString()},
-                );
-                },
-              width: 250,
-              height: 45,
-              isSearch: true,
+          if (!isDetail)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: isDetail
+                  ? SizedBox.shrink()
+                  : ForwardDetailButton(
+                      buttonName: 'Learn their pain',
+                      onPressed: () {
+                        context.pushNamed(
+                          SearchCountryDetailScreen.routeName,
+                          pathParameters: {'id': id.toString()},
+                        );
+                      },
+                      width: 250,
+                      height: 45,
+                      isSearch: true,
+                    ),
             ),
-          ),
           const SizedBox(height: 18.0),
         ],
       ),

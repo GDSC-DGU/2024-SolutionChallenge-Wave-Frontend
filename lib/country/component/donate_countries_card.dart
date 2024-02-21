@@ -62,11 +62,12 @@ class DonateCountryCard extends StatelessWidget {
       image: Image.network(
         model.image,
         fit: BoxFit.cover,
-        loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-          if (loadingProgress == null) return child; // 로딩 완료
+        loadingBuilder: (BuildContext context, Widget child,
+            ImageChunkEvent? loadingProgress) {
+          if (loadingProgress == null) return Container(child: child); // 로딩 완료
           return Center(
             child: SizedBox(
-              height: 225,
+              height: 180,
             ),
           );
         },
@@ -95,12 +96,16 @@ class DonateCountryCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: isDetail ==  true ? BorderRadius.zero : const BorderRadius.all(
-          Radius.circular(15.0),
-        ),
+        borderRadius: isDetail == true
+            ? BorderRadius.zero
+            : const BorderRadius.all(
+                Radius.circular(15.0),
+              ),
         boxShadow: [
           BoxShadow(
-            color: isDetail ==  true ? Colors.transparent : Colors.grey.withOpacity(0.5),
+            color: isDetail == true
+                ? Colors.transparent
+                : Colors.grey.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 5,
             offset: Offset(0, 3), // changes position of shadow
@@ -121,7 +126,7 @@ class DonateCountryCard extends StatelessWidget {
                             topLeft: Radius.circular(15.0),
                             topRight: Radius.circular(15.0),
                           ),
-                    child: image,
+                    child: Container(child: image),
                   ),
                 ),
               if (heroKey == null)
@@ -132,9 +137,14 @@ class DonateCountryCard extends StatelessWidget {
                           topLeft: Radius.circular(15.0),
                           topRight: Radius.circular(15.0),
                         ),
-                  child: image,
+                  child: Container(
+                    height: 180,
+                    width: double.infinity,
+                    child: image,
+                  ),
                 ),
-              if (heroKey == null) // heroKey가 null => detail인 경우(컬러 카테고리 보여줄 필요 없음)
+              if (heroKey ==
+                  null) // heroKey가 null => detail인 경우(컬러 카테고리 보여줄 필요 없음)
                 Positioned(
                   child: CategoryButton(category: category),
                 ),
@@ -161,22 +171,22 @@ class DonateCountryCard extends StatelessWidget {
             ),
           ),
           if (!isDetail)
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 26.0,
-              vertical: 10,
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 26.0,
+                vertical: 10,
+              ),
+              child: ForwardDetailButton(
+                buttonName: 'Sending Waves',
+                onPressed: () {
+                  context.pushNamed(DonateCountryDetailScreen.routeName,
+                      pathParameters: {
+                        'id': id.toString(),
+                      });
+                },
+              ),
             ),
-            child: ForwardDetailButton(
-              buttonName: 'Sending Waves',
-              onPressed: () {
-                context.pushNamed(DonateCountryDetailScreen.routeName,
-                    pathParameters: {
-                      'id': id.toString(),
-                    });
-              },
-            ),
-          ),
-          if(isDetail)
+          if (isDetail)
             Row(
               children: [
                 Padding(
@@ -209,7 +219,10 @@ class DonateCountryCard extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => WaveSelectScreen(selectedCountry: country, id: id,),
+                            builder: (context) => WaveSelectScreen(
+                              selectedCountry: country,
+                              id: id,
+                            ),
                           ),
                         );
                       },
@@ -220,14 +233,14 @@ class DonateCountryCard extends StatelessWidget {
                 ),
               ],
             ),
-         if(isDetail)
-           const Padding(
-             padding: EdgeInsets.symmetric(vertical: 10),
-             child: Divider(
-               color: BUTTON_BACKGROUND_COLOR,
-               thickness: 1.5,
-             ),
-           ),
+          if (isDetail)
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              child: Divider(
+                color: BUTTON_BACKGROUND_COLOR,
+                thickness: 1.5,
+              ),
+            ),
         ],
       ),
     );
