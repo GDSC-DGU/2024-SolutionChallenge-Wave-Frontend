@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wave/common/const/colors.dart';
 import 'package:wave/user/view/my_page_screen.dart';
@@ -27,7 +28,7 @@ class DonateCompletionScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Image.asset(
+              SvgPicture.asset(
                 'assets/images/donationCompletionImage.svg',
                 width: 150,
                 height: 150,
