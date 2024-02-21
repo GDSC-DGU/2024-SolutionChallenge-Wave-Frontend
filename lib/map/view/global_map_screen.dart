@@ -26,7 +26,6 @@ import '../provider/global_map_provider.dart';
 //2. 위험 국가 리스트 받아오기
 //3. 위험 국가 리스트에 따라 색상 변경하기
 
-
 class GlobalMapScreen extends ConsumerStatefulWidget {
   @override
   _GlobalMapScreenState createState() => _GlobalMapScreenState();
@@ -34,7 +33,7 @@ class GlobalMapScreen extends ConsumerStatefulWidget {
 
 class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
   MapShapeSource? _dataSource;
- MapZoomPanBehavior? _zoomPanBehavior;
+  MapZoomPanBehavior? _zoomPanBehavior;
   bool _isLoading = true;
   double currentZoomLevel = 3;
 
@@ -52,27 +51,31 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
 
   List features = [];
   late List<Model> _data;
+
+  var selectNumber;
   @override
   void initState() {
     _isLoading = true;
-    super.initState();
-    _showHighRisk = !_showHighRisk;
-    _showMidRisk = !_showMidRisk;
-    _showLowRisk = !_showLowRisk;
-    _updateDataSource();
     _zoomPanBehavior = MapZoomPanBehavior(
       focalLatLng: const MapLatLng(34.8149, 49.02),
       enableDoubleTapZooming: true,
       enablePanning: true,
       zoomLevel: currentZoomLevel,
       minZoomLevel: 1,
-      maxZoomLevel: 12,
+      maxZoomLevel: 10,
     );
+    super.initState();
+    _showHighRisk = !_showHighRisk;
+    _showMidRisk = !_showMidRisk;
+    _showLowRisk = !_showLowRisk;
+
+    _updateDataSource();
+
     _data = const <Model>[
-      Model('Ukraine', 10.5527, 38.5164,166),
-      Model('Yemen', 48.3794, 31.1656,173),
-      Model('Syria', 34.8021, 38.9968,153),
-      Model('Israel', 31.0461, 34.8516, 132),
+      Model('Yemen', 15.5527, 48.5164, 173),
+      Model('Ukraine', 48.3794, 31.1656, 166),
+      Model('Syria', 34.8021, 38.9968, 153),
+      Model('Palestine', 31.9522, 35.2332, 132),
     ];
   }
 
@@ -132,7 +135,6 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
         child: Center(child: Text('⭐️ Error ⭐️: ${state.message}')),
       );
     } else if (state is ImportantCountriesModel) {
-
       if (_isLoading || _dataSource == null) {
         _updateRiskCountriesLists(state);
         // _updateDataSource();
@@ -140,117 +142,124 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
       }
     }
     return DefaultLayout(
-            title: 'World Conflict Map',
-            child: Container(
-              height: maxHeight * 0.9,
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: BlueGridPattern(zoomLevel: currentZoomLevel),
-                  ),
-                  SfMaps(
-                    layers: [
-                      MapShapeLayer(
-                        onSelectionChanged: (int index) {
-                          setState(() {
-                           final importantIdx =  features[index]['properties']['id'];
+      title: 'World Conflict Map',
+      child: Container(
+        height: maxHeight * 0.9,
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: BlueGridPattern(zoomLevel: currentZoomLevel),
+            ),
+            SfMaps(
+              layers: [
+                MapShapeLayer(
+                  onSelectionChanged: (int index) {
+                    setState(() {
+                      final int countryId = features[index]['properties']['id'];
+                      final bool isLowRisk = lowRiskCountriesId.contains(countryId);
+                      final bool isMidRisk = midRiskCountriesId.contains(countryId);
+                      final bool isHighRisk = highRiskCountriesId.contains(countryId);
 
-                            if (donatePossibleCountriesId.contains(importantIdx)) {
-                              showCustomModal(context, importantIdx,ref);
+                      if ((isLowRisk && !_showLowRisk) || (isMidRisk && !_showMidRisk) || (isHighRisk && !_showHighRisk)) {
+                        // If the country's risk level is not set to be shown, do nothing
+                        return;
+                      }
 
-                            }else if(importantCountriesId.contains(importantIdx)){
-                              showCustomSearchModal(context, importantIdx,ref);
-                            }
-                          });
-                        },
-                        initialMarkersCount: 4,
-                        markerBuilder: (BuildContext context, int index) {
-                          final Model model = _data[index];
-                          return MapMarker(
-                            latitude: model.latitude,
-                            longitude: model.longitude,
-                            child: GestureDetector(
-                              onTap: () {
-                                final countryId =  model.id;
-                                if (donatePossibleCountriesId.contains(countryId)) {
-                                  showCustomModal(context, countryId, ref);
-                                } else if (importantCountriesId.contains(countryId)) {
-                                  showCustomSearchModal(context, countryId, ref);
-                                }
-                              },
-                              child: SvgPicture.asset(
-                                'assets/icons/marker.svg',
-                              ),
-                            ),
-                          );
-                        },
+                      if (donatePossibleCountriesId.contains(countryId)) {
+                        showCustomModal(context, countryId, ref);
+                      } else if (importantCountriesId.contains(countryId)) {
+                        showCustomSearchModal(context, countryId, ref);
+                      }
+                    });
+                  },
 
-                        source: _dataSource!,
-                        zoomPanBehavior: _zoomPanBehavior,
-                        showDataLabels: true,
-                        dataLabelSettings:
-                            getDataLabelSettings(currentZoomLevel),
-                          onWillZoom: (MapZoomDetails details) {
-                          setState(() {
-                            if (details.newZoomLevel != null) {
-                              currentZoomLevel = details.newZoomLevel!;
-                              _updateDataSource();
-                            }
-                          });
-                          return true;
+                  initialMarkersCount: 4,
+                  markerBuilder: (BuildContext context, int index) {
+                    final Model model = _data[index];
+                    return MapMarker(
+                      latitude: model.latitude,
+                      longitude: model.longitude,
+                      child: GestureDetector(
+                        onTap: () {
+                          final countryId =  model.id;
+                          if (donatePossibleCountriesId.contains(countryId)) {
+                            showCustomModal(context, countryId, ref);
+                          } else if (importantCountriesId.contains(countryId)) {
+                            showCustomSearchModal(context, countryId, ref);
+                          }
                         },
-                        selectionSettings: MapSelectionSettings(
-                          color: Colors.indigo,
-                          strokeColor: Colors.indigo,
+                        child: SvgPicture.asset(
+                          'assets/icons/marker.svg',
                         ),
                       ),
-                    ],
+                    );
+                  },
+
+                  source: _dataSource!,
+                  zoomPanBehavior: _zoomPanBehavior,
+                  showDataLabels: true,
+                  dataLabelSettings: getDataLabelSettings(currentZoomLevel),
+                  onWillZoom: (MapZoomDetails details) {
+                    setState(() {
+                      if (details.newZoomLevel != null) {
+                        currentZoomLevel = details.newZoomLevel!;
+                        _updateDataSource();
+                      }
+                    });
+                    return true;
+                  },
+                  selectionSettings: MapSelectionSettings(
+                    color: Colors.indigo,
+                    strokeColor: Colors.indigo,
+                  ),
+                ),
+              ],
+            ),
+            Positioned(
+              left: 10,
+              child: Row(
+                children: [
+                  RiskLevelButton(
+                    riskLevel: 'Emergency',
+                    isSelected: _showHighRisk,
+                    color: PRIMARY_BLUE_COLOR,
+                    onPressed: () {
+                      setState(() {
+                        _showHighRisk = !_showHighRisk;
+                        _updateDataSource();
+                      });
+                    },
+                  ),
+                  RiskLevelButton(
+                    riskLevel: 'Alert',
+                    isSelected: _showMidRisk,
+                    color: PRIMARY_BLUE_COLOR,
+                    onPressed: () {
+                      setState(() {
+                        _showMidRisk = !_showMidRisk;
+                        _updateDataSource();
+                      });
+                    },
+                  ),
+                  RiskLevelButton(
+                    riskLevel: 'Caution',
+                    isSelected: _showLowRisk,
+                    color: PRIMARY_BLUE_COLOR,
+                    onPressed: () {
+                      setState(() {
+                        _showLowRisk = !_showLowRisk;
+                        _updateDataSource();
+                      });
+                    },
                   ),
 
-                  Positioned(
-                    left: 10,
-                    child: Row(
-                      children: [
-                        RiskLevelButton(
-                          riskLevel: 'Caution',
-                          isSelected: _showLowRisk,
-                          color: PRIMARY_BLUE_COLOR,
-                          onPressed: () {
-                            setState(() {
-                              _showLowRisk = !_showLowRisk;
-                              _updateDataSource();
-                            });
-                          },
-                        ),
-                        RiskLevelButton(
-                          riskLevel: 'Emergency',
-                          isSelected: _showHighRisk,
-                          color: PRIMARY_BLUE_COLOR,
-                          onPressed: () {
-                            setState(() {
-                              _showHighRisk = !_showHighRisk;
-                              _updateDataSource();
-                            });
-                          },
-                        ),
-                        RiskLevelButton(
-                          riskLevel: 'Alert',
-                          isSelected: _showMidRisk,
-                          color: PRIMARY_BLUE_COLOR,
-                          onPressed: () {
-                            setState(() {
-                              _showMidRisk = !_showMidRisk;
-                              _updateDataSource();
-                            });
-                          },
-                        )
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ),
-          );
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -289,7 +298,8 @@ void showCustomModal(BuildContext context, int countryId, WidgetRef ref) async {
           }
           // 로딩 상태에 따라 UI 분기
           if (!isLoaded) {
-            return const Center(child: CircularProgressIndicator(color: PRIMARY_BLUE_COLOR));
+            return const Center(
+                child: CircularProgressIndicator(color: PRIMARY_BLUE_COLOR));
           } else {
             return Dialog(
               child: ModalDonateCountryCard.fromModel(
@@ -304,7 +314,8 @@ void showCustomModal(BuildContext context, int countryId, WidgetRef ref) async {
   );
 }
 
-void showCustomSearchModal(BuildContext context, int countryId, WidgetRef ref) async {
+void showCustomSearchModal(
+    BuildContext context, int countryId, WidgetRef ref) async {
   // 상태 초기화
   bool isLoaded = false;
   // 데이터 로딩 시작
@@ -326,7 +337,8 @@ void showCustomSearchModal(BuildContext context, int countryId, WidgetRef ref) a
           }
           // 로딩 상태에 따라 UI 분기
           if (!isLoaded) {
-            return const Center(child: CircularProgressIndicator(color: PRIMARY_BLUE_COLOR));
+            return const Center(
+                child: CircularProgressIndicator(color: PRIMARY_BLUE_COLOR));
           } else {
             return Dialog(
               child: ModalSearchCountryCard.fromModel(
@@ -385,8 +397,6 @@ class GridPainter extends CustomPainter {
   }
 }
 
-
-
 class Model {
   const Model(this.country, this.latitude, this.longitude, this.id);
 
@@ -395,6 +405,3 @@ class Model {
   final double longitude;
   final int id;
 }
-
-
-
