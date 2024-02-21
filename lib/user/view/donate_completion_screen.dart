@@ -62,7 +62,7 @@ class DonateCompletionScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 31),
               child: ElevatedButton(
                 onPressed: () {
-                  context.go('/myPage');
+                  context.pushReplacement('/donation-list');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: PRIMARY_BLUE_COLOR,

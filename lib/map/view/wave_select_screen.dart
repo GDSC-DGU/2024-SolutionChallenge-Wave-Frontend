@@ -123,7 +123,6 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
     print(amount.round());
     print(request);
 
-
     // PaymentRequest? ret;
     // ret = PaymentRequest.card(amount: 10000, orderId: "8ak23s", orderName: "도도", customerName: '저쟈');
     // _showPayment(context, ret);
@@ -177,7 +176,7 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
   Widget build(BuildContext context) {
     // 금액을 문자열로 변환하는 함수
     String _formattedAmount(double value) {
-      return "\$${(value * (1000 / _countries.length)).toStringAsFixed(0)}";
+      return "\$${(value * (1200 / _countries.length)).round().toStringAsFixed(0)}";
     }
 
     final screenWidth = MediaQuery.of(context).size.width;
@@ -271,6 +270,13 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
   }
 
   _showPayment(BuildContext context, PaymentRequest request) async {
+
+    int _formattedAmount(double value) {
+      print('donation list에 반영될 wave: ${((value * (1200 / _countries.length)).round())}');
+      return ((value * (1200 / _countries.length)).round());
+    }
+
+
     print(request.url);
     var ret = await showModalBottomSheet(
         context: context,
@@ -297,12 +303,13 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
                 if (success) {
                   if (url.contains('amount=${request.amount}') &&
                       url.contains('orderId=${request.orderId}')) {
-                    ref.read(userMeProvider.notifier).postDonations(widget.id, _sliderValue.toInt() + 1);
+                    // ref.read(userMeProvider.notifier).postDonations(widget.id, _sliderValue.toInt() + 1);
+                    ref.read(userMeProvider.notifier).postDonations(widget.id, _formattedAmount(_sliderValue));
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) => DonateCompletionScreen(
-                          waves: _sliderValue.toInt() + 1,
+                          waves: _formattedAmount(_sliderValue),
                           country: widget
                               .selectedCountry, // selectedCountry 값을 country 파라미터로 전달
                         ),
