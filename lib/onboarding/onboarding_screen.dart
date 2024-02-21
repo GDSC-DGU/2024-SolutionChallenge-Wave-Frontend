@@ -88,8 +88,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       });
                     },
                     children: <Widget>[
-                      Image.asset('assets/images/onBoardingImage1.png'),
-                      Image.asset('assets/images/onBoardingImage2.png'),
+                      Image.asset('assets/images/onBoardingImage1.svg'),
+                      Image.asset('assets/images/onBoardingImage2.svg'),
                     ],
                   ),
                 ),

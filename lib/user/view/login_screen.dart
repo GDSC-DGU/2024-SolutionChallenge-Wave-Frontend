@@ -25,7 +25,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           // 배경 이미지
           Positioned.fill(
             child: Image.asset(
-              "assets/images/loginBackground.png",
+              "assets/images/loginBackground.svg",
               fit: BoxFit.cover,
             ),
           ),
@@ -36,7 +36,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               children: [
                 Expanded(
                   child: Image.asset(
-                    "assets/images/loginScreenLogo.png",
+                    "assets/images/loginScreenLogo.svg",
                     height: 99,
                   ),
                 ),
