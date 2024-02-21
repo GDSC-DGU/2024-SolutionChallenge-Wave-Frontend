@@ -61,6 +61,8 @@ class DonateCountryCard extends StatelessWidget {
       subTitle: model.subTitle,
       image: Image.network(
         model.image,
+        width: double.infinity,
+        height: isDetail ? 300 : 180,
         fit: BoxFit.cover,
         loadingBuilder: (BuildContext context, Widget child,
             ImageChunkEvent? loadingProgress) {
