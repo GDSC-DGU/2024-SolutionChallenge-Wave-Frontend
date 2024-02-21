@@ -29,7 +29,6 @@ void main() async {
   await MockServer.startServer();
   // 온보딩 화면을 보여주기 위해, 최초 실행 여부를 확인
   prefs = await SharedPreferences.getInstance();
-  prefs.setBool('isFirstRun', true);
   runApp(const ProviderScope(child: _App()));
 }
 
