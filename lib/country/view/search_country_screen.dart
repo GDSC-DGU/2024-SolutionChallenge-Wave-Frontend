@@ -55,6 +55,7 @@ class _SearchCountriesScreenState extends ConsumerState<SearchCountriesScreen> {
             _buildCountryList(context, ref,
                 ref.watch(searchNotifierProvider.notifier)
                     .getCautionCountries()),
+            const SizedBox(height: 80), // 여기에 SizedBox를 추가하여 화면 하단에 공백을 추가합니다.
           ],
         ),
       ),
@@ -97,7 +98,7 @@ class _SearchCountriesScreenState extends ConsumerState<SearchCountriesScreen> {
           height: 1.5, // 선의 굵기
           color: Colors.black.withOpacity(0.1), // 색상 및 투명도 설정
         ),
-        SizedBox(height: 5,)
+        SizedBox(height: 5,),
       ],
     );
   }
