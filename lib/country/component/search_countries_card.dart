@@ -57,23 +57,26 @@ class SearchCountryCard extends StatelessWidget {
       subTitle: model.subTitle,
       image: Image.network(
         model.image,
-        width: double.infinity,
-        height: isDetail ? 300 : 180,
         fit: BoxFit.cover,
         loadingBuilder: (BuildContext context, Widget child,
             ImageChunkEvent? loadingProgress) {
           if (loadingProgress == null && isDetail == false) {
             return SizedBox(
               child: child,
-              height: 145,
+              height: 220,
             ); // 로딩 완료
           }
+          else if(loadingProgress != null && isDetail == true){
+            return SizedBox(
+              height: 262,
+            );
+          }
           else if (loadingProgress == null && isDetail == true) {
-            return child; // 로딩 완료
+            return SizedBox(child: child,); // 로딩 완료
           }
           return const Center(
             child: SizedBox(
-              height: 145,
+              height: 220,
             ),
           );
         },
@@ -82,13 +85,13 @@ class SearchCountryCard extends StatelessWidget {
       isDetail: isDetail,
       heroKey: model.id,
       imageProducer:
-          model is SearchCountryDetailModel ? model.imageProducer : null,
+      model is SearchCountryDetailModel ? model.imageProducer : null,
       contents: model is SearchCountryDetailModel ? model.contents : null,
       detailImage: model is SearchCountryDetailModel ? model.detailImage : null,
       detailImageTitle:
-          model is SearchCountryDetailModel ? model.detailImageTitle : null,
+      model is SearchCountryDetailModel ? model.detailImageTitle : null,
       detailImageProducer:
-          model is SearchCountryDetailModel ? model.detailImageProducer : null,
+      model is SearchCountryDetailModel ? model.detailImageProducer : null,
       news: model is SearchCountryDetailModel ? model.news : null,
     );
   }
@@ -102,8 +105,8 @@ class SearchCountryCard extends StatelessWidget {
         borderRadius: isDetail == true
             ? BorderRadius.zero
             : const BorderRadius.all(
-                Radius.circular(15.0),
-              ),
+          Radius.circular(15.0),
+        ),
         boxShadow: [
           BoxShadow(
             color: isDetail == true
@@ -126,9 +129,9 @@ class SearchCountryCard extends StatelessWidget {
                     borderRadius: isDetail
                         ? BorderRadius.zero
                         : const BorderRadius.only(
-                            topLeft: Radius.circular(15.0),
-                            topRight: Radius.circular(15.0),
-                          ),
+                      topLeft: Radius.circular(15.0),
+                      topRight: Radius.circular(15.0),
+                    ),
                     child: image,
                   ),
                 ),
@@ -137,12 +140,13 @@ class SearchCountryCard extends StatelessWidget {
                   borderRadius: isDetail
                       ? BorderRadius.zero
                       : BorderRadius.only(
-                          topLeft: Radius.circular(15.0),
-                          topRight: Radius.circular(15.0),
-                        ),
+                    topLeft: Radius.circular(15.0),
+                    topRight: Radius.circular(15.0),
+                  ),
                   child: image,
                 ),
-              if (!isDetail) // isDetail false => detail인 경우(컬러 카테고리 보여줄 필요 없음)
+              if (heroKey !=
+                  null && (isDetail == false)) // heroKey가 null => detail인 경우(컬러 카테고리 보여줄 필요 없음)
                 Positioned(
                   child: CountryCategoryButton(
                     category: category,
@@ -223,17 +227,17 @@ class SearchCountryCard extends StatelessWidget {
               child: isDetail
                   ? SizedBox.shrink()
                   : ForwardDetailButton(
-                      buttonName: 'Learn their pain',
-                      onPressed: () {
-                        context.pushNamed(
-                          SearchCountryDetailScreen.routeName,
-                          pathParameters: {'id': id.toString()},
-                        );
-                      },
-                      width: 250,
-                      height: 45,
-                      isSearch: true,
-                    ),
+                buttonName: 'Learn their pain',
+                onPressed: () {
+                  context.pushNamed(
+                    SearchCountryDetailScreen.routeName,
+                    pathParameters: {'id': id.toString()},
+                  );
+                },
+                width: 250,
+                height: 45,
+                isSearch: true,
+              ),
             ),
           const SizedBox(height: 18.0),
         ],
@@ -241,3 +245,4 @@ class SearchCountryCard extends StatelessWidget {
     );
   }
 }
+
