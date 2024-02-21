@@ -145,8 +145,7 @@ class DonateCountryCard extends StatelessWidget {
                     child: image,
                   ),
                 ),
-              if (heroKey ==
-                  null) // heroKey가 null => detail인 경우(컬러 카테고리 보여줄 필요 없음)
+              if (!isDetail) // isDetail false => detail인 경우(컬러 카테고리 보여줄 필요 없음)
                 Positioned(
                   child: CategoryButton(category: category),
                 ),
