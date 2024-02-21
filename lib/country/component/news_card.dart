@@ -54,6 +54,13 @@ class NewsCard extends StatelessWidget {
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: Colors.white.withOpacity(0.9),
+                      shadows: const [
+                        Shadow(
+                          color: Color(0xFF000000), // 그림자 색상
+                          offset: Offset(3.0, 3.0), // 그림자 위치
+                          blurRadius: 2.5, // 흐림 정도
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 5),
@@ -65,11 +72,19 @@ class NewsCard extends StatelessWidget {
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Colors.white.withOpacity(0.9),
+                        shadows: const [
+                          Shadow(
+                            color: Color(0xFF000000), // 그림자 색상
+                            offset: Offset(3.0, 3.0), // 그림자 위치
+                            blurRadius: 2.5, // 흐림 정도
+                          ),
+                        ],
                       ),
                       overflow: TextOverflow.ellipsis,
-                      maxLines: 2, // 최대 2줄까지만 표시
+                      maxLines: 2, // 최대 2줄까지만 표시, 여기로 옮겼습니다.
                     ),
                   ),
+
                 ],
               ),
             ),
@@ -79,4 +94,3 @@ class NewsCard extends StatelessWidget {
     );
   }
 }
-
