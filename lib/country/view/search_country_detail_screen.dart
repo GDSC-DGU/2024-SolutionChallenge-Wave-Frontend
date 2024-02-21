@@ -126,7 +126,7 @@ class _SearchCountryDetailScreenState
               // 타이틀 표시
               return Padding(
                 padding: const EdgeInsets.only(
-                    top: 30.0, bottom: 10.0), // 타이틀 위아래 패딩
+                    top: 0.0, bottom: 10.0), // 타이틀 위아래 패딩
                 child: Text(
                   content.title,
                   style: TextStyle(
