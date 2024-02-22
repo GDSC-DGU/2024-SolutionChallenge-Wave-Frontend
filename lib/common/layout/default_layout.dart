@@ -40,6 +40,7 @@ class DefaultLayout extends StatelessWidget {
       return null;
     } else if (isNeededCenterAppbar){
       return AppBar(
+        backgroundColor: Colors.white,
         title: Text(
             title!,
           style: TextStyle(
