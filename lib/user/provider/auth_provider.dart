@@ -113,11 +113,6 @@ class AuthProvider extends ChangeNotifier {
           name: MyPageScreen.routeName,
           builder: (_, __) => const MyPageScreen(),
         ),
-        GoRoute(
-          path:  '/donation-completion',
-          name: DonateCompletionScreen.routeName,
-          builder: (_, __) => const MyPageScreen(),
-        ),
       ];
 
   // SplashScreen
