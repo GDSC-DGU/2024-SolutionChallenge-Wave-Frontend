@@ -59,33 +59,11 @@ class SearchCountryCard extends ConsumerWidget {
       category: model.category,
       mainTitle: model.mainTitle,
       subTitle: model.subTitle,
-      image: Image.network(
-        model.image,
+      image: CachedNetworkImage(
+        imageUrl: model.image,
         width: double.infinity,
         height: isDetail ? 300 : 145,
         fit: BoxFit.cover,
-        loadingBuilder: (BuildContext context, Widget child,
-            ImageChunkEvent? loadingProgress) {
-          if (loadingProgress == null && isDetail == false) {
-            return SizedBox(
-              child: child,
-              height: 145,
-            ); // 로딩 완료
-          }
-          else if(loadingProgress != null && isDetail == true){
-            return SizedBox(
-              height: isDetail ? 300 : 145,
-            );
-          }
-          else if (loadingProgress == null && isDetail == true) {
-            return SizedBox(child: child,); // 로딩 완료
-          }
-          return const Center(
-            child: SizedBox(
-              height: 145,
-            ),
-          );
-        },
       ),
       views: model.views,
       isDetail: isDetail,

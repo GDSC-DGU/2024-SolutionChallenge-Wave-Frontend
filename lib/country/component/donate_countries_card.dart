@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -62,20 +63,11 @@ class DonateCountryCard extends StatelessWidget {
       category: model.category,
       mainTitle: model.mainTitle,
       subTitle: model.subTitle,
-      image: Image.network(
-        model.image,
+      image: CachedNetworkImage(
+        imageUrl: model.image,
         width: double.infinity,
         height: isDetail ? 300 : 180,
         fit: BoxFit.cover,
-        loadingBuilder: (BuildContext context, Widget child,
-            ImageChunkEvent? loadingProgress) {
-          if (loadingProgress == null) return Container(child: child); // 로딩 완료
-          return Center(
-            child: SizedBox(
-              height: isDetail ? 300 : 180,
-            ),
-          );
-        },
       ),
       allWave: model.allWave,
       lastWave: model.lastWave,
