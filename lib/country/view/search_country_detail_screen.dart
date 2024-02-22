@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:wave/common/const/colors.dart';
 import 'package:wave/common/layout/default_layout.dart';
 import 'package:wave/country/component/search_countries_card.dart';
 import 'package:wave/country/model/search_country_model.dart';
@@ -70,7 +69,7 @@ class _SearchCountryDetailScreenState
     // 로딩 중 또는 데이터 없음 처리
     if (searchCountryModel == null) {
       print('Please wait for loading');
-      return const CircularProgressIndicator(color: PRIMARY_BLUE_COLOR,); // 기본 정보 로딩 중 처리
+      return const LoadingScreen(); // 기본 정보 로딩 중 처리
     }
 
     return DefaultLayout(
