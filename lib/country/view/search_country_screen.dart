@@ -54,8 +54,8 @@ class _SearchCountriesScreenState extends ConsumerState<SearchCountriesScreen> {
             _buildSectionTitle(context, 'CAUTION'),
             _buildCountryList(context, ref,
                 ref.watch(searchNotifierProvider.notifier)
-                    .getCautionCountries()),
-            const SizedBox(height: 100), // 여기에 SizedBox를 추가하여 화면 하단에 공백을 추가합니다.
+                    .getCautionCountries(),isFinal: false),
+            const SizedBox(height: 100),
           ],
         ),
       ),
@@ -75,31 +75,32 @@ class _SearchCountriesScreenState extends ConsumerState<SearchCountriesScreen> {
   }
 
   Widget _buildCountryList(BuildContext context, WidgetRef ref,
-      List<SearchCountryModel> countries) {
+      List<SearchCountryModel> countries, {bool isFinal = true}) { // isFinal을 옵셔널로 변경, 기본값 true
     return Column(
       children: [
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Padding(
-            padding: const EdgeInsets.only(top: 12, bottom: 16, left: 10), // 여기서 Row 전체에 대한 패딩을 설정합니다.
+            padding: const EdgeInsets.only(top: 12, bottom: 16, left: 10),
             child: Row(
               children: countries.map((country) =>
                   Padding(
                     padding: const EdgeInsets.only(right: 16),
-                    // 각 요소의 오른쪽에만 패딩을 적용합니다.
-                    child: SearchCountryCard.fromModel(model: country, isDetail:false,),
+                    child: SearchCountryCard.fromModel(model: country, isDetail: false),
                   )).toList(),
             ),
           ),
         ),
         SizedBox(height: 24,),
-        Container(
-          width: double.infinity, // 화면 전체 너비
-          height: 1.5, // 선의 굵기
-          color: Colors.black.withOpacity(0.1), // 색상 및 투명도 설정
-        ),
+        if (isFinal) // isFinal이 true일 때만 구분선 표시
+          Container(
+            width: double.infinity,
+            height: 1.5,
+            color: Colors.black.withOpacity(0.1),
+          ),
         SizedBox(height: 5,),
       ],
     );
   }
+
 }
