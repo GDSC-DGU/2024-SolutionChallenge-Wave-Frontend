@@ -1,4 +1,3 @@
-// map_page.dart
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -7,23 +6,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
 import 'package:wave/common/const/colors.dart';
 import 'package:wave/common/layout/default_layout.dart';
-import 'package:wave/country/component/donate_countries_card.dart';
 import 'package:wave/country/component/modal_donate_countries_card.dart';
 import 'package:wave/country/component/modal_search_countries_card.dart';
-import 'package:wave/country/component/search_countries_card.dart';
-import 'package:wave/country/model/donate_country_model.dart';
 import 'package:wave/country/provider/donate_country_provider.dart';
 import 'package:wave/country/provider/search_country_provider.dart';
 import 'package:wave/loading/loading_screen.dart';
-import 'package:wave/map/component/current_zoom_level.dart';
 import 'package:wave/map/component/risk_level_button.dart';
 import 'package:wave/map/model/important_countries_model.dart';
 import '../provider/global_map_provider.dart';
-
-/// todolist
-//1. 지도 화면에 그리기
-//2. 위험 국가 리스트 받아오기
-//3. 위험 국가 리스트에 따라 색상 변경하기
 
 class GlobalMapScreen extends ConsumerStatefulWidget {
   @override
@@ -56,7 +46,6 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
   void initState() {
     _isLoading = true;
     _zoomPanBehavior = MapZoomPanBehavior(
-      focalLatLng: const MapLatLng(34.8149, 49.02),
       enableDoubleTapZooming: true,
       enablePanning: true,
       zoomLevel: currentZoomLevel,
@@ -71,23 +60,21 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
     _showHighRisk = !_showHighRisk;
     _showMidRisk = !_showMidRisk;
     _showLowRisk = !_showLowRisk;
-
-    _updateDataSource();
-
     _data = const <Model>[
       Model('Yemen', 15.5527, 48.5164, 173),
       Model('Ukraine', 48.3794, 31.1656, 166),
       Model('Syria', 34.8021, 38.9968, 153),
       Model('Palestine', 31.9522, 35.2332, 132),
     ];
+    _updateDataSource();
   }
+
 
   Future<void> _updateDataSource() async {
     final jsonString =
         await rootBundle.loadString('assets/maps/world_map.json');
     final jsonResponse = json.decode(jsonString);
     features = jsonResponse['features'] as List;
-
     setState(() {
       _dataSource = MapShapeSource.asset(
         'assets/maps/world_map.json',
@@ -101,6 +88,14 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
             jsonResponse['features'][index]['properties']['name'],
       );
     });
+  }
+
+  void _panMap() {
+    if (_zoomPanBehavior != null && _zoomPanBehavior!.focalLatLng != null) {
+      final currentFocalPoint = _zoomPanBehavior!.focalLatLng!;
+      final newFocalPoint = MapLatLng(currentFocalPoint.latitude+ 0.001, currentFocalPoint.longitude);
+      _zoomPanBehavior!.focalLatLng = newFocalPoint;
+    }
   }
 
   Color _getRiskLevelColor(int countryId) {
@@ -140,7 +135,6 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
     } else if (state is ImportantCountriesModel) {
       if (_isLoading || _dataSource == null) {
         _updateRiskCountriesLists(state);
-        // _updateDataSource();
         _isLoading = false;
       }
     }
@@ -178,6 +172,8 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
 
                   initialMarkersCount: 4,
                   markerBuilder: (BuildContext context, int index) {
+                    print(index);
+                    print('rebuild');
                     final Model model = _data[index];
                     return MapMarker(
                       latitude: model.latitude,
@@ -197,21 +193,22 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
                       ),
                     );
                   },
-
+                  onWillPan: (MapPanDetails details) {
+                    print(details);
+                    print('panning@@@');
+                    return true;
+                  },
                   source: _dataSource!,
                   zoomPanBehavior: _zoomPanBehavior,
                   showDataLabels: true,
                   dataLabelSettings: getDataLabelSettings(currentZoomLevel),
-                  onWillZoom: (MapZoomDetails details) {
-                    setState(() {
-                      if (details.newZoomLevel != null) {
+                  onWillZoom: (MapZoomDetails details)  {
+                    if (details.newZoomLevel != null) {
+                      print('here@@@@@');
+                      setState(() {
                         currentZoomLevel = details.newZoomLevel!;
-                        _updateDataSource();
-                        setState(() {
-                          _zoomPanBehavior!.zoomLevel = (_zoomPanBehavior!.zoomLevel).clamp(_zoomPanBehavior!.minZoomLevel, _zoomPanBehavior!.maxZoomLevel);
-                        });
-                      }
-                    });
+                      });
+                    }
                     return true;
                   },
                   selectionSettings: MapSelectionSettings(
@@ -233,6 +230,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
                       setState(() {
                         _showHighRisk = !_showHighRisk;
                         _updateDataSource();
+                        _panMap();
                       });
                     },
                   ),
@@ -243,7 +241,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
                     onPressed: () {
                       setState(() {
                         _showMidRisk = !_showMidRisk;
-                        _updateDataSource();
+                        _panMap();
                       });
                     },
                   ),
@@ -255,6 +253,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
                       setState(() {
                         _showLowRisk = !_showLowRisk;
                         _updateDataSource();
+                        _panMap();
                       });
                     },
                   ),
