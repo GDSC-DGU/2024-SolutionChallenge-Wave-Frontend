@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wave/country/component/category_button.dart';
@@ -7,11 +8,12 @@ import 'package:wave/country/component/country_category_button.dart';
 import 'package:wave/country/component/forward_detail_button.dart';
 import 'package:wave/country/model/search_country_detail_model.dart';
 import 'package:wave/country/model/search_country_model.dart';
+import 'package:wave/country/provider/search_country_provider.dart';
 import 'package:wave/country/view/search_country_detail_screen.dart';
 
 import 'package:share/share.dart';
 
-class SearchCountryCard extends StatelessWidget {
+class SearchCountryCard extends ConsumerWidget {
   final String category;
   final String mainTitle;
   final String subTitle;
@@ -101,7 +103,7 @@ class SearchCountryCard extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       width: 320,
       decoration: BoxDecoration(
@@ -237,6 +239,8 @@ class SearchCountryCard extends StatelessWidget {
                     SearchCountryDetailScreen.routeName,
                     pathParameters: {'id': id.toString()},
                   );
+                  // Optimistic Response (조회수 Up!)
+                  ref.read(searchNotifierProvider.notifier).incrementViews(id);
                 },
                 width: 250,
                 height: 45,

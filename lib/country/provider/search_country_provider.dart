@@ -10,27 +10,8 @@ import 'package:collection/collection.dart';
 
 enum SearchState { idle, loading, loaded, error }
 
-final searchDetailProvider = FutureProvider.family<SearchCountryDetailModel?, int>((ref, id) async {
-  final repository = ref.watch(searchCountryRepositoryProvider);
-
-  try {
-    final response = await repository.getSearchCountryDetail(id: id);
-    if (response.success && response.data != null) {
-      return response.data!;
-    } else {
-      // 실패한 경우에는 null 반환
-      return null;
-    }
-  } catch (error) {
-    // 에러 발생 시에도 null 반환
-    print("Error fetching search country detail: $error");
-    return null;
-  }
-});
-
-
 final searchNotifierProvider = ChangeNotifierProvider(
-    (ref) => SearchNotifier(ref.watch(searchCountryRepositoryProvider)));
+        (ref) => SearchNotifier(ref.watch(searchCountryRepositoryProvider)));
 
 class SearchNotifier extends ChangeNotifier {
   final SearchCountryRepository _repository;
@@ -41,7 +22,6 @@ class SearchNotifier extends ChangeNotifier {
   String? errorMessage;
 
   SearchNotifier(this._repository) {
-    // Schedule fetchSearchCountries to be called once the constructor execution is complete
     print('debugrightnow1');
     Future.microtask(() => fetchSearchCountries());
   }
@@ -105,6 +85,23 @@ class SearchNotifier extends ChangeNotifier {
       setError("Error fetching search country: $error");
     }
   }
+
+  // SearchNotifier 클래스 내부에 메소드 추가
+  void incrementViews(int id) {
+    // ID에 해당국가의 조회수를 찾아서 1 증가
+    print('id:${id}');
+    final country = searchCountriesData?.emergency?.firstWhereOrNull((c) => c.id == id) ??
+        searchCountriesData?.alert?.firstWhereOrNull((c) => c.id == id) ??
+        searchCountriesData?.caution?.firstWhereOrNull((c) => c.id == id);
+
+    print('country: $country');
+
+    if (country != null) {
+      country.incrementViews();
+      notifyListeners();
+    }
+  }
+
 
   Future<void> fetchSearchCountryDetail(int id) async {
     print('debugrightnow3');
