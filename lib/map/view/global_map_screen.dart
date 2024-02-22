@@ -241,6 +241,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
                     onPressed: () {
                       setState(() {
                         _showMidRisk = !_showMidRisk;
+                        _updateDataSource();
                         _panMap();
                       });
                     },
