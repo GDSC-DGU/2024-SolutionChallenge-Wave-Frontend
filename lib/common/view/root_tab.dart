@@ -38,31 +38,6 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
       return SvgPicture.asset('assets/icons/$iconName');
     });
 
-    // final items = [
-    //   BottomNavigationBarItem(
-    //     icon: SvgPicture.asset(
-    //       'assets/icons/tab1${index == 0 ? 'On' : 'Off'}.svg',
-    //     ),
-    //     label: '',
-    //   ),
-    //   BottomNavigationBarItem(
-    //     icon: SvgPicture.asset(
-    //       'assets/icons/tab2${index == 1 ? 'On' : 'Off'}.svg',
-    //     ),
-    //     label: '',
-    //   ),
-    //   BottomNavigationBarItem(
-    //     icon: SvgPicture.asset(
-    //       'assets/icons/tab3${index == 2 ? 'On' : 'Off'}.svg',
-    //     ), label: '',
-    //   ),
-    //   BottomNavigationBarItem(
-    //     icon: SvgPicture.asset(
-    //       'assets/icons/tab4${index == 3 ? 'On' : 'Off'}.svg',
-    //     ), label: '',
-    //   ),
-    // ];
-
     return Scaffold(
       body: screens[index],
       extendBody: true,
@@ -90,20 +65,6 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
           ),
         ),
       ),
-    // bottomNavigationBar: BottomNavigationBar(
-      //   items: items,      //   items: items,
-      //   onTap: (selectedIndex) {
-      //     print(selectedIndex);
-      //     setState(() {
-      //       index = selectedIndex;
-      //     });
-      //   },
-      //   currentIndex: index,
-      //   selectedItemColor: PRIMARY_BLUE_COLOR,
-      //   unselectedItemColor: PRIMARY_BLUE_COLOR,
-      //   backgroundColor: Colors.black,
-      //   type: BottomNavigationBarType.fixed,
-      // ),
     );
   }
 }
