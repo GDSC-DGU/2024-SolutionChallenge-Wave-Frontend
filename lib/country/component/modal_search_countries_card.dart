@@ -72,7 +72,7 @@ class ModalSearchCountryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 310,
+      width: 340,
       height: 300,
       decoration: BoxDecoration(
         color: Colors.white,
