@@ -103,7 +103,7 @@ class SearchCountryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300,
+      width: 320,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: isDetail == true
