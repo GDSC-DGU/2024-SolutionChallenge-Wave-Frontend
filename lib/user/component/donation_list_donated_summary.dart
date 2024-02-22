@@ -43,22 +43,25 @@ class DonatedWavesSummaryState extends State<DonatedWavesSummary> with SingleTic
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          width: 165.0,
-          height: 40.0,
-          child: Container(
-            padding: const EdgeInsets.all(10.0),
-            decoration: BoxDecoration(
-              color: const Color(0xFFE2E2E8).withOpacity(0.41),
-              borderRadius: BorderRadius.circular(30.0),
-            ),
-            child: Center(
-              child: Text(
-                'Donated waves',
-                style: TextStyle(
-                  color: Colors.black.withOpacity(0.8),
-                  fontWeight: FontWeight.w600,
-                  fontSize: 15,
+        Padding(
+          padding: const EdgeInsets.only(top: 00),
+          child: SizedBox(
+            width: 165.0,
+            height: 40.0,
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              decoration: BoxDecoration(
+                color: const Color(0xFFE2E2E8).withOpacity(0.41),
+                borderRadius: BorderRadius.circular(30.0),
+              ),
+              child: Center(
+                child: Text(
+                  'Donated waves',
+                  style: TextStyle(
+                    color: Colors.black.withOpacity(0.8),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 15,
+                  ),
                 ),
               ),
             ),
