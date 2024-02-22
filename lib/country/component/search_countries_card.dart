@@ -240,7 +240,10 @@ class SearchCountryCard extends ConsumerWidget {
                     pathParameters: {'id': id.toString()},
                   );
                   // Optimistic Response (조회수 Up!)
-                  ref.read(searchNotifierProvider.notifier).incrementViews(id);
+                  // 0.5초 지연 후에 조회수 증가 로직 수행
+                  Future.delayed(Duration(milliseconds: 500), () {
+                    ref.read(searchNotifierProvider.notifier).incrementViews(id);
+                  });
                 },
                 width: 250,
                 height: 45,
