@@ -114,23 +114,13 @@ class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
     }
   }
 
-  Future<CommonResponse> logout() async {
+  Future<void> logout() async {
     state = null;
-    // 토큰 삭제
+    await authRepository.logout();
     await Future.wait([
       storage.delete(key: REFRESH_TOKEN_KEY),
       storage.delete(key: ACCESS_TOKEN_KEY),
     ]);
-    print('In Provider, Start logout');
-    try {
-      // 서버에 로그아웃 요청
-      final resp = await authRepository.logout();
-      print('성공적 로그아웃');
-      return resp;
-    } catch (e) {
-      print('logoutError?');
-      throw e;
-    }
   }
 
   Future<CommonResponse> signOut() async {
