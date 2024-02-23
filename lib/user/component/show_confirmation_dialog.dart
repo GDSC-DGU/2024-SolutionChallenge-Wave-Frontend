@@ -33,7 +33,7 @@ Future<void> showConfirmationDialog(BuildContext context, String title, String c
             onPressed: onConfirm,
             style: TextButton.styleFrom(
               foregroundColor: Colors.white,
-              backgroundColor: PRIMARY_BLUE_COLOR,
+              backgroundColor: Colors.grey.shade700,
               minimumSize: const Size(80, 36),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(18),

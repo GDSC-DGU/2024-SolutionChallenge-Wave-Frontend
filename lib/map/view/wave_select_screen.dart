@@ -6,6 +6,7 @@ import 'package:path_drawing/path_drawing.dart';
 import 'package:wave/common/const/colors.dart';
 import 'package:wave/common/layout/default_layout.dart';
 import 'package:wave/payment/models/payment_request.dart';
+import 'package:wave/user/component/show_confirmation_dialog.dart';
 import 'package:wave/user/model/send_wave_model.dart';
 import 'package:wave/user/model/user_model.dart';
 import 'package:wave/user/provider/user_me_provider.dart';
@@ -347,6 +348,10 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
         isDismissible: false,
         builder: (context) {
           bool success = false;
+          void popNow() {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop(success);
+          }
           return Container(
             margin: const EdgeInsets.only(top: 110),
             child: PaymentWebView(
@@ -361,6 +366,10 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
                 print('onPageFinished.url = $url');
                 success = url.contains('success');
                 print('성공여부 = $success');
+                if(url.contains('/fail')){
+                  print('niya');
+                  Navigator.pop(context);
+                }
                 if (success) {
                   if (url.contains('amount=${request.amount}') &&
                       url.contains('orderId=${request.orderId}')) {
@@ -381,10 +390,16 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
               },
               onDisposed: () {
                 print('성공여부2 = $success');
+                print(request.url);
+                print('noah!!!!');
               },
-              onTapCloseButton: () {
-                Navigator.of(context).pop(success);
-              },
+              onTapCloseButton: ()  =>
+                    showConfirmationDialog(
+                      context,
+                      'Do you want to cancel payment?',
+                      'You will be returned to the wave select screen.',
+                      popNow,
+              ),
             ),
           );
         });
@@ -398,3 +413,4 @@ extension PaymentRequestExtension on PaymentRequest {
     return Uri.http("localhost:8080", "payment", json);
   }
 }
+
