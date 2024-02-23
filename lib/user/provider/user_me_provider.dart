@@ -40,7 +40,7 @@ class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
     required this.storage,
   }) : super(UserModelLoading()) {
     // 내 정보 가져오기
-    //logout();
+    // logout();
     getMe();
   }
 
@@ -115,6 +115,8 @@ class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
   }
 
   Future<void> logout() async {
+    final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+    final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
     state = null;
     await authRepository.logout();
     await Future.wait([
