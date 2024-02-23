@@ -31,7 +31,7 @@ android {
 
     namespace "com.team.wave"
     compileSdkVersion flutter.compileSdkVersion
-    //compileSdkVersion 34
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -61,7 +61,7 @@ android {
 
     signingConfigs {
         release {
-            keyAlias keystoreProperties['keyAlias']
+            keyAlias 'puretension'
             keyPassword keystoreProperties['keyPassword']
             storeFile file(keystoreProperties['storeFile'])
             storePassword keystoreProperties['storePassword']
