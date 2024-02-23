@@ -89,7 +89,7 @@ class SearchCountryCard extends ConsumerWidget {
         borderRadius: isDetail == true
             ? BorderRadius.zero
             : const BorderRadius.all(
-          Radius.circular(15.0),
+          Radius.circular(20.0),
         ),
         boxShadow: [
           BoxShadow(
@@ -113,24 +113,13 @@ class SearchCountryCard extends ConsumerWidget {
                     borderRadius: isDetail
                         ? BorderRadius.zero
                         : const BorderRadius.only(
-                      topLeft: Radius.circular(15.0),
-                      topRight: Radius.circular(15.0),
+                      topLeft: Radius.circular(20.0),
+                      topRight: Radius.circular(20.0),
                     ),
                     child: image,
                   ),
                 ),
-              if (heroKey == null)
-                ClipRRect(
-                  borderRadius: isDetail
-                      ? BorderRadius.zero
-                      : BorderRadius.only(
-                    topLeft: Radius.circular(15.0),
-                    topRight: Radius.circular(15.0),
-                  ),
-                  child: image,
-                ),
-              if (heroKey !=
-                  null && (isDetail == false)) // heroKey가 null => detail인 경우(컬러 카테고리 보여줄 필요 없음)
+              if (heroKey != null && (isDetail == false)) // heroKey가 null => detail인 경우(컬러 카테고리 보여줄 필요 없음)
                 Positioned(
                   child: CountryCategoryButton(
                     category: category,
