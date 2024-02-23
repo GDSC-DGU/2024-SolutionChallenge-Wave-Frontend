@@ -83,6 +83,7 @@ class ModalDonateCountryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       height: 310,
       decoration: BoxDecoration(
@@ -96,12 +97,11 @@ class ModalDonateCountryCard extends StatelessWidget {
                 Hero(
                   tag: ObjectKey(heroKey),
                   child: ClipRRect(
-                    borderRadius: isDetail
-                        ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
-                        : const BorderRadius.only(
-                            topLeft: Radius.circular(20.0),
-                            topRight: Radius.circular(20.0),
-                          ),
+                    borderRadius:
+                      const BorderRadius.only(
+                        topLeft: Radius.circular(20.0),
+                        topRight: Radius.circular(20.0),
+                      ),
                     child: Container(
                       height: 150,
                       width: double.infinity,
@@ -119,7 +119,7 @@ class ModalDonateCountryCard extends StatelessWidget {
                 child: Text(
                   "$mainTitle\n$subTitle",
                   style: const TextStyle(
-                      fontSize: 18.0,
+                      fontSize: 15,
                       fontWeight: FontWeight.w700,
                       color: Colors.white),
                 ),

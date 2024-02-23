@@ -108,7 +108,7 @@ class ModalSearchCountryCard extends StatelessWidget {
                   ),
                   child: Container(
                     height: 130,
-                    width: 300,
+                    width: 320,
                     child: image,
                   ),
                 ),
@@ -128,7 +128,7 @@ class ModalSearchCountryCard extends StatelessWidget {
                       child: Text(
                         mainTitle,
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 13,
                           fontWeight: FontWeight.w700,
                           color: Colors.black.withOpacity(0.9),
                         ),
@@ -145,7 +145,7 @@ class ModalSearchCountryCard extends StatelessWidget {
                     Text(
                       views.toString(),
                       style: TextStyle(
-                        fontSize: 12.0,
+                        fontSize: 11.0,
                         fontWeight: FontWeight.w400,
                         color: Color(0xFF747474),
                       ), // View 카운트 글꼴 크기
@@ -155,7 +155,7 @@ class ModalSearchCountryCard extends StatelessWidget {
                 Text(
                   subTitle,
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 13,
                     fontWeight: FontWeight.w700,
                     color: Colors.black.withOpacity(0.9),
                   ), // 조절된 subTitle 글꼴 크기
