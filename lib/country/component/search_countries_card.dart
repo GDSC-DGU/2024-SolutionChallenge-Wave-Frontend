@@ -120,21 +120,32 @@ class SearchCountryCard extends ConsumerWidget {
                     child: image,
                   ),
                 ),
-              if (heroKey != null && (isDetail == false)) // heroKey가 null => detail인 경우(컬러 카테고리 보여줄 필요 없음)
+              if (heroKey == null)
+                ClipRRect(
+                  borderRadius: isDetail
+                      ? BorderRadius.zero
+                      : BorderRadius.only(
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0),
+                  ),
+                  child: image,
+                ),
+              if (heroKey !=
+                  null && (isDetail == false)) // heroKey가 null => detail인 경우(컬러 카테고리 보여줄 필요 없음)
                 Positioned(
                   child: CountryCategoryButton(
                     category: category,
                     countryName: country,
                   ),
                 ),
-              if (isDetail)
+              if (isDetail) // isDetail false => detail인 경우(컬러 카테고리 보여줄 필요 없음)
                 Positioned(
-                bottom: 85, // 메인 타이틀과 서브타이틀의 높이를 고려하여 조정
-                left: 21,
-                child: TranslucenceCategoryButton(
-                  text: category,
+                  bottom: 85, // 메인 타이틀과 서브타이틀의 높이를 고려하여 조정
+                  left: 21,
+                  child: TranslucenceCategoryButton(
+                    text: category,
+                  ),
                 ),
-              ),
               if (isDetail)
                 Positioned(
                   bottom: 20,
