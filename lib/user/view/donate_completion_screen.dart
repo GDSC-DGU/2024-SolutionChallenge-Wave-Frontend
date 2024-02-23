@@ -28,10 +28,15 @@ class DonateCompletionScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SvgPicture.asset(
-                'assets/images/donationCompletionImage.svg',
-                width: 150,
-                height: 150,
+              // SvgPicture.asset(
+              //   'assets/images/donationCompletionImage.svg',
+              //   width: 150,
+              //   height: 150,
+              // ),
+              Image.asset(
+                'assets/images/donationCompletionImage.jpeg',
+                width: 200,
+                height: 200,
               ),
               const SizedBox(height: 24),
               const Text(
