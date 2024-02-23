@@ -92,7 +92,7 @@ class DonateCountryCard extends StatelessWidget {
         borderRadius: isDetail == true
             ? BorderRadius.zero
             : const BorderRadius.all(
-                Radius.circular(15.0),
+                Radius.circular(20.0),
               ),
         boxShadow: [
           BoxShadow(
@@ -116,24 +116,10 @@ class DonateCountryCard extends StatelessWidget {
                     borderRadius: isDetail
                         ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
                         : const BorderRadius.only(
-                            topLeft: Radius.circular(15.0),
-                            topRight: Radius.circular(15.0),
+                            topLeft: Radius.circular(20.0),
+                            topRight: Radius.circular(20.0),
                           ),
                     child: Container(child: image),
-                  ),
-                ),
-              if (heroKey == null)
-                ClipRRect(
-                  borderRadius: isDetail
-                      ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
-                      : const BorderRadius.only(
-                          topLeft: Radius.circular(15.0),
-                          topRight: Radius.circular(15.0),
-                        ),
-                  child: Container(
-                    height: 180,
-                    width: double.infinity,
-                    child: image,
                   ),
                 ),
               if (!isDetail) // isDetail false => detail인 경우(컬러 카테고리 보여줄 필요 없음)
@@ -189,7 +175,7 @@ class DonateCountryCard extends StatelessWidget {
                     //width: 60, // 너비 60
                     height: 60, // 높이 60
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10), // 모서리 둥글게 처리
+                      borderRadius: BorderRadius.circular(20), // 모서리 둥글게 처리
                     ),
                     // child: InkWell(
                     //   onTap: () async{
