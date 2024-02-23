@@ -70,7 +70,7 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => OnboardingScreen(showAppBar: true), // AppBar를 보여줍니다.
+            builder: (context) => OnboardingScreen(showAppBar: true),
           ),
         );
         },

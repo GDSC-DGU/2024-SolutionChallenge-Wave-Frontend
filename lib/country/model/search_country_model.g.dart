@@ -11,10 +11,10 @@ SearchCountryModel _$SearchCountryModelFromJson(Map<String, dynamic> json) =>
       category: json['category'] as String,
       mainTitle: json['mainTitle'] as String,
       subTitle: json['subTitle'] as String,
+      country: json['country'] as String,
       image: json['image'] as String,
       views: json['views'] as int,
       id: json['id'] as int,
-      country: json['country'] as String,
     );
 
 Map<String, dynamic> _$SearchCountryModelToJson(SearchCountryModel instance) =>
