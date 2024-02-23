@@ -336,21 +336,9 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
   }
 }
 
-// extension PaymentRequestExtension on PaymentRequest {
-//   Uri get url {
-//
-//     return Uri.http("localhost:8080", "payment", json);
-//   }
-// }
-
 extension PaymentRequestExtension on PaymentRequest {
   Uri get url {
-    // Android 장비에서 실행되는 경우 10.0.2.2 주소 사용
-    if (Platform.isAndroid) {
-      return Uri.http("10.0.2.2:8080", "payment", json);
-    } else {
-      // 그 외의 경우 localhost 주소 사용
-      return Uri.http("localhost:8080", "payment", json);
-    }
+
+    return Uri.http("localhost:8080", "payment", json);
   }
 }
