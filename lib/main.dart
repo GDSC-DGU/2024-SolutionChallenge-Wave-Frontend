@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -52,12 +54,19 @@ class _App extends ConsumerWidget {
     );
   }
 }
+
 extension PaymentRequestExtension on PaymentRequest {
   Uri get url {
-    // TODO 토스페이를 위해 만든 Web 주소를 넣어주세요. 아래는 예시입니다. => Test이므로, 예제 그대로 8080
-    return Uri.http("localhost:8080", "payment", json);
+    // Android 장비에서 실행되는 경우 10.0.2.2 주소 사용
+    if (Platform.isAndroid) {
+      return Uri.http("10.0.2.2:8080", "payment", json);
+    } else {
+      // 그 외의 경우 localhost 주소 사용
+      return Uri.http("localhost:8080", "payment", json);
+    }
   }
 }
+
 // //// ⭐️ TEST CODE: 아래처럼 UI만 보고 싶을 때 위에 기존거 주석 처리 하고 ✅
 // void main() async{
 //   WidgetsFlutterBinding.ensureInitialized();
