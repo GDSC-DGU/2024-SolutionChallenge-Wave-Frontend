@@ -12,7 +12,7 @@ class DefaultLayout extends StatelessWidget {
 
   const DefaultLayout({
     required this.child,
-    this.backgroundColor,
+    this.backgroundColor = const Color(0xFFFFFFFF), // 기본 배경색을 흰색으로 설정
     this.title,
     this.bottomNavigationBar,
     this.floatingActionButton,
@@ -40,7 +40,9 @@ class DefaultLayout extends StatelessWidget {
       return null;
     } else if (isNeededCenterAppbar){
       return AppBar(
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        elevation: 0,
         scrolledUnderElevation: 0,
         title: Text(
             title!,
@@ -60,7 +62,9 @@ class DefaultLayout extends StatelessWidget {
     }
     else {
       return AppBar(
-        surfaceTintColor: Colors.transparent,
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        elevation: 0,
         scrolledUnderElevation: 0,
         title: Align(
           alignment: Alignment.centerLeft,

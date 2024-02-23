@@ -145,9 +145,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   AppBar _buildAppBar() {
     return AppBar(
+      backgroundColor: Colors.white,
+      surfaceTintColor: Colors.white,
+      elevation: 0,
+      scrolledUnderElevation: 0,
       title: Text(
         'About Wave',
         style: TextStyle(
+
           fontSize: 18,
           fontWeight: FontWeight.w600,
           color: Colors.black.withOpacity(0.9),
