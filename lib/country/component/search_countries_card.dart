@@ -140,7 +140,7 @@ class SearchCountryCard extends ConsumerWidget {
                 ),
               if (isDetail) // isDetail false => detail인 경우(컬러 카테고리 보여줄 필요 없음)
                 Positioned(
-                  bottom: 85, // 메인 타이틀과 서브타이틀의 높이를 고려하여 조정
+                  bottom: 90, // 메인 타이틀과 서브타이틀의 높이를 고려하여 조정
                   left: 21,
                   child: TranslucenceCategoryButton(
                     text: category,
@@ -243,4 +243,3 @@ class SearchCountryCard extends ConsumerWidget {
     );
   }
 }
-
