@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
 class BorderThumbShape extends SliderComponentShape {
-  // thumb의 반지름을 설정합니다.
   final double thumbRadius;
 
   const BorderThumbShape({this.thumbRadius = 16.0});
 
   @override
   Size getPreferredSize(bool isEnabled, bool isDiscrete) {
-    // thumb의 기본 크기를 설정합니다.
     return Size.fromRadius(thumbRadius);
   }
 
@@ -30,17 +28,17 @@ class BorderThumbShape extends SliderComponentShape {
     final Canvas canvas = context.canvas;
 
     final Paint thumbInnerPaint = Paint()
-      ..color = Colors.white // Thumb의 내부 색상
+      ..color = Colors.white
       ..style = PaintingStyle.fill;
 
     final Paint thumbBorderPaint = Paint()
-      ..color = Color(0xFF247EF4) // Thumb 테두리의 색상
+      ..color = Color(0xFF247EF4)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 4; // Thumb 테두리의 두께
+      ..strokeWidth = 4;
 
-    // Thumb의 내부를 그립니다.
+    // Thumb의 내부
     canvas.drawCircle(center, thumbRadius - thumbBorderPaint.strokeWidth, thumbInnerPaint);
-    // Thumb의 테두리를 그립니다.
+    // Thumb의 테두리
     canvas.drawCircle(center, thumbRadius, thumbBorderPaint);
   }
 }

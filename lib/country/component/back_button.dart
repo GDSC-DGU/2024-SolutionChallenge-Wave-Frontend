@@ -19,7 +19,7 @@ class CustomBackButton extends StatelessWidget {
         child: IconButton(
           icon: Icon(Icons.chevron_left, color: Colors.white),
           onPressed: onPressed,
-          iconSize: iconSize, // 아이콘 크기 설정
+          iconSize: iconSize,
         ),
       ),
     );

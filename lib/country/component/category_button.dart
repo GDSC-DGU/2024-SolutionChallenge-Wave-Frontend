@@ -20,7 +20,7 @@ class CategoryButton extends StatelessWidget {
         backgroundColor = CAUTION_YELLO_COLOR;
         break;
       default:
-        backgroundColor = Colors.grey; // Default color if category doesn't match
+        backgroundColor = Colors.grey;
     }
 
     return Container(

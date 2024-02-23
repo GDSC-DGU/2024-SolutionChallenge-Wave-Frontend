@@ -5,30 +5,29 @@ import 'package:wave/common/const/colors.dart';
 class ForwardDetailButton extends StatelessWidget {
   final String buttonName;
   final VoidCallback onPressed;
-  final double? width; // 너비를 옵셔널로 받음
-  final double? height; // 높이도 옵셔널로 받음
-  final bool? isSearch; // 검색 버튼 여부를 결정하는 플래그
+  final double? width;
+  final double? height;
+  final bool? isSearch;
 
   const ForwardDetailButton({
     Key? key,
     required this.buttonName,
     required this.onPressed,
-    this.width, // 너비를 옵셔널로 받음
-    this.height, //높이도 옵셔널로 받음
-    this.isSearch = false, // 기본값은 false
+    this.width,
+    this.height,
+    this.isSearch = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // 너비가 지정되지 않았을 때의 기본값 설정
-    final buttonWidth = width ?? 300.0; // 기본 너비를 300.0으로 설정
-    final buttonHeight = height ?? 54.0; // 기본 높이를 54.0으로 설정
+    final buttonWidth = width ?? 300.0;
+    final buttonHeight = height ?? 54.0;
 
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        primary: BUTTON_BACKGROUND_COLOR, // 버튼 배경색 사용
-        minimumSize: Size(buttonWidth, buttonHeight), // 동적으로 너비와 높이 설정
+        primary: BUTTON_BACKGROUND_COLOR,
+        minimumSize: Size(buttonWidth, buttonHeight),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(13.5),
         ),
@@ -41,14 +40,14 @@ class ForwardDetailButton extends StatelessWidget {
             style: TextStyle(
               color: BUTTON_TEXT_COLOR, // 버튼 텍스트 색상 사용
               fontWeight: FontWeight.w500,
-              fontSize: isSearch == true ? 16 : 18, // isSearch가 true이면 폰트 크기를 14로 설정
+              fontSize: isSearch == true ? 16 : 18,
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 15),
             child: SvgPicture.asset(
-              'assets/icons/rightArrow.svg', // SVG 아이콘 사용
-              height: isSearch == true ? 16 : 18, // isSearch가 true이면 SVG 아이콘 크기를 14로 설정
+              'assets/icons/rightArrow.svg',
+              height: isSearch == true ? 16 : 18,
             ),
           ),
         ],

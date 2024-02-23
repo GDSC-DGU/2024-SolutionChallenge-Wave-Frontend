@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wave/common/const/colors.dart';
 import 'package:wave/country/component/category_button.dart';
 import 'package:wave/country/component/donate_card_row.dart';
 import 'package:wave/country/component/donate_button.dart';
-import 'package:wave/country/component/donate_countries_card.dart';
 import 'package:wave/country/component/forward_detail_button.dart';
 import 'package:wave/country/model/donate_country_detail_model.dart';
 import 'package:wave/country/view/donate_country_detail_screen.dart';

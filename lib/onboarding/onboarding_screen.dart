@@ -1,18 +1,12 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
+import 'package:wave/common/const/colors.dart';
 import 'package:wave/main.dart';
-
-import '../common/layout/default_layout.dart';
 import '../user/view/login_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   static String get routeName => 'onboarding';
-  final bool showAppBar; // AppBar를 표시할지 결정하는 인자
+  final bool showAppBar;
 
-  // 생성자에서 showAppBar를 받도록 설정합니다.
   OnboardingScreen({Key? key, this.showAppBar = false}) : super(key: key);
 
   @override
@@ -26,7 +20,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     // TODO: implement initState
-    prefs.setBool('isFirstRun', false); // 앱이 최초로 실행되었는지 여부를 확인후, 최초일떄만 온보딩 보여주기(물론 마이페이지에서 볼 수도 있음)
+    prefs.setBool('isFirstRun', false);
     super.initState();
   }
 
@@ -48,14 +42,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: widget.showAppBar // showAppBar 인자에 따라 AppBar를 표시할지 결정
+      appBar: widget.showAppBar
           ? _buildAppBar()
           : null,
       body: Stack(
         children: [
           Padding(
-            padding: widget.showAppBar // showAppBar 인자에 따라 AppBar를 표시할지 결정
-                ? const EdgeInsets.only(bottom: 50) // 인디케이터 공간 확보
+            padding: widget.showAppBar
+                ? const EdgeInsets.only(bottom: 50)
                 : const EdgeInsets.only(bottom: 50, top: 90),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -102,11 +96,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: List.generate(2, (index) => _buildIndicator(index)),
                 ),
-                SizedBox(height: 20), // 인디케이터와 화면 하단 간의 간격 추가
+                SizedBox(height: 20),
               ],
             ),
           ),
-          if (!widget.showAppBar) // showAppBar가 false일 때만 Skip 버튼을 보여줌
+          if (!widget.showAppBar)
             Positioned(
             top: 50.0,
             left: 8.0,
@@ -123,7 +117,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: Text(
                   'Skip',
                   style: TextStyle(
-                    color: Color(0xFF247EF4), // 지정된 색상으로 텍스트 색상 설정
+                    color: PRIMARY_BLUE_COLOR,
                     fontWeight: FontWeight.w500,
                     fontSize: 14,
                   ),

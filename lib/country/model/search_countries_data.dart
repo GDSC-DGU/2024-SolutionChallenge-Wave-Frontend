@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'search_country_model.dart'; // SearchCountryModel 클래스를 import합니다.
+import 'search_country_model.dart';
 
 part 'search_countries_data.g.dart';
 

@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:wave/common/model/common_response.dart';
-import 'search_countries_data.dart'; // SearchCountriesData 클래스를 import합니다.
+import 'search_countries_data.dart';
 
 part 'search_countries_response.g.dart';
 

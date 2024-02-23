@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:wave/common/utils/data_utils.dart';
 import 'package:wave/country/model/search_country_model.dart';
 
 part 'search_country_detail_model.g.dart';

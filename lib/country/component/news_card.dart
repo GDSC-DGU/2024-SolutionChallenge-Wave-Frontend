@@ -22,7 +22,6 @@ class NewsCard extends StatelessWidget {
         if (await canLaunchUrl(Uri.parse(newsUrl))) {
           await launchUrl(Uri.parse(newsUrl));
         } else {
-          // URL을 열 수 없을 때의 처리
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Could not launch $newsUrl'),
@@ -81,7 +80,7 @@ class NewsCard extends StatelessWidget {
                         ],
                       ),
                       overflow: TextOverflow.ellipsis,
-                      maxLines: 2, // 최대 2줄까지만 표시, 여기로 옮겼습니다.
+                      maxLines: 2,
                     ),
                   ),
 

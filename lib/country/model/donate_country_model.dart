@@ -2,7 +2,6 @@
 
 import 'package:json_annotation/json_annotation.dart';
 import 'package:wave/common/model/i_model_with_id.dart';
-import 'package:wave/common/utils/data_utils.dart';
 
 part 'donate_country_model.g.dart';
 

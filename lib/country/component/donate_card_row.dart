@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import '../../common/const/colors.dart';
 import 'card_vertical_divider.dart';
 

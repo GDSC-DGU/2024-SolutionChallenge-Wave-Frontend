@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:wave/common/model/common_response.dart';
-import 'donate_countries_data_model.dart'; // 수정된 부분: DonateCountryModel 대신 CountriesData를 사용
+import 'donate_countries_data_model.dart';
 
 part 'donate_countries_response.g.dart';
 

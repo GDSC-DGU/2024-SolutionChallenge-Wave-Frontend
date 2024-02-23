@@ -10,7 +10,7 @@ class CountryCategoryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color backgroundColor;
-    Color textColor = Colors.white; // 기본 텍스트 색상을 흰색으로 설정
+    Color textColor = Colors.white;
     switch (category) {
       case 'EMERGENCY':
         backgroundColor = EMERGENCY_RED_COLOR;
@@ -20,7 +20,7 @@ class CountryCategoryButton extends StatelessWidget {
         break;
       case 'CAUTION':
         backgroundColor = CAUTION_YELLO_COLOR;
-        textColor = Colors.black; // CAUTION 카테고리일 때만 텍스트 색상을 검은색으로 변경
+        textColor = Colors.black;
         break;
       default:
         backgroundColor = Colors.grey;
@@ -40,7 +40,7 @@ class CountryCategoryButton extends StatelessWidget {
         child: Text(
           countryName,
           style: TextStyle(
-            color: textColor, // 텍스트 색상을 동적으로 설정
+            color: textColor,
             fontSize: 14,
             fontWeight: FontWeight.w500,
           ),

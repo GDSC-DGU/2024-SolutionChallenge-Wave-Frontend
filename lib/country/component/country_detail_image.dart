@@ -21,7 +21,7 @@ class CountryDetailImage extends StatelessWidget {
           imageUrl,
           fit: BoxFit.cover,
           width: double.infinity,
-          height: 260, // 높이는 필요에 따라 조절하세요.
+          height: 260,
         ),
         Padding(
           padding: const EdgeInsets.only(top: 8.0, left: 20, right: 20,),

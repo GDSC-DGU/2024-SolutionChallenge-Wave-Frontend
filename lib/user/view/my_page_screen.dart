@@ -4,7 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wave/common/layout/default_layout.dart';
 import 'package:wave/onboarding/onboarding_screen.dart';
-import 'package:wave/user/component/my_page_components.dart';
+import 'package:wave/user/component/my_page_menu_list.dart';
+import 'package:wave/user/component/my_page_user_card.dart';
 import 'package:wave/user/component/show_confirmation_dialog.dart';
 import 'package:wave/user/model/user_model.dart';
 import 'package:wave/user/provider/user_me_provider.dart';
@@ -61,10 +62,8 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final actions = {
       'Donation list': () {
-        // Donation List 스크린으로 이동
         context.push(DonationListScreen.routeName);
       },
       'About Wave': () {
@@ -114,86 +113,9 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Container(
-                  padding: const EdgeInsets.all(20.0),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF247EF4),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              user.nickname,
-                              style: const TextStyle(fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.white),
-                            ),
-                          ),
-                          OutlinedButton(
-                            onPressed: () =>
-                                showConfirmationDialog(
-                                  context,
-                                  'Do you want to logout?',
-                                  'You will be returned to the login screen.',
-                                  _logout,
-                                ),
-                            style: OutlinedButton.styleFrom(
-                              side: const BorderSide(
-                                  color: Colors.white, width: 1.2),
-                              minimumSize: const Size(80, 30),
-                            ),
-                            child: const Text('Log out', style: TextStyle(
-                                color: Colors.white, fontSize: 10)),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 35),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF242424), // 내부 박스 색상 변경
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: buildInfoSection(
-                            user.totalWave, user.donationCountryCnt),
-                      )
-                    ],
-                  ),
-                ),
+                MyPageUserCard(user: user, onLogout: _logout),
                 const SizedBox(height: 24),
-                ...[
-                  'Donation list',
-                  'About Wave',
-                  'Terms and conditions',
-                  'Privacy policy',
-                  'Unscribing membership'
-                ]
-                    .map(
-                      (title) =>
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 8),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFF1F1F7),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(26, 10, 10, 10),
-                          child: ListTile(
-                            title: Text(
-                              title,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black.withOpacity(0.9),
-                              ),
-                            ),
-                            trailing: const Icon(Icons.arrow_forward_ios),
-                            onTap: actions[title]!,
-                          ),
-                        ),
-                      ),
-                ).toList(),
+                MyPageMenuList(actions: actions),
                 const SizedBox(height: 120),
               ],
             ),

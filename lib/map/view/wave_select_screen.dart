@@ -1,30 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:path_drawing/path_drawing.dart';
 import 'package:wave/common/const/colors.dart';
 import 'package:wave/common/layout/default_layout.dart';
+import 'package:wave/map/component/country_painter.dart';
+import 'package:wave/map/model/wave_select_country.dart';
 import 'package:wave/payment/models/payment_request.dart';
 import 'package:wave/user/component/show_confirmation_dialog.dart';
-import 'package:wave/user/model/send_wave_model.dart';
 import 'package:wave/user/model/user_model.dart';
 import 'package:wave/user/provider/user_me_provider.dart';
 import 'package:wave/user/view/donate_completion_screen.dart';
 import 'package:xml/xml.dart' as xml;
-import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'package:xml/xml.dart';
 import 'package:wave/map/component/border_thumb_shape.dart';
-
-import 'package:wave/payment/models/payment_request.dart';
 import 'dart:developer' as dev;
 
-/// Toss Payment 💵
+/// Toss Payment 💵 => Toss Payments 를 사용해 앱내 결제를 할 수 있는 flutter 라이브러리
 import 'package:toss_payment/feature/payments/webview/payment_webview.dart';
-
-/// Toss Payment ??
-/// Toss Payments 를 사용해 앱내 결제를 할 수 있는 flutter 라이브러리입니다.
 export 'package:toss_payment/extensions/uri_extension.dart';
 export 'package:toss_payment/feature/payments/webview/payment_webview.dart';
 import 'package:toss_payment/toss_payment.dart';
@@ -33,58 +26,7 @@ import '../../country/component/edit_amount_dialog.dart';
 import '../../country/component/edit_donate_button.dart';
 
 /// FF5039(빨강) 247EF4(파랑)
-
-class Country {
-  final String path;
-  String color;
-  final String id;
-
-  Country({
-    required this.path,
-    required this.color,
-    required this.id,
-  });
-}
-
-class CountryPainter extends CustomPainter {
-  final List<Country> countries;
-
-  CountryPainter({required this.countries});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint = Paint();
-    Path allPaths = Path(); // 모든 경로를 저장할 Path 객체
-
-    for (var country in countries) {
-      // 각 국가의 경로를 Path 객체로 변환하고 allPaths에 추가
-      var path = parseSvgPathData(country.path);
-      allPaths.addPath(path, Offset.zero); // Offset.zero를 사용하여 원본 위치에 경로 추가
-    }
-
-    // 모든 경로를 포함하는 allPaths의 경계를 계산
-    Rect bounds = allPaths.getBounds();
-
-    // 캔버스의 중앙과 SVG의 중앙 사이의 차이를 계산하여 SVG를 캔버스 중앙에 배치
-    double offsetX = size.width / 2 - bounds.center.dx;
-    double offsetY = size.height / 2 - bounds.center.dy;
-
-    canvas.translate(offsetX, offsetY); // 캔버스 시작 위치를 조정
-
-    // 조정된 위치에서 모든 경로를 그림
-    for (var country in countries) {
-      paint.color = Color(int.parse("0xFF${country.color}"));
-      var path = parseSvgPathData(country.path);
-      canvas.drawPath(path, paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
-  }
-}
-
+///
 class WaveSelectScreen extends ConsumerStatefulWidget {
   static String get routeName => 'waveSelect';
 
@@ -103,7 +45,7 @@ class WaveSelectScreen extends ConsumerStatefulWidget {
 
 class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
   double _sliderValue = 0;
-  List<Country> _countries = [];
+  List<WaveSelectCountryModel> _countries = [];
 
   @override
   void initState() {
@@ -124,9 +66,6 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
         customerName: '고객명');
     _showPayment(context, request); // 결제
 
-    print(name.toString());
-    print(amount.round());
-    print(request);
 
     // PaymentRequest? ret;
     // ret = PaymentRequest.card(amount: 10000, orderId: "8ak23s", orderName: "도도", customerName: '저쟈');
@@ -138,7 +77,7 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
     final document = XmlDocument.parse(svgContent);
     final paths = document.findAllElements('path');
     final localCountries = paths.map((node) {
-      return Country(
+      return WaveSelectCountryModel(
         id: node.getAttribute('id') ?? '',
         path: node.getAttribute('d') ?? '',
         color: node.getAttribute('fill')?.replaceAll('#', '') ?? 'FF5039',
@@ -153,9 +92,7 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
     });
 
     setState(() {
-      print('naya');
       _countries = localCountries;
-      print('총나라 개수: ${_countries.length}');
     });
   }
 
@@ -216,8 +153,6 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
         },
       );
     }
-
-
 
     return DefaultLayout(
       isSingleChildScrollViewNeeded: true,
@@ -284,7 +219,6 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
               value: _sliderValue,
               onChanged: (value) {
                 setState(() {
-                  print('slider value: $value');
                   _sliderValue = value;
                   _updateColors(_sliderValue);
                 });
@@ -334,12 +268,10 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
   _showPayment(BuildContext context, PaymentRequest request) async {
 
     int _formattedAmount(double value) {
-      print('donation list에 반영될 wave: ${((value * (1000 / _countries.length)).round())}');
       return ((value * (1000 / _countries.length)).round());
     }
 
 
-    print(request.url);
     var ret = await showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -363,11 +295,8 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
               onPageFinished: (url) {
                 dev.log('onPageFinished.url = $url', name: "PaymentWebView");
                 // TODO something to decide the payment is successful or not.
-                print('onPageFinished.url = $url');
                 success = url.contains('success');
-                print('성공여부 = $success');
                 if(url.contains('/fail')){
-                  print('niya');
                   Navigator.pop(context);
                 }
                 if (success) {
@@ -389,9 +318,7 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
                 }
               },
               onDisposed: () {
-                print('성공여부2 = $success');
                 print(request.url);
-                print('noah!!!!');
               },
               onTapCloseButton: ()  =>
                     showConfirmationDialog(
@@ -409,7 +336,7 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
 
 extension PaymentRequestExtension on PaymentRequest {
   Uri get url {
-    // TODO 토스페이를 위해 만든 Web 주소를 넣어주세요. 아래는 예시입니다. => Test이므로, 예제 그대로!
+    // TODO 토스페이를 위해 만든 Web 주소. 아래는 예시. => Test이므로, 예제 그대로!
     return Uri.http("localhost:8080", "payment", json);
   }
 }

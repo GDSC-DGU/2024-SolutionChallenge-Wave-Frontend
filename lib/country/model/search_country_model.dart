@@ -1,36 +1,3 @@
-// import 'package:json_annotation/json_annotation.dart';
-//
-// import '../../common/model/i_model_with_id.dart';
-// import '../../common/utils/data_utils.dart';
-//
-// part 'search_country_model.g.dart';
-//
-// @JsonSerializable()
-// class SearchCountryModel implements IModelWithId {
-//   final String category;
-//   final String mainTitle;
-//   final String subTitle;
-//   final String country;
-//   final String image;
-//   final int views;
-//   final int id;
-//
-//   SearchCountryModel({
-//     required this.category,
-//     required this.mainTitle,
-//     required this.subTitle,
-//     required this.image,
-//     required this.views,
-//     required this.id,
-//     required this.country,
-//   });
-//
-//   factory SearchCountryModel.fromJson(Map<String, dynamic> json) =>
-//       _$SearchCountryModelFromJson(json);
-//
-//   Map<String, dynamic> toJson() => _$SearchCountryModelToJson(this);
-// }
-
 import 'package:json_annotation/json_annotation.dart';
 
 part 'search_country_model.g.dart';
@@ -62,7 +29,7 @@ class SearchCountryModel {
   // SearchCountryModel 객체를 JSON으로 변환하는 메소드
   Map<String, dynamic> toJson() => _$SearchCountryModelToJson(this);
 
-  // views 값을 증가시키는 메소드
+  // views 값을 증가시키는 메소드(Optimistic UI를 위해 사용)
   void incrementViews() {
     views += 1;
   }

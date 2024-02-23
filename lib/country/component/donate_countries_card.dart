@@ -1,8 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-
 import 'package:wave/common/const/colors.dart';
 import 'package:wave/country/component/category_button.dart';
 import 'package:wave/country/component/donate_card_row.dart';
@@ -12,8 +10,6 @@ import 'package:wave/country/model/donate_country_detail_model.dart';
 import 'package:wave/country/view/donate_country_detail_screen.dart';
 import 'package:wave/map/view/wave_select_screen.dart';
 import '../model/donate_country_model.dart';
-
-import 'package:share_plus/share_plus.dart';
 
 class DonateCountryCard extends StatelessWidget {
   final String category;
@@ -105,7 +101,7 @@ class DonateCountryCard extends StatelessWidget {
                 : Colors.grey.withOpacity(0.5),
             spreadRadius: 1,
             blurRadius: 5,
-            offset: Offset(0, 3), // changes position of shadow
+            offset: Offset(0, 3),
           ),
         ],
       ),

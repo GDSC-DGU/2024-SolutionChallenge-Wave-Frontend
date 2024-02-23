@@ -7,7 +7,6 @@ import '../../loading/loading_screen.dart';
 import '../component/donation_list_donated_summary.dart';
 import '../component/donation_list_tile.dart';
 import '../model/donation_response_model.dart';
-import '../provider/user_me_provider.dart';
 
 class DonationListScreen extends ConsumerStatefulWidget {
   const DonationListScreen({Key? key}) : super(key: key);

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../../common/const/colors.dart';
 
 class EditAmountDialog extends StatefulWidget {
