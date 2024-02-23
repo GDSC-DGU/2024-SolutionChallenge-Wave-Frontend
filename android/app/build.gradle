@@ -63,7 +63,7 @@ android {
         release {
             keyAlias 'puretension'
             keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
+            storeFile file("${rootDir}/key.jks")
             storePassword keystoreProperties['storePassword']
         }
     }
