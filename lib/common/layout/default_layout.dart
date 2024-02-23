@@ -25,7 +25,7 @@ class DefaultLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: backgroundColor ?? Colors.white,
+      backgroundColor: Colors.white,
       appBar: renderAppBar(context),
       body: isSingleChildScrollViewNeeded
           ? SingleChildScrollView(child: child) // Wrap child with SingleChildScrollView if needed
@@ -40,7 +40,8 @@ class DefaultLayout extends StatelessWidget {
       return null;
     } else if (isNeededCenterAppbar){
       return AppBar(
-        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.transparent,
+        scrolledUnderElevation: 0,
         title: Text(
             title!,
           style: TextStyle(
@@ -59,6 +60,8 @@ class DefaultLayout extends StatelessWidget {
     }
     else {
       return AppBar(
+        surfaceTintColor: Colors.transparent,
+        scrolledUnderElevation: 0,
         title: Align(
           alignment: Alignment.centerLeft,
           child: Text(
