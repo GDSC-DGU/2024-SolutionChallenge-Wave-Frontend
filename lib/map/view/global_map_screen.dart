@@ -93,7 +93,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
   void _panMap() {
     if (_zoomPanBehavior != null && _zoomPanBehavior!.focalLatLng != null) {
       final currentFocalPoint = _zoomPanBehavior!.focalLatLng!;
-      final newFocalPoint = MapLatLng(currentFocalPoint.latitude+ 0.001, currentFocalPoint.longitude);
+      final newFocalPoint = MapLatLng(currentFocalPoint.latitude, currentFocalPoint.longitude+ 0.00000001);
       _zoomPanBehavior!.focalLatLng = newFocalPoint;
     }
   }
