@@ -119,9 +119,8 @@ class ModalSearchCountryCard extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  child: CountryCategoryButton(
+                  child: CategoryButton(
                     category: category,
-                    countryName: country,
                   ),
                 ),
             ],

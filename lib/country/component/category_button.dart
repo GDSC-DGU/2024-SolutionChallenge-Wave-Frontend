@@ -9,6 +9,7 @@ class CategoryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color backgroundColor;
+    Color textColor = Colors.white;
     switch (category) {
       case 'EMERGENCY':
         backgroundColor = EMERGENCY_RED_COLOR;
@@ -18,6 +19,7 @@ class CategoryButton extends StatelessWidget {
         break;
       case 'CAUTION':
         backgroundColor = CAUTION_YELLO_COLOR;
+        textColor = Colors.black;
         break;
       default:
         backgroundColor = Colors.grey;
@@ -36,8 +38,8 @@ class CategoryButton extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(6,3, 10, 3),
         child: Text(
           category,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: textColor,
             fontSize: 14,
             fontWeight: FontWeight.w600,
           ),
