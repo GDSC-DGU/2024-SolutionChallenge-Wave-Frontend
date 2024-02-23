@@ -11,6 +11,13 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       nickname: json['nickname'] as String,
       totalWave: json['totalWave'] as int,
       donationCountryCnt: json['donationCountryCnt'] as int,
+      firstBadge: json['firstBadge'] as bool,
+      secondBadge: json['secondBadge'] as bool,
+      thirdBadge: json['thirdBadge'] as bool,
+      fourthBadge: json['fourthBadge'] as bool,
+      fifthBadge: json['fifthBadge'] as bool,
+      sixthBadge: json['sixthBadge'] as bool,
+      seventhBadge: json['seventhBadge'] as bool,
     );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -18,4 +25,11 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'nickname': instance.nickname,
       'totalWave': instance.totalWave,
       'donationCountryCnt': instance.donationCountryCnt,
+      'firstBadge': instance.firstBadge,
+      'secondBadge': instance.secondBadge,
+      'thirdBadge': instance.thirdBadge,
+      'fourthBadge': instance.fourthBadge,
+      'fifthBadge': instance.fifthBadge,
+      'sixthBadge': instance.sixthBadge,
+      'seventhBadge': instance.seventhBadge,
     };

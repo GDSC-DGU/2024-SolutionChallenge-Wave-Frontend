@@ -20,12 +20,27 @@ class UserModel extends UserModelBase {
   final String nickname;
   final int totalWave;
   final int donationCountryCnt;
+  final bool firstBadge;
+  final bool secondBadge;
+  final bool thirdBadge;
+  final bool fourthBadge;
+  final bool fifthBadge;
+  final bool sixthBadge;
+  final bool seventhBadge;
+
 
   UserModel({
     required this.id,
     required this.nickname,
     required this.totalWave,
     required this.donationCountryCnt,
+    required this.firstBadge,
+    required this.secondBadge,
+    required this.thirdBadge,
+    required this.fourthBadge,
+    required this.fifthBadge,
+    required this.sixthBadge,
+    required this.seventhBadge,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => _$UserModelFromJson(json);
