@@ -50,7 +50,7 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
       enablePanning: true,
       zoomLevel: currentZoomLevel,
       minZoomLevel: 2,
-      maxZoomLevel: 10,
+      maxZoomLevel: 11,
       latLngBounds: const MapLatLngBounds(
         MapLatLng(71.538800, 179.148909), // 북동 경계
         MapLatLng(-55.973798, -179.148909), // 남서 경계
@@ -61,10 +61,10 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
     _showMidRisk = !_showMidRisk;
     _showLowRisk = !_showLowRisk;
     _data = const <Model>[
-      Model('Yemen', 15.5527, 48.5164, 173),
-      Model('Ukraine', 48.3794, 31.1656, 166),
-      Model('Syria', 34.8021, 38.9968, 153),
-      Model('Palestine', 31.9522, 35.2332, 132),
+      Model('Yemen', 13.5527, 45.5164, 173),
+      Model('Ukraine', 51.1794, 31.1656, 166),
+      Model('Syria', 36.0021, 40.2968, 153),
+      Model('Palestine', 29.9522, 35.2332, 132),
     ];
     _updateDataSource();
   }
@@ -188,7 +188,9 @@ class _GlobalMapScreenState extends ConsumerState<GlobalMapScreen> {
                           }
                         },
                         child: SvgPicture.asset(
-                          'assets/icons/marker.svg',
+                          'assets/icons/test.svg',
+                          height: 13,
+                          width: 13,
                         ),
                       ),
                     );
@@ -414,7 +416,7 @@ class Model {
 
 MapDataLabelSettings getDataLabelSettings(double currentZoomLevel) {
   print('currentZoomLevel: $currentZoomLevel');
-  if (currentZoomLevel >= 8) {
+  if (currentZoomLevel >= 7) {
     return const MapDataLabelSettings(
       overflowMode: MapLabelOverflow.visible,
       textStyle: TextStyle(
@@ -424,7 +426,19 @@ MapDataLabelSettings getDataLabelSettings(double currentZoomLevel) {
         fontSize: 18,
       ),
     );
-  } else if (currentZoomLevel >= 4) {
+  }
+  else if (currentZoomLevel >= 5) {
+    return const MapDataLabelSettings(
+      overflowMode: MapLabelOverflow.ellipsis,
+      textStyle: TextStyle(
+        fontFamily: 'HelveticaNeue',
+        color: MAP_COUNTRY_COLOR,
+        fontWeight: FontWeight.w600,
+        fontSize: 15,
+      ),
+    );
+  }
+  else if (currentZoomLevel >= 4) {
     return const MapDataLabelSettings(
       overflowMode: MapLabelOverflow.hide,
       textStyle: TextStyle(
