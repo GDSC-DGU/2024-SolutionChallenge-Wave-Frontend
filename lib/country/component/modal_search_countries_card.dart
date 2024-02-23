@@ -7,6 +7,8 @@ import 'package:wave/country/model/search_country_detail_model.dart';
 import 'package:wave/country/model/search_country_model.dart';
 import 'package:wave/country/view/search_country_detail_screen.dart';
 
+import 'country_category_button.dart';
+
 class ModalSearchCountryCard extends StatelessWidget {
   final String category;
   final String mainTitle;
@@ -22,6 +24,7 @@ class ModalSearchCountryCard extends StatelessWidget {
   final String? detailImageProducer;
   final List<News>? news;
   final int id;
+  final String country;
 
   const ModalSearchCountryCard({
     required this.category,
@@ -38,6 +41,7 @@ class ModalSearchCountryCard extends StatelessWidget {
     this.detailImageProducer,
     this.news,
     required this.id,
+    required this.country,
     Key? key,
   }) : super(key: key);
 
@@ -66,6 +70,8 @@ class ModalSearchCountryCard extends StatelessWidget {
       detailImageProducer:
       model is SearchCountryDetailModel ? model.detailImageProducer : null,
       news: model is SearchCountryDetailModel ? model.news : null,
+      country: model.country,
+
     );
   }
 
@@ -113,7 +119,10 @@ class ModalSearchCountryCard extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  child: CategoryButton(category: category),
+                  child: CountryCategoryButton(
+                    category: category,
+                    countryName: country,
+                  ),
                 ),
             ],
           ),
