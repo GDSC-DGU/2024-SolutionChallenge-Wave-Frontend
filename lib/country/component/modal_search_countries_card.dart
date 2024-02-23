@@ -75,16 +75,7 @@ class ModalSearchCountryCard extends StatelessWidget {
       width: 340,
       height: 300,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.3), // 그림자 색상 설정
-            spreadRadius: 1, // 그림자 확산 반경
-            blurRadius: 10, // 그림자 흐림 정도
-            offset: Offset(0, 1), // 그림자의 위치 조정
-          ),
-        ],
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
         children: [
@@ -97,8 +88,8 @@ class ModalSearchCountryCard extends StatelessWidget {
                     borderRadius: isDetail
                         ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
                         : const BorderRadius.only(
-                      topLeft: Radius.circular(15.0),
-                      topRight: Radius.circular(15.0),
+                      topLeft: Radius.circular(20.0),
+                      topRight: Radius.circular(20.0),
                     ),
                     child: Container(
                       height: 150,
@@ -112,8 +103,8 @@ class ModalSearchCountryCard extends StatelessWidget {
                   borderRadius: isDetail
                       ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
                       : BorderRadius.only(
-                    topLeft: Radius.circular(15.0),
-                    topRight: Radius.circular(15.0),
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0),
                   ),
                   child: Container(
                     height: 130,

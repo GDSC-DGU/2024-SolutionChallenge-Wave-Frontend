@@ -19,15 +19,18 @@ class DonateCardRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final numberFormat = NumberFormat("#,###");
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        _buildStatColumn('All Waves', '🌊${numberFormat.format(allWave)}', PRIMARY_BLUE_COLOR),
-        const CardVerticalDivider(),
-        _buildStatColumn('Last Wave', '🌊${numberFormat.format(lastWave)}', Colors.black),
-        const CardVerticalDivider(),
-        _buildStatColumn('Casualties', numberFormat.format(casualties), Colors.black),
-      ],
+    return Container(
+      color: Colors.transparent,
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            _buildStatColumn('All Waves', '🌊${numberFormat.format(allWave)}', PRIMARY_BLUE_COLOR),
+            const CardVerticalDivider(),
+            _buildStatColumn('Last Wave', '🌊${numberFormat.format(lastWave)}', Colors.black),
+            const CardVerticalDivider(),
+            _buildStatColumn('Casualties', numberFormat.format(casualties), Colors.black),
+          ],
+        ),
     );
   }
 

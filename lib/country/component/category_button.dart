@@ -28,8 +28,8 @@ class CategoryButton extends StatelessWidget {
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(12),
-          bottomRight: Radius.circular(12),
+          topLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
         ),
       ),
       child: Padding(

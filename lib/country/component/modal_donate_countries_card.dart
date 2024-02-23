@@ -86,52 +86,27 @@ class ModalDonateCountryCard extends StatelessWidget {
     return Container(
       height: 310,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15), // 모서리를 15px 둥글게
-        color: Colors.white, // 여기에 배경색을 설정
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.3), // 그림자 색상 설정
-            spreadRadius: 1, // 그림자 확산 반경
-            blurRadius: 10, // 그림자 흐림 정도
-            offset: Offset(0, 1), // 그림자의 위치 조정
-          ),
-        ],
-        // 필요하다면 여기에 boxShadow 등 다른 디자인 속성을 추가할 수 있습니다.
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
         children: [
           Stack(
             children: [
-              if (heroKey !=
-                  null) // heroKey != null => detail이 아닌 경우(지도에서 클릭시랑 2번째 탭화면)
+              if (heroKey != null) // heroKey != null => detail이 아닌 경우(지도에서 클릭시랑 2번째 탭화면)
                 Hero(
                   tag: ObjectKey(heroKey),
                   child: ClipRRect(
                     borderRadius: isDetail
                         ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
                         : const BorderRadius.only(
-                            topLeft: Radius.circular(15.0),
-                            topRight: Radius.circular(15.0),
+                            topLeft: Radius.circular(20.0),
+                            topRight: Radius.circular(20.0),
                           ),
                     child: Container(
                       height: 150,
                       width: double.infinity,
                       child: image,
                     ),
-                  ),
-                ),
-              if (heroKey == null)
-                ClipRRect(
-                  borderRadius: isDetail
-                      ? BorderRadius.zero // 상세 페이지에서는 모든 모서리를 직각으로
-                      : const BorderRadius.only(
-                          topLeft: Radius.circular(15.0),
-                          topRight: Radius.circular(15.0),
-                        ),
-                  child: Container(
-                    height: 180,
-                    width: double.infinity,
-                    child: image,
                   ),
                 ),
               Positioned(
@@ -176,64 +151,6 @@ class ModalDonateCountryCard extends StatelessWidget {
                 width: 240, // 너비를 240으로 지정
                 height: 44, // 높이를 50으로 지정
                 isSearch: true,
-              ),
-            ),
-          if (isDetail)
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 6, 0, 6),
-                  child: Container(
-                    width: 60, // 너비 60
-                    height: 60, // 높이 60
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10), // 모서리 둥글게 처리
-                      image: const DecorationImage(
-                        image:
-                            AssetImage('assets/icons/share.svg'),
-                        fit: BoxFit.cover, // 이미지가 컨테이너를 꽉 채우도록 설정
-                      ),
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        // 버튼 클릭 시 수행할 작업
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        // 버튼 내부에 다른 위젯을 추가하고 싶다면 여기에 추가
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: DonateButton(
-                      buttonName: 'Donate',
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => WaveSelectScreen(
-                              selectedCountry: country,
-                              id: id,
-                            ),
-                          ),
-                        );
-                      },
-                      width: 270.0, // 버튼 너비를 200.0으로 설정
-                      height: 60.0, // 버튼 높이를 50.0으로 설정
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          if (isDetail)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: Divider(
-                color: BUTTON_BACKGROUND_COLOR,
-                thickness: 1.5,
               ),
             ),
         ],
