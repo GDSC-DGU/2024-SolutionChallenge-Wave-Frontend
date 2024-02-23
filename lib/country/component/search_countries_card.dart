@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:wave/country/component/category_button.dart';
 import 'package:wave/country/component/country_category_button.dart';
 import 'package:wave/country/component/forward_detail_button.dart';
+import 'package:wave/country/component/translucence_category_button.dart';
 import 'package:wave/country/model/search_country_detail_model.dart';
 import 'package:wave/country/model/search_country_model.dart';
 import 'package:wave/country/provider/search_country_provider.dart';
@@ -126,6 +127,14 @@ class SearchCountryCard extends ConsumerWidget {
                     countryName: country,
                   ),
                 ),
+              if (isDetail)
+                Positioned(
+                bottom: 85, // 메인 타이틀과 서브타이틀의 높이를 고려하여 조정
+                left: 21,
+                child: TranslucenceCategoryButton(
+                  text: category,
+                ),
+              ),
               if (isDetail)
                 Positioned(
                   bottom: 20,

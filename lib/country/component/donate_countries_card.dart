@@ -6,6 +6,7 @@ import 'package:wave/country/component/category_button.dart';
 import 'package:wave/country/component/donate_card_row.dart';
 import 'package:wave/country/component/donate_button.dart';
 import 'package:wave/country/component/forward_detail_button.dart';
+import 'package:wave/country/component/translucence_category_button.dart';
 import 'package:wave/country/model/donate_country_detail_model.dart';
 import 'package:wave/country/view/donate_country_detail_screen.dart';
 import 'package:wave/map/view/wave_select_screen.dart';
@@ -125,6 +126,14 @@ class DonateCountryCard extends StatelessWidget {
               if (!isDetail) // isDetail false => detail인 경우(컬러 카테고리 보여줄 필요 없음)
                 Positioned(
                   child: CategoryButton(category: category),
+                ),
+              if (isDetail) // isDetail false => detail인 경우(컬러 카테고리 보여줄 필요 없음)
+                Positioned(
+                  bottom: 90, // 메인 타이틀과 서브타이틀의 높이를 고려하여 조정
+                  left: 21,
+                  child: TranslucenceCategoryButton(
+                    text: category,
+                  ),
                 ),
               Positioned(
                 bottom: 20,
