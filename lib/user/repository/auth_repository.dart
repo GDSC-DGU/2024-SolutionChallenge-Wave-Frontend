@@ -28,7 +28,7 @@ abstract class AuthRepository {
   })
   Future<CommonResponse> logout();
 
-  @PATCH('/sign-out')
+  @DELETE('/sign-out')
   @Headers({
     'accessToken': 'true',
   })

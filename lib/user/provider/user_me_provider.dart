@@ -115,8 +115,6 @@ class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
   }
 
   Future<void> logout() async {
-    final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
-    final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
     state = null;
     await authRepository.logout();
     await Future.wait([
@@ -128,13 +126,13 @@ class UserMeStateNotifier extends StateNotifier<UserModelBase?> {
   Future<CommonResponse> signOut() async {
     state = null;
     // 토큰 삭제
-    await Future.wait([
-      storage.delete(key: REFRESH_TOKEN_KEY),
-      storage.delete(key: ACCESS_TOKEN_KEY),
-    ]);
     try {
       final resp = await authRepository.signOut();
       print('성공적 탈퇴');
+      await Future.wait([
+        storage.delete(key: REFRESH_TOKEN_KEY),
+        storage.delete(key: ACCESS_TOKEN_KEY),
+      ]);
       return resp;
     } catch (e) {
       print('signoutError?');
