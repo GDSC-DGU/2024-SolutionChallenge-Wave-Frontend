@@ -12,6 +12,7 @@ import 'package:wave/user/view/donation_list_screen.dart';
 import 'package:wave/user/view/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:wave/user/view/my_page_screen.dart';
+import 'discription/view/discription_screen.dart';
 import 'firebase_options.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
@@ -83,7 +84,7 @@ extension PaymentRequestExtension on PaymentRequest {
 //         fontFamily: 'Pretendard',
 //       ),
 //       debugShowCheckedModeBanner: false,
-//       home: DonateCompletionScreen( waves: 100, country: '',), // 여기 원하는 스크린 대입 ✅
+//       home: DiscriptionScreen(), // 여기 원하는 스크린 대입 ✅
 //     );
 //   }
 // }
