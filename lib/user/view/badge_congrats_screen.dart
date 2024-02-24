@@ -73,6 +73,7 @@ class _BadgeCongratsScreenState extends State<BadgeCongratsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           Column(
