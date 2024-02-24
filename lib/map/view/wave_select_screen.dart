@@ -178,7 +178,7 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
           _sliderValue == 0
               ? Text("Your waves can protect them!") // 0달러일 때 텍스트 표시
               : Text("You saved ${_sliderValue.toInt() + 1} region!"),
-          SizedBox(height: 15), // 슬라이더와 버튼 사이의 간격
+          SizedBox(height: 20), // 금액과 영어 텍스트 사이의 간격
           Center(
             child: Transform.translate(
               offset: Offset(14, 0), // 오른쪽으로 20px 이동
@@ -200,6 +200,7 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
               ),
             ),
           ),
+          SizedBox(height: 10), // 슬라이더와 금액 사이의 간격
           SliderTheme(
             data: SliderTheme.of(context).copyWith(
               trackHeight: 28.0,
@@ -227,7 +228,7 @@ class _WaveSelectScreenState extends ConsumerState<WaveSelectScreen> {
               },
             ),
           ),
-          SizedBox(height: 20), // 슬라이더와 버튼 사이의 간격
+          SizedBox(height: 40), // 슬라이더와 버튼 사이의 간격
           ElevatedButton(
             onPressed: _sliderValue > 0
                 ? () {
