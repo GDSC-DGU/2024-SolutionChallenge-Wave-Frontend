@@ -94,7 +94,7 @@ class _BadgeCongratsScreenState extends State<BadgeCongratsScreen> {
                 ),
               if(widget.amount != "NONE" && widget.count == "NONE") // count 뱃지를 획득했을 때 띄울 이미지
                 Image.asset(
-                  'assets/icons/badge/countBadge${amountIndex}.png',
+                  'assets/icons/badge/amountBadge${amountIndex}.png',
                   width: 200,
                   height: 200,
                 ),
