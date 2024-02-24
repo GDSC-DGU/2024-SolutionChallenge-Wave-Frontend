@@ -7,6 +7,7 @@ import 'package:wave/country/model/donate_country_model.dart';
 import 'package:wave/country/provider/donate_country_provider.dart';
 import 'package:wave/loading/loading_screen.dart';
 
+import '../component/render_discription_card_section.dart';
 import '../model/donate_country_detail_model.dart';
 import 'package:skeletons/skeletons.dart';
 import 'package:wave/country/component/back_button.dart';
@@ -83,7 +84,9 @@ class _DonateCountryDetailScreenState extends ConsumerState<DonateCountryDetailS
                 renderTop(
                   model: donateCountryModel, // 기존 모델 사용
                 ),
-               // 상세 정보 로딩 상태 처리
+                SliverToBoxAdapter(
+                  child: DescriptionCardSlider(),
+                ),
                 if (donateCountryDetailModel == null) renderLoading(),
                 // 상세 정보가 로드되었다면, 상세 정보 UI 구성
                 if (donateCountryDetailModel != null)
@@ -91,6 +94,7 @@ class _DonateCountryDetailScreenState extends ConsumerState<DonateCountryDetailS
                 if (donateCountryDetailModel != null)
                   renderCountryDetailImage(model: donateCountryDetailModel),
                 const CustomDividerSliver(),
+
                 if (donateCountryDetailModel != null && donateCountryDetailModel.news != null)
                   renderNewsSection(newsList: donateCountryDetailModel.news!),
                 const CustomDividerNoLinerSliver(),
@@ -220,8 +224,8 @@ class _DonateCountryDetailScreenState extends ConsumerState<DonateCountryDetailS
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 16.0),
               child: Text(
                 '', // 타이틀 텍스트
                 style: TextStyle(
