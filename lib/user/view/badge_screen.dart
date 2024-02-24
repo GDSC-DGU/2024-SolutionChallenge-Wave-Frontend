@@ -20,19 +20,6 @@ class BadgeScreen extends ConsumerStatefulWidget {
 }
 
 class _BadgeScreenState extends ConsumerState<BadgeScreen> {
-  @override
-  void initState() {
-    super.initState();
-    _fetchUserData();
-  }
-
-  Future<void> _fetchUserData() async {
-    try {
-      await ref.read(userMeProvider.notifier).getMe();
-    } catch (error) {
-      print("사용자 데이터를 가져오는 중 에러 발생: $error");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +38,7 @@ class _BadgeScreenState extends ConsumerState<BadgeScreen> {
       title: 'Earned badges',
         isSingleChildScrollViewNeeded: true,
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(20.0),
 
           )
     );
