@@ -74,29 +74,6 @@ class DefaultLayout extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
           iconSize: 24,
         ),
-        actions: <Widget>[
-          if (isMyPage && onLogout != null) // MyPage인 경우 로그아웃 버튼을 표시
-            OutlinedButton(
-              onPressed: () => showConfirmationDialog(
-                context,
-                'Do you want to logout?',
-                'You will be returned to the login screen.',
-                onLogout!, // Null 체크 연산자(!) 사용
-              ),
-              style: OutlinedButton.styleFrom(
-                side: BorderSide(color: Colors.black.withOpacity(0.9), width: 1.2),
-                minimumSize: const Size(80, 30),
-              ),
-              child: Text(
-                  'Log out',
-                  style: TextStyle(
-                      color: Colors.black.withOpacity(0.9),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                  )
-              ),
-            ),
-        ],
       );
     }
     else {
@@ -114,6 +91,36 @@ class DefaultLayout extends StatelessWidget {
             ),
           ),
         ),
+        actions: <Widget>[
+          if (isMyPage && onLogout != null)
+            Padding(
+              padding: const EdgeInsets.only(right: 16.0), // 오른쪽에 8.0의 패딩 추가
+              child: OutlinedButton(
+                onPressed: () {
+                  if (onLogout != null) {
+                    showConfirmationDialog(
+                      context,
+                      'Do you want to logout?',
+                      'You will be returned to the login screen.',
+                      onLogout!,
+                    );
+                  }
+                },
+                style: OutlinedButton.styleFrom(
+                  side: BorderSide(color: Colors.black.withOpacity(0.9), width: 1.2),
+                  minimumSize: const Size(80, 30),
+                ),
+                child: Text(
+                  'Log out',
+                  style: TextStyle(
+                    color: Colors.black.withOpacity(0.9),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+        ],
       );
     }
   }
