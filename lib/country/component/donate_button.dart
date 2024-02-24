@@ -18,7 +18,7 @@ class DonateButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 버튼 고정 너비, 높이 설정
-    final buttonWidth = width ?? 45.0; // 기본 너비를 250.0으로 설정
+    final buttonWidth = width ?? 200.0; // 기본 너비를 250.0으로 설정
     final buttonHeight = height ?? 64.0; // 기본 높이를 44.0으로 설정
 
     return ElevatedButton(

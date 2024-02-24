@@ -6,10 +6,12 @@ import 'package:wave/country/component/category_button.dart';
 import 'package:wave/country/component/donate_card_row.dart';
 import 'package:wave/country/component/donate_button.dart';
 import 'package:wave/country/component/forward_detail_button.dart';
+import 'package:wave/country/component/small_button.dart';
 import 'package:wave/country/component/translucence_category_button.dart';
 import 'package:wave/country/model/donate_country_detail_model.dart';
 import 'package:wave/country/view/donate_country_detail_screen.dart';
 import 'package:wave/map/view/wave_select_screen.dart';
+import '../../discription/view/discription_screen.dart';
 import '../model/donate_country_model.dart';
 
 class DonateCountryCard extends StatelessWidget {
@@ -204,22 +206,39 @@ class DonateCountryCard extends StatelessWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: DonateButton(
-                      buttonName: 'Donate',
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => WaveSelectScreen(
-                              selectedCountry: country,
-                              id: id,
-                            ),
+                    padding: const EdgeInsets.all(16.0), // Row 전체에 패딩 적용
+                    child: Row(
+                      children: [
+                        SmallButton(
+                          svgPath: 'assets/images/discriptionButton.svg', // SVG 파일 경로
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const DiscriptionScreen(),
+                              ),
+                            );
+                          },
+                        ),
+                        SizedBox(width: 16), // SmallButton과 DonateButton 사이의 간격
+                        Expanded(
+                          child: DonateButton(
+                            buttonName: 'Donate',
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => WaveSelectScreen(
+                                    selectedCountry: country,
+                                    id: id,
+                                  ),
+                                ),
+                              );
+                            },
+                            height: 60.0,
                           ),
-                        );
-                      },
-                      width: 300.0, // 버튼 너비를 200.0으로 설정
-                      height: 60.0, // 버튼 높이를 50.0으로 설정
+                        ),
+                      ],
                     ),
                   ),
                 ),

@@ -223,7 +223,7 @@ class _DonateCountryDetailScreenState extends ConsumerState<DonateCountryDetailS
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0),
               child: Text(
-                'See More News', // 타이틀 텍스트
+                '', // 타이틀 텍스트
                 style: TextStyle(
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
