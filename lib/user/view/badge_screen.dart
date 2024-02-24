@@ -71,7 +71,7 @@ class _BadgeScreenState extends ConsumerState<BadgeScreen> {
                 children: [
                   Text(
                     'Achieved donation count',
-                    style: TextStyle(fontSize: 16,
+                    style: TextStyle(fontSize: 15,
                         fontWeight: FontWeight.w500,
                         color: Colors.black),
                   ),
@@ -85,11 +85,12 @@ class _BadgeScreenState extends ConsumerState<BadgeScreen> {
               height: 2,
               color: Colors.black.withOpacity(0.1),
             ),
+            SizedBox(height: 26),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 'Amount of donations achieved',
-                style: TextStyle(fontSize: 16,
+                style: TextStyle(fontSize: 15,
                     fontWeight: FontWeight.w500,
                     color: Colors.black),
               ),
@@ -113,7 +114,7 @@ Widget _buildBadgeGrid(List<bool> badges, String badgeType) {
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 3,
       crossAxisSpacing: 8,
-      mainAxisExtent: 160,
+      mainAxisExtent: 140,
     ),
     itemCount: badges.length,
     itemBuilder: (context, index) {
@@ -137,7 +138,7 @@ Widget _buildBadgeGrid(List<bool> badges, String badgeType) {
               fontWeight: FontWeight.w600,
             ),
           ),
-          if (isActive)
+          if (!isActive)
             Text(
               'Achieve',
               style: TextStyle(
