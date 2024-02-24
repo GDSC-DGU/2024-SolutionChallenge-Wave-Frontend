@@ -16,7 +16,6 @@ class MyPageMenuList extends StatelessWidget {
         'About Wave',
         'Terms and conditions',
         'Privacy policy',
-        'Logout',
         'Unscribing membership',
       ]
           .map(

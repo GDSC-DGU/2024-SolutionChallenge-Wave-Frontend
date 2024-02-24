@@ -103,7 +103,9 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
       return const LoadingScreen();
     }else {
       return DefaultLayout(
-        title: 'My Page',
+        onLogout: _logout,
+          isMyPage: true,
+          title: 'My Page',
         isSingleChildScrollViewNeeded: true,
           child: Padding(
           padding: const EdgeInsets.all(16.0),

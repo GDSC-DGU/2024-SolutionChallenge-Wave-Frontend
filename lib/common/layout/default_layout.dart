@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:wave/user/provider/user_me_provider.dart';
+
+import '../../user/component/show_confirmation_dialog.dart';
 
 class DefaultLayout extends StatelessWidget {
+  final VoidCallback? onLogout;
   final Color? backgroundColor;
   final Widget child;
   final String? title;
@@ -8,9 +12,11 @@ class DefaultLayout extends StatelessWidget {
   final Widget? floatingActionButton;
   final bool isSingleChildScrollViewNeeded; // Make it non-optional with a default value
   final bool isNeededCenterAppbar;
+  final bool isMyPage; // MyPage 여부를 나타내는 새로운 파라미터
 
 
   const DefaultLayout({
+    this.onLogout,
     required this.child,
     this.backgroundColor = const Color(0xFFFFFFFF), // 기본 배경색을 흰색으로 설정
     this.title,
@@ -18,9 +24,19 @@ class DefaultLayout extends StatelessWidget {
     this.floatingActionButton,
     this.isSingleChildScrollViewNeeded = false, // Default to false
     this.isNeededCenterAppbar = false,
+    this.isMyPage = false, // 기본값을 false로 설정
     Key? key,
     AppBar? appBar,
   }) : super(key: key);
+
+  // // 로그아웃 API 호출 함수
+  // Future<void> _logout() async {
+  //   try{
+  //     await ref.read(userMeProvider.notifier).logout();
+  //   }catch(error){
+  //     print("로그아웃 에러 발생: $error");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +74,29 @@ class DefaultLayout extends StatelessWidget {
           onPressed: () => Navigator.pop(context),
           iconSize: 24,
         ),
+        actions: <Widget>[
+          if (isMyPage && onLogout != null) // MyPage인 경우 로그아웃 버튼을 표시
+            OutlinedButton(
+              onPressed: () => showConfirmationDialog(
+                context,
+                'Do you want to logout?',
+                'You will be returned to the login screen.',
+                onLogout!, // Null 체크 연산자(!) 사용
+              ),
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(color: Colors.black.withOpacity(0.9), width: 1.2),
+                minimumSize: const Size(80, 30),
+              ),
+              child: Text(
+                  'Log out',
+                  style: TextStyle(
+                      color: Colors.black.withOpacity(0.9),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                  )
+              ),
+            ),
+        ],
       );
     }
     else {
