@@ -26,7 +26,6 @@ class _BadgeCongratsScreenState extends State<BadgeCongratsScreen> {
   @override
   void initState() {
     super.initState();
-    // Determine the index for the amount badge
     switch (widget.amount) {
       case "10":
         amountIndex = 1;
@@ -41,7 +40,6 @@ class _BadgeCongratsScreenState extends State<BadgeCongratsScreen> {
         amountIndex = 0; // Default or error case
     }
 
-    // Determine the index for the count badge
     switch (widget.count) {
       case "1":
         countIndex = 1;

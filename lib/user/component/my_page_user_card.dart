@@ -10,14 +10,10 @@ import 'my_page_components.dart';
 
 class MyPageUserCard extends StatelessWidget {
   final UserModel user;
-  final String amountBadge;
-  final String countBadge;
 
   const MyPageUserCard({
     Key? key,
     required this.user,
-    required this.amountBadge,
-    required this.countBadge,
   }) : super(key: key);
 
   @override
@@ -43,176 +39,12 @@ class MyPageUserCard extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  // BadgeScreen으로 이동
-                  if (amountBadge == "NONE" || countBadge == "NONE") {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BadgeScreen(),
-                      ),
-                    );
-                  } else if (amountBadge == "NONE" ||
-                      countBadge == "FIRST_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "NONE", count: "1")),
-                    );
-                  } else if (amountBadge == "NONE" ||
-                      countBadge == "SECOND_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "NONE", count: "5")),
-                    );
-                  } else if (amountBadge == "NONE" ||
-                      countBadge == "THIRD_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "NONE", count: "10")),
-                    );
-                  } else if (amountBadge == "NONE" ||
-                      countBadge == "FOURTH_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "NONE", count: "50")),
-                    );
-                  } else if (amountBadge == "NONE" ||
-                      countBadge == "FIFTH_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "NONE", count: "100")),
-                    );
-                  } else if (amountBadge == "FIRST_AMOUNT_BADGE" ||
-                      countBadge == "FIRST_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "10", count: "1")),
-                    );
-                  } else if (amountBadge == "FIRST_AMOUNT_BADGE" ||
-                      countBadge == "SECOND_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "10", count: "5")),
-                    );
-                  } else if (amountBadge == "FIRST_AMOUNT_BADGE" ||
-                      countBadge == "THIRD_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "10", count: "10")),
-                    );
-                  } else if (amountBadge == "FIRST_AMOUNT_BADGE" ||
-                      countBadge == "FOURTH_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "10", count: "50")),
-                    );
-                  } else if (amountBadge == "FIRST_AMOUNT_BADGE" ||
-                      countBadge == "FIFTH_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "10", count: "100")),
-                    );
-                  } else if (amountBadge == "SECOND_AMOUNT_BADGE" ||
-                      countBadge == "FIRST_COUNT_BADGE") {
-                    print('level');
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "100", count: "1")),
-                    );
-                  } else if (amountBadge == "SECOND_AMOUNT_BADGE" ||
-                      countBadge == "SECOND_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "100", count: "5")),
-                    );
-                  } else if (amountBadge == "SECOND_AMOUNT_BADGE" ||
-                      countBadge == "THIRD_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "100", count: "10")),
-                    );
-                  } else if (amountBadge == "SECOND_AMOUNT_BADGE" ||
-                      countBadge == "FOURTH_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "100", count: "50")),
-                    );
-                  } else if (amountBadge == "SECOND_AMOUNT_BADGE" ||
-                      countBadge == "FIFTH_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "100", count: "100")),
-                    );
-                  } else if (amountBadge == "THIRD_AMOUNT_BADGE" ||
-                      countBadge == "FIRST_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "1000", count: "1")),
-                    );
-                  } else if (amountBadge == "THIRD_AMOUNT_BADGE" ||
-                      countBadge == "SECOND_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "1000", count: "5")),
-                    );
-                  } else if (amountBadge == "THIRD_AMOUNT_BADGE" ||
-                      countBadge == "THIRD_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "1000", count: "10")),
-                    );
-                  } else if (amountBadge == "THIRD_AMOUNT_BADGE" ||
-                      countBadge == "FOURTH_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "1000", count: "50")),
-                    );
-                  } else if (amountBadge == "THIRD_AMOUNT_BADGE" ||
-                      countBadge == "FIFTH_COUNT_BADGE") {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const BadgeCongratsScreen(
-                              amount: "1000", count: "100")),
-                    );
-                  } else {}
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const BadgeCongratsScreen(
+                            amount: "1000", count: "100")),
+                  );
                 },
                 child: Image.asset(
                   'assets/icons/myBadgeButton.png', // SVG 파일의 경로

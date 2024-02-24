@@ -120,7 +120,7 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                MyPageUserCard(user: user, amountBadge: amountBadge, countBadge: countBadge),
+                MyPageUserCard(user: user),
                 const SizedBox(height: 24),
                 MyPageMenuList(actions: actions),
                 const SizedBox(height: 120),
