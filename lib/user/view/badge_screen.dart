@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wave/user/repository/user_me_repository.dart';
 import '../../common/layout/default_layout.dart';
 import '../../loading/loading_screen.dart';
 import '../model/user_model.dart';
@@ -23,6 +24,25 @@ final List<String> amountBadgeNames = [
 ];
 
 class _BadgeScreenState extends ConsumerState<BadgeScreen> {
+  bool? isLightOn;
+
+  Future<void> fetchLightStatus() async {
+    try {
+      final lightResponse = await ref.read(userMeRepositoryProvider).getLight();
+      setState(() {
+        print('me?');
+        isLightOn = lightResponse.data?.isLightOn ?? false;
+      });
+    } catch (error) {
+      print("Light status fetch error: $error");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchLightStatus();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +53,7 @@ class _BadgeScreenState extends ConsumerState<BadgeScreen> {
       user = userState;
     }
 
-    if (user == null) {
+    if (user == null || isLightOn == null) {
       return const LoadingScreen();
     } else {
       print('hehe${user.amountBadges[0]}');

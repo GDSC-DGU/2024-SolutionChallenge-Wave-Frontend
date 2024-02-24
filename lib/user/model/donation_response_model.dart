@@ -5,7 +5,7 @@ import 'donation_model.dart';
 part 'donation_response_model.g.dart';
 
 @JsonSerializable()
-class   DonationResponseModel extends CommonResponse{
+class DonationResponseModel extends CommonResponse{
   final DonationResponseData? data;
 
   DonationResponseModel({

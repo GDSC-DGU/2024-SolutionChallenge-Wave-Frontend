@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:wave/user/model/light_response_model.dart';
 import 'package:wave/user/model/send_wave_model.dart';
 import 'package:wave/user/model/user_info_response.dart';
 
@@ -42,5 +43,11 @@ abstract class UserMeRepository {
     'accessToken': 'true',
   })
   Future<DonationResponseModel> getDonations();
+
+  @GET('/light')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<LightResponse> getLight();
 
 }
