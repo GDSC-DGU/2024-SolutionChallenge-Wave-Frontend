@@ -7,6 +7,7 @@ import 'package:wave/map/view/global_map_screen.dart';
 import 'package:wave/map/view/wave_select_screen.dart';
 import 'package:wave/onboarding/onboarding_screen.dart';
 import 'package:wave/payment/services/mock_server.dart';
+import 'package:wave/user/view/badge_screen.dart';
 import 'package:wave/user/view/donate_completion_screen.dart';
 import 'package:wave/user/view/donation_list_screen.dart';
 import 'package:wave/user/view/login_screen.dart';
@@ -84,7 +85,7 @@ extension PaymentRequestExtension on PaymentRequest {
 //         fontFamily: 'Pretendard',
 //       ),
 //       debugShowCheckedModeBanner: false,
-//       home: DiscriptionScreen(), // 여기 원하는 스크린 대입 ✅
+//       home: BadgeScreen(), // 여기 원하는 스크린 대입 ✅
 //     );
 //   }
 // }
