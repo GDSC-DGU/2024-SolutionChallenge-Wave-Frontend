@@ -2,20 +2,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../discription/view/discription_screen.dart';
 
-class DescriptionCardSlider extends StatefulWidget {
-  DescriptionCardSlider({Key? key}) : super(key: key);
+class CardSlider extends StatefulWidget {
+  final List<String> imagePaths; // 이미지 경로 리스트를 받는 변수 추가
+
+  CardSlider({Key? key, required this.imagePaths}) : super(key: key);
 
   @override
-  _DescriptionCardSliderState createState() => _DescriptionCardSliderState();
+  _CardSliderState createState() => _CardSliderState();
 }
 
-class _DescriptionCardSliderState extends State<DescriptionCardSlider> {
-  final List<String> imagePaths = [
-    'assets/images/discriptionCard1.png',
-    'assets/images/discriptionCard2.png',
-    'assets/images/discriptionCard3.png',
-  ];
-  final PageController _pageController = PageController(viewportFraction: 1);
+class _CardSliderState extends State<CardSlider> {
+  final PageController _pageController = PageController(viewportFraction: 1.04);
   Timer? _timer;
   int _currentPage = 0;
 
@@ -23,7 +20,7 @@ class _DescriptionCardSliderState extends State<DescriptionCardSlider> {
   void initState() {
     super.initState();
     _timer = Timer.periodic(Duration(seconds: 2), (Timer timer) {
-      if (_currentPage < imagePaths.length - 1) {
+      if (_currentPage < widget.imagePaths.length - 1) {
         _currentPage++;
       } else {
         _currentPage = 0;
@@ -57,7 +54,7 @@ class _DescriptionCardSliderState extends State<DescriptionCardSlider> {
           height: 200,
           child: PageView.builder(
             controller: _pageController,
-            itemCount: imagePaths.length,
+            itemCount: widget.imagePaths.length,
             itemBuilder: (context, index) {
               return Padding( // 여기에 패딩 추가
                 padding: const EdgeInsets.symmetric(horizontal: 10), // 좌우 간격 설정
@@ -69,7 +66,7 @@ class _DescriptionCardSliderState extends State<DescriptionCardSlider> {
                     ),
                   ),
                   child: Image.asset(
-                    imagePaths[index],
+                    widget.imagePaths[index],
                     width: 353,
                     height: 200,
                   ),
@@ -86,7 +83,7 @@ class _DescriptionCardSliderState extends State<DescriptionCardSlider> {
         SizedBox(height: 0),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(imagePaths.length, (index) {
+          children: List.generate(widget.imagePaths.length, (index) {
             return Container(
               width: 7,
               height: 7,

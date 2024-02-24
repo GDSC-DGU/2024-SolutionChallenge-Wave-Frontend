@@ -85,7 +85,13 @@ class _DonateCountryDetailScreenState extends ConsumerState<DonateCountryDetailS
                   model: donateCountryModel, // 기존 모델 사용
                 ),
                 SliverToBoxAdapter(
-                  child: DescriptionCardSlider(),
+                  child: CardSlider(
+                    imagePaths: [
+                      'assets/images/discriptionCard1.png',
+                      'assets/images/discriptionCard2.png',
+                      'assets/images/discriptionCard3.png',
+                    ],
+                  ),
                 ),
                 if (donateCountryDetailModel == null) renderLoading(),
                 // 상세 정보가 로드되었다면, 상세 정보 UI 구성
