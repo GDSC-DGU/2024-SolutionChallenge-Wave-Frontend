@@ -30,7 +30,7 @@ class _BadgeScreenState extends ConsumerState<BadgeScreen> {
       user = userState;
     }
 
-    if(user != null){
+    if(user == null){
       return const LoadingScreen();
     }else {
       return DefaultLayout(
