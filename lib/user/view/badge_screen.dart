@@ -138,7 +138,7 @@ Widget _buildBadgeGrid(List<bool> badges, String badgeType) {
               fontWeight: FontWeight.w600,
             ),
           ),
-          if (!isActive)
+          if (isActive)
             Text(
               'Achieve',
               style: TextStyle(
