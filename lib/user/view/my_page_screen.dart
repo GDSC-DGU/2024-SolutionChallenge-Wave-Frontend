@@ -9,6 +9,7 @@ import 'package:wave/user/component/my_page_user_card.dart';
 import 'package:wave/user/component/show_confirmation_dialog.dart';
 import 'package:wave/user/model/user_model.dart';
 import 'package:wave/user/provider/user_me_provider.dart';
+import 'package:wave/user/repository/user_me_repository.dart';
 import '../../loading/loading_screen.dart';
 import 'donation_list_screen.dart';
 
@@ -20,6 +21,10 @@ class MyPageScreen extends ConsumerStatefulWidget {
 }
 
 class _MyPageScreenState extends ConsumerState<MyPageScreen> {
+
+  var amountBadge = "NONE";
+  var countBadge = "NONE";
+
 
   @override
   void initState() {
@@ -115,7 +120,7 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                MyPageUserCard(user: user),
+                MyPageUserCard(user: user, amountBadge: amountBadge, countBadge: countBadge),
                 const SizedBox(height: 24),
                 MyPageMenuList(actions: actions),
                 const SizedBox(height: 120),

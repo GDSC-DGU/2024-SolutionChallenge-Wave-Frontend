@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wave/user/repository/user_me_repository.dart';
+import 'package:wave/user/view/badge_congrats_screen.dart';
 import '../../common/layout/default_layout.dart';
 import '../../loading/loading_screen.dart';
 import '../model/user_model.dart';
@@ -25,6 +26,26 @@ final List<String> amountBadgeNames = [
 
 class _BadgeScreenState extends ConsumerState<BadgeScreen> {
   bool? isLightOn;
+  bool isBadgeResponse = false;
+
+  var amountBadge = "NONE";
+  var countBadge = "NONE";
+
+  Future<void> fetchLightBadge() async {
+    try {
+      final lightResponse =
+          await ref.read(userMeRepositoryProvider).getNewBadge();
+      setState(() {
+        print('ok we done!!!!!!!!!!!!!!!');
+        amountBadge = lightResponse.data.amountBadge ?? "NONE";
+        countBadge = lightResponse.data.countBadge ?? "NONE";
+        isBadgeResponse = true;
+      });
+    } catch (error) {
+      isBadgeResponse = false;
+      print("Light status fetch error: $error");
+    }
+  }
 
   Future<void> fetchLightStatus() async {
     try {
@@ -41,6 +62,7 @@ class _BadgeScreenState extends ConsumerState<BadgeScreen> {
   @override
   void initState() {
     super.initState();
+    fetchLightBadge();
     fetchLightStatus();
   }
 
@@ -52,9 +74,69 @@ class _BadgeScreenState extends ConsumerState<BadgeScreen> {
     if (userState is UserModel) {
       user = userState;
     }
-
-    if (user == null || isLightOn == null) {
+    if (user == null || isLightOn == null || isBadgeResponse == false) {
       return const LoadingScreen();
+    } else if (amountBadge == "NONE" && countBadge == "FIRST_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "NONE", count: "1");
+    } else if (amountBadge == "NONE" && countBadge == "SECOND_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "NONE", count: "5");
+    } else if (amountBadge == "NONE" && countBadge == "THIRD_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "NONE", count: "10");
+    } else if (amountBadge == "NONE" && countBadge == "FOURTH_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "NONE", count: "50");
+    } else if (amountBadge == "NONE" && countBadge == "FIFTH_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "NONE", count: "100");
+    } else if (amountBadge == "FIRST_AMOUNT_BADGE" && countBadge == "NONE") {
+      return const BadgeCongratsScreen(amount: "10", count: "NONE");
+    } else if (amountBadge == "FIRST_AMOUNT_BADGE" &&
+        countBadge == "FIRST_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "10", count: "1");
+    } else if (amountBadge == "FIRST_AMOUNT_BADGE" &&
+        countBadge == "SECOND_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "10", count: "5");
+    } else if (amountBadge == "FIRST_AMOUNT_BADGE" &&
+        countBadge == "THIRD_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "10", count: "10");
+    } else if (amountBadge == "FIRST_AMOUNT_BADGE" &&
+        countBadge == "FOURTH_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "10", count: "50");
+    } else if (amountBadge == "FIRST_AMOUNT_BADGE" &&
+        countBadge == "FIFTH_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "10", count: "100");
+    } else if (amountBadge == "SECOND_AMOUNT_BADGE" && countBadge == "NONE") {
+      return const BadgeCongratsScreen(amount: "100", count: "NONE");
+    } else if (amountBadge == "SECOND_AMOUNT_BADGE" &&
+        countBadge == "FIRST_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "100", count: "1");
+    } else if (amountBadge == "SECOND_AMOUNT_BADGE" &&
+        countBadge == "SECOND_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "100", count: "5");
+    } else if (amountBadge == "SECOND_AMOUNT_BADGE" &&
+        countBadge == "THIRD_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "100", count: "10");
+    } else if (amountBadge == "SECOND_AMOUNT_BADGE" &&
+        countBadge == "FOURTH_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "100", count: "50");
+    } else if (amountBadge == "SECOND_AMOUNT_BADGE" &&
+        countBadge == "FIFTH_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "100", count: "100");
+    } else if (amountBadge == "THIRD_AMOUNT_BADGE" && countBadge == "NONE") {
+      return const BadgeCongratsScreen(amount: "1000", count: "NONE");
+    } else if (amountBadge == "THIRD_AMOUNT_BADGE" &&
+        countBadge == "FIRST_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "1000", count: "1");
+    } else if (amountBadge == "THIRD_AMOUNT_BADGE" &&
+        countBadge == "SECOND_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "1000", count: "5");
+    } else if (amountBadge == "THIRD_AMOUNT_BADGE" &&
+        countBadge == "THIRD_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "1000", count: "10");
+    } else if (amountBadge == "THIRD_AMOUNT_BADGE" &&
+        countBadge == "FOURTH_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "1000", count: "50");
+    } else if (amountBadge == "THIRD_AMOUNT_BADGE" &&
+        countBadge == "FIFTH_COUNT_BADGE") {
+      return const BadgeCongratsScreen(amount: "1000", count: "100");
     } else {
       print('hehe${user.amountBadges[0]}');
       return DefaultLayout(
@@ -71,7 +153,8 @@ class _BadgeScreenState extends ConsumerState<BadgeScreen> {
                 children: [
                   Text(
                     'Achieved donation count',
-                    style: TextStyle(fontSize: 15,
+                    style: TextStyle(
+                        fontSize: 15,
                         fontWeight: FontWeight.w500,
                         color: Colors.black),
                   ),
@@ -90,7 +173,8 @@ class _BadgeScreenState extends ConsumerState<BadgeScreen> {
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 'Amount of donations achieved',
-                style: TextStyle(fontSize: 15,
+                style: TextStyle(
+                    fontSize: 15,
                     fontWeight: FontWeight.w500,
                     color: Colors.black),
               ),
@@ -106,7 +190,8 @@ class _BadgeScreenState extends ConsumerState<BadgeScreen> {
 
 Widget _buildBadgeGrid(List<bool> badges, String badgeType) {
   // 뱃지 타입에 따라 이름 배열 선택
-  List<String> badgeNames = badgeType == 'countBadge' ? countBadgeNames : amountBadgeNames;
+  List<String> badgeNames =
+      badgeType == 'countBadge' ? countBadgeNames : amountBadgeNames;
 
   return GridView.builder(
     shrinkWrap: true,
@@ -158,5 +243,3 @@ extension StringExtension on String {
     return "${this[0].toUpperCase()}${substring(1)}";
   }
 }
-
-

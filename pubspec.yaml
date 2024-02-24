@@ -121,6 +121,7 @@ flutter:
     - assets/icons/badge/
     - assets/maps/
     - assets/config/
+    - assets/gif/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

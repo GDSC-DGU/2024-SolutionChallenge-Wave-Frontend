@@ -7,15 +7,15 @@ import '../../map/view/global_map_screen.dart';
 import 'badge_screen.dart';
 
 class BadgeCongratsScreen extends StatefulWidget {
-  final String? amount;
-  final String? count;
+  final String amount;
+  final String count;
 
   static const String routeName = '/badge-congrats';
 
   const BadgeCongratsScreen({
     Key? key,
-    this.amount,
-    this.count,
+    required this.amount,
+    required this.count,
   }) : super(key: key);
 
   @override
@@ -83,20 +83,20 @@ class _BadgeCongratsScreenState extends State<BadgeCongratsScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              if(widget.amount != null && widget.count != null) // amount 뱃지를 획득했을 때 띄울 이미지
+              if(widget.amount != "NONE" && widget.count != "NONE") // amount 뱃지를 획득했을 때 띄울 이미지
                 Image.asset(
                   'assets/icons/badge/amountBadge${amountIndex}.png',
                 width: 200,
                 height: 200,
               ),
 
-              if(widget.count != null && widget.amount == null) // count 뱃지를 획득했을 때 띄울 이미지
+              if(widget.count != "NONE" && widget.amount == "NONE") // count 뱃지를 획득했을 때 띄울 이미지
                 Image.asset(
                   'assets/icons/badge/countBadge${countIndex}.png',
                   width: 200,
                   height: 200,
                 ),
-              if(widget.count == null && widget.amount != null) // count 뱃지를 획득했을 때 띄울 이미지
+              if(widget.count == "NONE" && widget.amount != "NONE") // count 뱃지를 획득했을 때 띄울 이미지
                 Image.asset(
                   'assets/icons/badge/countBadge${amountIndex}.png',
                   width: 200,
@@ -113,7 +113,7 @@ class _BadgeCongratsScreenState extends State<BadgeCongratsScreen> {
                 ),
               ),
               const SizedBox(height: 8),
-              if(widget.amount != null && widget.count != null) // amount 뱃지를 획득했을 때 띄울 텍스트
+              if(widget.amount != "NONE" && widget.count != "NONE") // amount 뱃지를 획득했을 때 띄울 텍스트
               Text(
                 "You've reached a donation of \$${widget.amount}",
                 textAlign: TextAlign.center,
@@ -123,7 +123,7 @@ class _BadgeCongratsScreenState extends State<BadgeCongratsScreen> {
                   color: Colors.black.withOpacity(0.7),
                 ),
               ),
-              if(widget.count != null && widget.amount == null) // count 뱃지를 획득했을 때 띄울 텍스트
+              if(widget.count != "NONE" && widget.amount == "NONE") // count 뱃지를 획득했을 때 띄울 텍스트
                 Text(
                   "You've reached ${widget.count} donations",
                   textAlign: TextAlign.center,
@@ -133,7 +133,7 @@ class _BadgeCongratsScreenState extends State<BadgeCongratsScreen> {
                     color: Colors.black.withOpacity(0.7),
                   ),
                 ),
-              if(widget.count == null && widget.amount != null) // count 뱃지를 획득했을 때 띄울 이미지
+              if(widget.count == "NONE" && widget.amount != "NONE") // count 뱃지를 획득했을 때 띄울 이미지
                 Text(
                   "You've reached ${widget.amount} donations",
                   textAlign: TextAlign.center,
@@ -153,19 +153,19 @@ class _BadgeCongratsScreenState extends State<BadgeCongratsScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 31),
               child: ElevatedButton(
                 onPressed: () {
-                  if(widget.amount != null && widget.count != null)
+                  if(widget.amount != "NONE" && widget.count != "NONE")
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) =>  BadgeCongratsScreen(count: widget.count)),
+                    MaterialPageRoute(builder: (context) =>  BadgeCongratsScreen(count: widget.count,  amount: widget.amount)),
                   );
 
-                  if(widget.count != null && widget.amount == null) // count 뱃지를 획득했을 때 띄울 텍스트
+                  if(widget.count != "NONE" && widget.amount == "NONE") // count 뱃지를 획득했을 때 띄울 텍스트
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) =>  BadgeScreen()),
                     );
 
-                  if(widget.count == null && widget.amount != null) // count 뱃지를 획득했을 때 띄울 텍스트
+                  if(widget.count == "NONE" && widget.amount != "NONE") // count 뱃지를 획득했을 때 띄울 텍스트
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) =>  BadgeScreen()),
