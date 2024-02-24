@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:wave/common/const/colors.dart';
-import 'package:wave/user/view/my_page_screen.dart';
-import '../../map/view/global_map_screen.dart';
 import 'badge_screen.dart';
 
 class BadgeCongratsScreen extends StatefulWidget {
