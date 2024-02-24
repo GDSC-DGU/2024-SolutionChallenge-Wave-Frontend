@@ -156,7 +156,7 @@ class _BadgeCongratsScreenState extends State<BadgeCongratsScreen> {
                   if(widget.amount != "NONE" && widget.count != "NONE")
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) =>  BadgeCongratsScreen(count: widget.count,  amount: widget.amount)),
+                    MaterialPageRoute(builder: (context) =>  BadgeCongratsScreen(count: widget.count, amount: "NONE")),
                   );
 
                   if(widget.count != "NONE" && widget.amount == "NONE") // count 뱃지를 획득했을 때 띄울 텍스트
