@@ -76,12 +76,6 @@ class _MyPageScreenState extends ConsumerState<MyPageScreen> {
         },
       'Terms and conditions': () => _launchURL('https://gusty-flock-5cd.notion.site/Terms-and-conditions-for-Wave-14c3fa62bc754673a4555c45dfd7916a?pvs=4'),
       'Privacy policy': () => _launchURL('https://gusty-flock-5cd.notion.site/Privacy-Policy-for-Wave-2e85cef8f08e4b5abfd329a92cdf8c1e?pvs=4'),
-      'Logout': () => showConfirmationDialog(
-        context,
-        'Do you want to logout?',
-        'You will be returned to the login screen.',
-        _logout,
-      ),
       'Unscribing membership': () => showConfirmationDialog(
         context,
         'Are you sure you want to leave?',
