@@ -6,20 +6,73 @@ import 'package:wave/user/view/my_page_screen.dart';
 import '../../map/view/global_map_screen.dart';
 import 'badge_screen.dart';
 
-class BadgeCongratsScreen extends StatelessWidget {
+class BadgeCongratsScreen extends StatefulWidget {
   final String? amount;
   final String? count;
 
-  static const String routeName = '/bad';
+  static const String routeName = '/badge-congrats';
 
-  BadgeCongratsScreen({
-    super.key,
+  const BadgeCongratsScreen({
+    Key? key,
     this.amount,
     this.count,
-    //required this.country,
-  });
+  }) : super(key: key);
 
-  bool isLoading = true;
+  @override
+  _BadgeCongratsScreenState createState() => _BadgeCongratsScreenState();
+}
+
+class _BadgeCongratsScreenState extends State<BadgeCongratsScreen> {
+  bool _showGif = true; // GIF를 표시할지 여부를 관리하는 변수
+  late int amountIndex;
+  late int countIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    // Determine the index for the amount badge
+    switch (widget.amount) {
+      case "10":
+        amountIndex = 1;
+        break;
+      case "100":
+        amountIndex = 2;
+        break;
+      case "1000":
+        amountIndex = 3;
+        break;
+      default:
+        amountIndex = 0; // Default or error case
+    }
+
+    // Determine the index for the count badge
+    switch (widget.count) {
+      case "1":
+        countIndex = 1;
+        break;
+      case "5":
+        countIndex = 2;
+        break;
+      case "10":
+        countIndex = 3;
+        break;
+      case "50":
+        countIndex = 4;
+        break;
+      case "100":
+        countIndex = 5;
+        break;
+      default:
+        countIndex = 0; // Default or error case
+    }
+
+    // 3초 후에 _showGif를 false로 설정하여 GIF를 숨깁니다.
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        _showGif = false;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,16 +83,25 @@ class BadgeCongratsScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // SvgPicture.asset(
-              //   'assets/images/donationCompletionImage.svg',
-              //   width: 150,
-              //   height: 150,
-              // ),
-              Image.asset(
-                'assets/images/donationCompletionImage.jpeg',
+              if(widget.amount != null && widget.count != null) // amount 뱃지를 획득했을 때 띄울 이미지
+                Image.asset(
+                  'assets/icons/badge/amountBadge${amountIndex}.png',
                 width: 200,
                 height: 200,
               ),
+
+              if(widget.count != null && widget.amount == null) // count 뱃지를 획득했을 때 띄울 이미지
+                Image.asset(
+                  'assets/icons/badge/countBadge${countIndex}.png',
+                  width: 200,
+                  height: 200,
+                ),
+              if(widget.count == null && widget.amount != null) // count 뱃지를 획득했을 때 띄울 이미지
+                Image.asset(
+                  'assets/icons/badge/countBadge${amountIndex}.png',
+                  width: 200,
+                  height: 200,
+                ),
               const SizedBox(height: 24),
               const Text(
                 "Congratulations!",
@@ -51,9 +113,9 @@ class BadgeCongratsScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              if(amount != null) // amount 뱃지를 획득했을 때 띄울 텍스트
+              if(widget.amount != null && widget.count != null) // amount 뱃지를 획득했을 때 띄울 텍스트
               Text(
-                "You've reached a donation of \$$amount",
+                "You've reached a donation of \$${widget.amount}",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
@@ -61,9 +123,19 @@ class BadgeCongratsScreen extends StatelessWidget {
                   color: Colors.black.withOpacity(0.7),
                 ),
               ),
-              if(count != null) // count 뱃지를 획득했을 때 띄울 텍스트
+              if(widget.count != null && widget.amount == null) // count 뱃지를 획득했을 때 띄울 텍스트
                 Text(
-                  "You've reached $count donations",
+                  "You've reached ${widget.count} donations",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black.withOpacity(0.7),
+                  ),
+                ),
+              if(widget.count == null && widget.amount != null) // count 뱃지를 획득했을 때 띄울 이미지
+                Text(
+                  "You've reached ${widget.amount} donations",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,
@@ -81,10 +153,23 @@ class BadgeCongratsScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 31),
               child: ElevatedButton(
                 onPressed: () {
+                  if(widget.amount != null && widget.count != null)
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => BadgeScreen()),
+                    MaterialPageRoute(builder: (context) =>  BadgeCongratsScreen(count: widget.count)),
                   );
+
+                  if(widget.count != null && widget.amount == null) // count 뱃지를 획득했을 때 띄울 텍스트
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) =>  BadgeScreen()),
+                    );
+
+                  if(widget.count == null && widget.amount != null) // count 뱃지를 획득했을 때 띄울 텍스트
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) =>  BadgeScreen()),
+                    );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: PRIMARY_BLUE_COLOR,
@@ -104,6 +189,13 @@ class BadgeCongratsScreen extends StatelessWidget {
               ),
             ),
           ),
+          if (_showGif)
+            Positioned.fill(
+              child: Image.asset(
+                'assets/gif/light.gif',
+                fit: BoxFit.cover,
+              ),
+            ),
         ],
       ),
     );

@@ -116,6 +116,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/gif/
     - assets/icons/
     - assets/icons/badge/
     - assets/maps/
