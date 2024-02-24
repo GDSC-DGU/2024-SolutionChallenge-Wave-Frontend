@@ -36,47 +36,46 @@ class _BadgeScreenState extends ConsumerState<BadgeScreen> {
     if (user == null) {
       return const LoadingScreen();
     } else {
+      print('hehe${user.amountBadges[0]}');
       return DefaultLayout(
         isNeededCenterAppbar: true,
         title: 'Earned badges',
         isSingleChildScrollViewNeeded: true,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Achieved donation count',
-                      style: TextStyle(fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black),
-                    ),
-                    _buildBadgeGrid(user.countBadges, 'countBadge'),
-                    SizedBox(height: 16),
-                  ],
-                ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Achieved donation count',
+                    style: TextStyle(fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black),
+                  ),
+                  _buildBadgeGrid(user.countBadges, 'countBadge'),
+                  SizedBox(height: 16),
+                ],
               ),
-              Container(
-                width: double.infinity,
-                height: 2,
-                color: Colors.black.withOpacity(0.1),
+            ),
+            Container(
+              width: double.infinity,
+              height: 2,
+              color: Colors.black.withOpacity(0.1),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'Amount of donations achieved',
+                style: TextStyle(fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  'Amount of donations achieved',
-                  style: TextStyle(fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black),
-                ),
-              ),
-              _buildBadgeGrid(user.amountBadges, 'amountBadge'),
-            ],
-          ),
+            ),
+            _buildBadgeGrid(user.amountBadges, 'amountBadge'),
+          ],
         ),
       );
     }
@@ -93,7 +92,8 @@ Widget _buildBadgeGrid(List<bool> badges, String badgeType) {
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 3,
       crossAxisSpacing: 8,
-      mainAxisSpacing: 50, // 뱃지와 이름 사이의 간격을 더 넓힘
+      mainAxisSpacing: 50,
+      mainAxisExtent: 160,
     ),
     itemCount: badges.length,
     itemBuilder: (context, index) {
@@ -102,12 +102,12 @@ Widget _buildBadgeGrid(List<bool> badges, String badgeType) {
           ? 'assets/icons/badge/$badgeType${index + 1}.png'
           : 'assets/icons/badge/disabled${badgeType.capitalize()}${index + 1}.png';
 
-        return Expanded(
-        child: Column(
+      return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(
-              badgeAssetPath,
+            badgeAssetPath,
+            height: 100,
           ),
           const SizedBox(height: 8),
           Text(
@@ -128,13 +128,10 @@ Widget _buildBadgeGrid(List<bool> badges, String badgeType) {
               ),
             ),
         ],
-      ),
       );
     },
   );
 }
-
-
 
 extension StringExtension on String {
   String capitalize() {
