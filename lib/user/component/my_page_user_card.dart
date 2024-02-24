@@ -39,11 +39,12 @@ class MyPageUserCard extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.pushReplacement(
+                  // BadgeScreen으로 이동
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const BadgeCongratsScreen(
-                            amount: "1000", count: "100")),
+                      builder: (context) => BadgeScreen(),
+                    ),
                   );
                 },
                 child: Image.asset(
