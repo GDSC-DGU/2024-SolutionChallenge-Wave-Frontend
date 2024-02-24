@@ -17,7 +17,7 @@ class BadgeScreen extends ConsumerStatefulWidget {
 
 final List<String> countBadgeNames = [
   "First donation", "5th donation", "10th donation", // countBadge 예시
-  "50th donation", "500th donation"
+  "50th donation", "100th donation"
 ];
 final List<String> amountBadgeNames = [
   "Reach \$10", "Reach \$100", "Reach \$1000", // countBadge 예시
@@ -75,8 +75,8 @@ class _BadgeScreenState extends ConsumerState<BadgeScreen> {
                         fontWeight: FontWeight.w500,
                         color: Colors.black),
                   ),
-                  _buildBadgeGrid(user.countBadges, 'countBadge'),
                   SizedBox(height: 16),
+                  _buildBadgeGrid(user.countBadges, 'countBadge'),
                 ],
               ),
             ),
@@ -94,6 +94,7 @@ class _BadgeScreenState extends ConsumerState<BadgeScreen> {
                     color: Colors.black),
               ),
             ),
+            SizedBox(height: 16),
             _buildBadgeGrid(user.amountBadges, 'amountBadge'),
           ],
         ),
@@ -112,7 +113,6 @@ Widget _buildBadgeGrid(List<bool> badges, String badgeType) {
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 3,
       crossAxisSpacing: 8,
-      mainAxisSpacing: 50,
       mainAxisExtent: 160,
     ),
     itemCount: badges.length,
@@ -129,7 +129,6 @@ Widget _buildBadgeGrid(List<bool> badges, String badgeType) {
             badgeAssetPath,
             height: 100,
           ),
-          const SizedBox(height: 8),
           Text(
             badgeNames[index],
             style: TextStyle(
@@ -138,7 +137,7 @@ Widget _buildBadgeGrid(List<bool> badges, String badgeType) {
               fontWeight: FontWeight.w600,
             ),
           ),
-          if (!isActive)
+          if (isActive)
             Text(
               'Achieve',
               style: TextStyle(
