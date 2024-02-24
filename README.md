@@ -78,7 +78,6 @@ cd android
 cd ..
 flutter clean
 flutter pub get
-flutter pub get
 flutter run
 
 ```
@@ -92,7 +91,7 @@ flutter run
 | NAME                                           | ROLE           | EMAIL                         |
 |------------------------------------------------|----------------|-------------------------------|
 | [SEUNGJUN KANG](https://github.com/jjuuuunnii) |**Leader**, **Back-End**       | kangseung1110@gmail.com       |
-| [DOHYEONG LEE](https://github.com/puretension) | **Front-End**      | gmlcks0513@dgu.ac.kr          |
+| [DOHYEONG LEE](https://github.com/puretension) | **Front-End**      | rlrlfhtm5@gmail.com          |
 | [MINSEONG KIM](https://github.com/minseong0324)| **Front-End**      | kwan03240324@gmail.com        |
 | [KYOUNGHYUN NAM](https://github.com/Oneourbefore) | **AI** | namkyounghyun1150@gmail.com   |
 
