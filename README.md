@@ -16,6 +16,8 @@ This approach not only keeps the audience informed about the latest developments
 #  ❇️ Architecture
 <img width="1004" alt="스크린샷 2024-02-25 오전 12 07 09" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/9e2f0645-c717-4cb6-bdba-f47ca77b98fe">
 
+# ❇️ Entity-Relationship Diagram
+![Wave ERD](https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/88dbf205-c832-4f02-8287-9e0330dfca8f)
 
 # 🛠️Tech Stack🛠️
 ## Frameworks
@@ -106,6 +108,7 @@ flutter run
 | [DOHYEONG LEE](https://github.com/puretension) | **Front-End**      | rlrlfhtm5@gmail.com          |
 | [MINSEONG KIM](https://github.com/minseong0324)| **Front-End**      | kwan03240324@gmail.com        |
 | [KYOUNGHYUN NAM](https://github.com/Oneourbefore) | **AI** | namkyounghyun1150@gmail.com   |
+
 
 # GitHub Role
 This repository follows the following conventions.
