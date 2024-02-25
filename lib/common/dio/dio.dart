@@ -94,13 +94,13 @@ class CustomInterceptor extends Interceptor {
       return handler.reject(err);
     }
 
-    final isStatus404 = err.response?.statusCode == 404;
+    final isStatus401 = err.response?.statusCode == 401;
     final isPathRefresh = err.requestOptions.path == '/auth/refresh';
 
     /// 토큰 재발급 요청
 
     // 토큰을 refresh하려는 의도가 아니었는데 401에러가 났다면?(401 -> token 만료)
-    if (isStatus404&& !isPathRefresh) {
+    if (isStatus401&& !isPathRefresh) {
       final dio = Dio();
       try {
         print('token refresh start');
