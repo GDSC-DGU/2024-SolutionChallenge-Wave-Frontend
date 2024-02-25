@@ -1,6 +1,6 @@
 
 # 2024 Solution Challenge: 🌊Wave
-### Wave ThumbNailImage Needed ⭐️
+![KakaoTalk_Image_2024-02-25-22-00-40](https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/bb36921a-0b65-40fd-bd03-02850b517d14)
 
 
 # 🌍 UN SDGs Goals
