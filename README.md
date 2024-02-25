@@ -1,4 +1,3 @@
-
 # 2024 Solution Challenge: 🌊Wave
 ![KakaoTalk_Image_2024-02-25-22-00-40](https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/bb36921a-0b65-40fd-bd03-02850b517d14)
 
@@ -8,7 +7,7 @@
 
 # What is Wave's Solution?
 ### ***"Wave from us save from war"***
-"Wave from us, save from war" is our slogan, under which our app was born with the belief that small ripples can create a massive change.
+"Wave from us, save from war" is our slogan,which is belief that small ripples can create a massive change.
 Our service is dedicated to maintaining and elevating awareness of **ongoing conflicts**, addressing the challenge of **declining public interest as wars continue**.  
 By offering an **Interactive War Map** that provides real-time updates and news on conflicts, alongside integrated features for **making donations**, we aim to actively engage the **global community**.  
 This approach not only keeps the audience informed about the latest developments in conflict zones but also facilitates **direct support to affected areas**, ensuring that the momentum of global empathy and aid is sustained over time.  
@@ -21,10 +20,10 @@ This approach not only keeps the audience informed about the latest developments
 # 🛠️Tech Stack🛠️
 ## Frameworks
 ![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)
-![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
+![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
 ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
-![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white)
+
 
 
 ## Server
@@ -34,6 +33,8 @@ This approach not only keeps the audience informed about the latest developments
 ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
 
 ## Stack
+![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![JPA](https://img.shields.io/badge/JPA-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
 ![Spring Security](https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=spring-security&logoColor=white)
 ![JSON Web Tokens](https://img.shields.io/badge/json%20web%20tokens-323330?style=for-the-badge&logo=json-web-tokens&logoColor=pink)
@@ -42,13 +43,12 @@ This approach not only keeps the audience informed about the latest developments
 ![http](https://img.shields.io/badge/http-0.13.6-red?style=for-the-badge)
 ![uuid](https://img.shields.io/badge/uuid-3.0.7-blue?style=for-the-badge)
 
-# Execution Method
-Here's how you can set up a testing environment.
-Download the apk file here.
-Run the apk file on your phone or the emulator.
-To ensure the best experience while testing our app, we recommend testing it in a Pixel 7 Pro API 34 or higher!
+# 📲 Execution Method
+##### Here's how you can set up a testing environment.
+##### Download the apk file here.
+##### Run the apk file on your phone or the emulator.
+##### To ensure the best experience while testing our app, we recommend testing it in a Pixel 7 Pro API 34 or higher!
 ### [Wave APK Link](https://apps.apple.com/us/app/인터미션-intermission/id6471970116) ⭐️(최종제출 버전 등록후 수정)
-
 
 ## Flutter Project Build Instructions
 
@@ -85,6 +85,18 @@ flutter run
 
 
 # 📸 ScreenShot & Description
+![WAVE README-01](https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/0f34363f-0565-49b3-88fd-66b85eb66e36)
+![WAVE README-02](https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/6f3898bb-9ec7-4a4c-b563-efcd53dce1f6)
+![WAVE README-03](https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/5f0aee83-a133-4361-ada7-95bcf2444a7b)
+![WAVE README-04](https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/7720b397-627b-4b22-aafe-0467cc9bb69e)
+![WAVE README-05](https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/4b149bc7-3cb1-4e04-b6b4-02ab84a8e638)
+![WAVE README-06](https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/6b08c2d5-0cb1-4805-b25e-0c69283b99e4)
+![WAVE README-07](https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/41886f19-fa95-42ed-9580-566bb0b61ef1)
+![WAVE README-08](https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/cd836e46-a2d2-4633-b9ad-757f314695bc)
+![WAVE README-09](https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/c11a6959-d29f-4454-8c0e-6b74ef631561)
+![WAVE README-10](https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/3cc918cc-2050-4e4b-862d-0268ae6fa2df)
+![WAVE README-11](https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/1afbf473-ab98-488b-8745-ded39177a4cd)
+![WAVE README-12](https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/3a138094-5dd6-4adb-8042-213b40b920ec)
 
 
 # Wave Developers
@@ -94,16 +106,6 @@ flutter run
 | [DOHYEONG LEE](https://github.com/puretension) | **Front-End**      | rlrlfhtm5@gmail.com          |
 | [MINSEONG KIM](https://github.com/minseong0324)| **Front-End**      | kwan03240324@gmail.com        |
 | [KYOUNGHYUN NAM](https://github.com/Oneourbefore) | **AI** | namkyounghyun1150@gmail.com   |
-
-
-
-
-# 2024-SolutionChallenge-Wave-Frontend
-This is 2024 GDSC Solution Challenge Wave Repository.
-
-## 🌊 Wave? 
-### ***"Wave from us save from war"***
-#### every ripple is a step away from conflict. Let's create waves of change together!
 
 # GitHub Role
 This repository follows the following conventions.
