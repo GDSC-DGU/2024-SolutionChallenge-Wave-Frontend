@@ -223,8 +223,9 @@ class _SearchCountryDetailScreenState
               child: Text(
                 'See More News', // 타이틀 텍스트
                 style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black.withOpacity(0.9),
                 ),
               ),
             ),

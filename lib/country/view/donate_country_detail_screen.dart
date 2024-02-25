@@ -230,13 +230,14 @@ class _DonateCountryDetailScreenState extends ConsumerState<DonateCountryDetailS
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(bottom: 16.0),
               child: Text(
-                '', // 타이틀 텍스트
+                'See More News',
                 style: TextStyle(
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black.withOpacity(0.9),
                 ),
               ),
             ),

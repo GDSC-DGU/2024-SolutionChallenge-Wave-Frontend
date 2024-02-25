@@ -43,8 +43,8 @@ class NewsCard extends StatelessWidget {
         child: Stack(
           children: [
             Positioned(
-              bottom: 10,
-              left: 10,
+              bottom: 20,
+              left: 20,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -53,7 +53,7 @@ class NewsCard extends StatelessWidget {
                   ),
                   SizedBox(height: 5),
                   Container(
-                    width: 300, // 제목 너비 제한
+                    width: 290, // 제목 너비 제한
                     child: Text(
                       newsTitle,
                       style: TextStyle(
