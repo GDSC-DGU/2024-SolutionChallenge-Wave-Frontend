@@ -13,39 +13,21 @@ class CardSlider extends StatefulWidget {
 
 class _CardSliderState extends State<CardSlider> {
   final PageController _pageController = PageController(viewportFraction: 1.04);
-  Timer? _timer;
   int _currentPage = 0;
 
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(Duration(seconds: 2), (Timer timer) {
-      if (_currentPage < widget.imagePaths.length - 1) {
-        _currentPage++;
-      } else {
-        _currentPage = 0;
-      }
-
-      if (_pageController.hasClients) {
-        _pageController.animateToPage(
-          _currentPage,
-          duration: Duration(milliseconds: 700),
-          curve: Curves.easeIn,
-        );
-      }
-    });
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
     _pageController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width; // 화면 전체 너비 가져오기
 
     return Column(
       children: [
