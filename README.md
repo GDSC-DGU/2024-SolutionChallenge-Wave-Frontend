@@ -17,7 +17,7 @@ This approach not only keeps the audience informed about the latest developments
 <img width="1004" alt="스크린샷 2024-02-25 오전 12 07 09" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/9e2f0645-c717-4cb6-bdba-f47ca77b98fe">
 
 # ❇️ Entity-Relationship Diagram
-![Wave ERD](https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/88dbf205-c832-4f02-8287-9e0330dfca8f)
+<img width="1163" alt="스크린샷 2024-02-26 오전 6 19 41" src="https://github.com/GDSC-DGU/2024-SolutionChallenge-Wave-Frontend/assets/106448279/088157e7-e090-4ce5-8174-9685c1a61806">
 
 # 🛠️Tech Stack🛠️
 ## Frameworks
